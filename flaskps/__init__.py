@@ -7,7 +7,10 @@ from flaskps.resources.api import issue as api_issue
 from flaskps.config import Config
 
 # Configuración inicial de la app
-app = Flask(__name__)
+app = Flask(
+    __name__,
+    static_url_path="/static"
+)
 app.config.from_object(Config)
 
 # Autenticación
@@ -36,4 +39,4 @@ app.add_url_rule("/api/consultas", 'api_issue_index', api_issue.index)
 
 @app.route("/")
 def hello():
-    return render_template('home.html')
+    return render_template('index.html')
