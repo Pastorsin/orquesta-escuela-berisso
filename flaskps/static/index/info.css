@@ -1,0 +1,116 @@
+#left-container {
+    background-color: #1a91a1;
+}
+
+/* Top */
+
+#logo-container {
+    text-align: center;
+}
+
+#social-container > div {
+    border-top: 1px solid #05404a;
+    border-bottom: 1px solid #05404a;
+}
+
+#social-container {
+    background-color: #191919f2;
+}
+
+.social-icon {
+    font-size: 3vh;
+    color: #3191a1;
+    transition: color 0.3s ease-out;
+    overflow: visible;
+}
+
+.social-icon:hover {
+    color: #8ff9f9;
+}
+
+#login-redirect {
+    display: none!important;
+}
+
+/* Middle */
+
+#carousel {
+    background-color: #065461;
+}
+
+.carousel-item img {
+	width: 100%;
+    height: 100%;
+}
+
+/* Bottom */
+
+#description-container {
+    background-color: #191919f2;
+    position: absolute;
+    bottom: 0;
+    height: 20%;
+    overflow-y: visible;
+    overflow-x: hidden;
+    padding: 2px 2px 2px 2px;
+}
+
+#description-content {
+    overflow-wrap: break-word;
+    word-wrap: break-word;
+    hyphens: auto;
+    color: #757575;
+    transition: color 0.2s;
+}
+
+#description-content:hover {
+    color: white;
+}
+
+
+/* Responsive */
+
+@media (max-width: 800px) {
+    .social-icon {
+        font-size: 4vw;
+    }
+}
+
+@media (max-height: 850px) {
+    #description-content {
+        font-size: 3vw;
+    }
+}
+
+/* Extra large devices (large desktops, 1200px and up) */
+
+@media (max-width: 1200px) {
+
+    .carousel-item img {
+        width: auto;
+    }
+
+    #login-redirect {
+        display: flex !important;
+    }
+
+    #login-redirect > button > a {
+        text-decoration: none;
+        color: white;
+        font-size: 1.5vh;
+        font-family: 'Quicksand', sans-serif;
+    }
+
+    #login-redirect > button {
+        border-radius: 2em;
+        border: none;
+        background-color: #17b7b7;
+        transition: all 0.3s;
+    }
+
+    #login-redirect > button:hover {
+        background-color: #256b6b;
+    }
+    
+}
+
