@@ -86,6 +86,14 @@
 
 @media (max-width: 1200px) {
 
+    #social-container {
+        padding: 0px !important;
+    }
+
+    #description-container {
+        height: auto;
+    }
+
     .carousel-item img {
         width: auto;
     }
