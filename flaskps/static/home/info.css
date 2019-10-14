@@ -92,6 +92,7 @@
 
     #description-container {
         height: auto;
+        max-height: 40%;
     }
 
     .carousel-item img {

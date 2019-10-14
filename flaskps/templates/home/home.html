@@ -1,0 +1,34 @@
+{% extends "base.html" %}
+
+{% block font %} 
+	<link rel='stylesheet' href='https://use.fontawesome.com/releases/v5.7.0/css/all.css' integrity='sha384-lZN37f5QGtY3VHgisS14W3ExzMWZxybE1SJSEsQp9S+oqd12jhcu+A56Ebc1zFSJ' crossorigin='anonymous'>
+	<link href="https://fonts.googleapis.com/css?family=Quicksand&display=swap" rel="stylesheet">
+{% endblock %}
+
+{% block style %}
+	<link rel="stylesheet" type="text/css" href="{{url_for('static', filename='home/info.css')}}">
+	<link rel="stylesheet" type="text/css" href="{{url_for('static', filename='home/login.css')}}">
+{% endblock %}
+
+
+{% block body %}
+	
+	<div class="container-fluid h-100 w-100 p-0">
+
+		<!-- Main row -->
+		<div class="row h-100 w-100 m-0 p-0">
+
+			<!-- Info section -->
+			<div class="col-xl-7 h-100" id="left-container">
+				{% include "home/info.html" %}
+			</div>
+
+			<!-- Login section -->
+			<div class="col-xl-5 h-100" id="right-container">
+				{% include "home/login.html" %}
+			</div>
+		</div>
+
+	</div>
+
+{% endblock %}

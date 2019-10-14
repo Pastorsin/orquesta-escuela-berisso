@@ -39,4 +39,4 @@ app.add_url_rule("/api/consultas", 'api_issue_index', api_issue.index)
 
 @app.route("/")
 def hello():
-    return render_template('index.html')
+    return render_template('home/home.html')
