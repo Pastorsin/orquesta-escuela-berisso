@@ -1,5 +1,4 @@
-from os import path
-from flask import Flask, render_template, g
+from flask import Flask, render_template
 from flaskps.resources import issue
 from flaskps.resources import user
 from flaskps.resources import auth
@@ -7,10 +6,7 @@ from flaskps.resources.api import issue as api_issue
 from flaskps.config import Config
 
 # Configuración inicial de la app
-app = Flask(
-    __name__,
-    static_url_path="/static"
-)
+app = Flask(__name__)
 app.config.from_object(Config)
 
 # Autenticación
