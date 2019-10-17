@@ -1,3 +1,45 @@
 #right-container {
     background-color: #003740;
 }
+
+.container-login {
+  display:flex;
+  justify-content:center;
+  align-items:center;
+  height:100%;
+  flex-direction: column;
+  color:white;
+  font-family: Quicksand;
+}
+
+.title-login {
+  border-bottom: 1px solid #5be6fc;
+}
+
+.input-login:first-child {
+  margin-bottom: 10px;
+}
+
+.input-login {
+  width: 100%;
+}
+
+.form-login {
+  display:flex;
+  flex-direction: column;
+  align-items: center;
+  width: 55%;
+}
+
+.forgot-password-login {
+  color:white;
+  transition: color 0.3s;
+}
+
+.forgot-password-login:hover {
+  color: #5be6fc;
+}
+
+.button-login {
+  width:100%;
+}
