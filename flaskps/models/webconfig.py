@@ -1,5 +1,6 @@
 from ..extensions.db import db
 
+
 class Webconfig(db.Model):
     __tablename__ = 'webconfig'
     id = db.Column(db.Integer, primary_key=True)
