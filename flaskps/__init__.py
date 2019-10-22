@@ -28,3 +28,8 @@ app.add_url_rule("/usuarios/new", 'user_new', user.new)
 def hello():
     db.create_all()
     return render_template('home/home.html')
+
+@app.route("/sections")
+def sections():
+	return render_template('home/secciones.html')
+
