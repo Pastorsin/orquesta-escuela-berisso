@@ -19,6 +19,7 @@ bcrypt.init_app(app)
 # Autenticación
 # app.add_url_rule("/iniciar_sesion", 'auth_login', auth.login)
 # app.add_url_rule("/cerrar_sesion", 'auth_logout', auth.logout)
+app.add_url_rule("/login", 'login', user.login, methods=['POST'])
 
 # Usuarios
 app.add_url_rule("/usuarios", 'user_index', user.index)

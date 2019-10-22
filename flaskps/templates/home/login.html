@@ -2,15 +2,15 @@
 	<div class="title-login">
 		<h2>Iniciar Sesión</h2>
 	</div>
-	<form class="form-login" action="autenticacion" method="post">
+    <form class="form-login" action="{{ url_for('login') }}" method="post">
 
 		<div class="form-item-login">
-			<label class="small label-login" for="user">Email</label>
+			<label class="small label-login" for="username">Usuario</label>
 			<div class="input-group">
 				<div class="input-group-prepend">
 					<span class="input-group-text"><i class="fas fa-envelope"></i></span>
 				</div>
-				<input class="form-control" type="email" name="user" value="" placeholder="Email" required>
+				<input class="form-control" type="text" name="username" value="" placeholder="Nombre de Usuario" required>
 			</div>
 		</div>
 
