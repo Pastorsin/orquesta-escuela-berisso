@@ -1,0 +1,41 @@
+{% extends "base.html" %}
+
+{% block style%}
+	<link rel="stylesheet" type="text/css" href="{{url_for('static', filename='home/sections.css')}}">
+	<link href="https://stackpath.bootstrapcdn.com/font-awesome/4.7.0/css/font-awesome.min.css" rel="stylesheet" integrity="sha384-wvfXpqpZZVQGK6TAh5PVlGOfQNHSoD2xbE+QkPxCAFlNEevoEH3Sl0sibVcOQVnN" crossorigin="anonymous">
+	<link href="https://fonts.googleapis.com/css?family=Poppins:400,500,600,800,900%7cRaleway:300,400,500,600,700" rel="stylesheet">
+{% endblock%}
+
+{% block body %}
+	<div id="section-container">
+		<section class="services pt-100 pb-50" id="services">
+         <div class="container">
+            <div class="row">
+               <div class="col-xl-6 mx-auto text-center">
+                  <div class="section-title mb-100">
+                     <h4>Secciones</h4>
+                  </div>
+               </div>
+            </div>
+            <div class="row">
+               <div class="col-lg-4 col-md-6">
+                  <!-- Single Service -->
+                  <a href="">
+                  <div class="single-service">
+                     <i class="fa fa-user-plus"></i>
+                     <h4>Agregar Usuario</h4>
+                  </div></a>
+               </div>
+               <div class="col-lg-4 col-md-6">
+                  <!-- Single Service -->
+                  <a href="">
+                  <div class="single-service">
+                     <i class="fa fa-user-times"></i>
+                     <h4>Inhabilitar Usuario</h4>
+                  </div></a>
+               </div>
+            </div>
+         </div>
+      </section>
+	</div>
+{% endblock %}
