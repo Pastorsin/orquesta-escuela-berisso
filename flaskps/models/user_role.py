@@ -1,4 +1,5 @@
 from ..extensions.db import db
+from . import role
 
 class UserRole(db.Model):
     __tablename__ = 'user_role'
