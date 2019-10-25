@@ -3,7 +3,7 @@
 
 		<!-- Logo -->
 		<div class="col-8 p-3 h-75 d-flex justify-content-center">
-			<img class="h-100" src="http://www.oeberisso.com.ar/wp-content/uploads/2017/12/cropped-Logo-Orquesta-Escuela-de-Berisso-PNG.png">								
+			<img class="h-100" src="{{url_for('static', filename='home/images/logo/logo.png')}}">								
 		</div>
 
 		<!-- Social -->
@@ -50,14 +50,14 @@
 
 		<!-- Images -->
 		<div class="carousel-inner h-100 d-flex">
-			<div class="carousel-item">
-				<img src="http://www.oeberisso.com.ar/wp-content/uploads/2017/07/21543970_10214411127216377_3929502647737430407_o-2000x1200.jpg" alt="First slide">
-			</div>
-			<div class="carousel-item">
-				<img src="http://www.oeberisso.com.ar/wp-content/uploads/2019/04/camehoriz2-2000x1200.jpg" alt="Second slide">
-			</div>
 			<div class="carousel-item active">
-				<img src="http://abc.gov.ar/sites/default/files/styles/juicebox_large/public/3651.jpg?itok=XT8fBmon" alt="Third slide">
+				<img src="{{url_for('static', filename='home/images/carousel/0.jpg')}}" alt="First slide">
+			</div>
+			<div class="carousel-item">
+				<img src="{{url_for('static', filename='home/images/carousel/1.jpg')}}" alt="Second slide">
+			</div>
+			<div class="carousel-item">
+				<img src="{{url_for('static', filename='home/images/carousel/2.jpg')}}" alt="Third slide">
 			</div>
 		</div>
 	</div>
@@ -66,8 +66,7 @@
 	<div class="row p-2 w-100 m-0" id="description-container">
 		<div class="col-12 mx-auto d-flex">
 			<div class="m-auto text-center">
-				<p id="description-content">La Orquesta Escuela de Berisso comenzó a funcionar en septiembre del 2005 en el barrio de El Carmen de la localidad de Berisso bajo la dirección del Mtro. Juan Carlos Herrero, orientada especialmente a la atención de chicos en situación de vulnerabilidad socio-cultural.
-Desde sus 20 alumnos iniciales fue creciendo hasta atender actualmente una matrícula de aproximadamente 530 chicos, distribuidos en los 15 núcleos que la conforman y dirigida a una franja etaria de 5 a 23 años, cubriendo en su accionar a la casi totalidad de los barrios de Berisso más los espacios cedidos por el Club Español y el Teatro Argentino</p>
+				<p id="description-content">{{ config.description }}</p>
 			</div>
 		</div>
 	</div>
