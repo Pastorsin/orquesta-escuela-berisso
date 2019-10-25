@@ -1,4 +1,5 @@
 from ..extensions.db import db
+from sqlalchemy import update
 
 
 class Webconfig(db.Model):
@@ -34,6 +35,12 @@ class Webconfig(db.Model):
         nullable=False,
         default=True
     )
+
+    @classmethod
+    def update(cls, config):
+        update_sql = update(cls, values=config)
+        db.session.execute(update_sql)
+        db.session.commit()
 
     def __repr__(self):
         return self.__tablename__

@@ -1,42 +1,72 @@
-{% extends "base.html" %}
+{% extends "sections_base.html" %}
+
 {% block style %}
 	<link href="https://cdn.jsdelivr.net/gh/gitbrent/bootstrap4-toggle@3.6.1/css/bootstrap4-toggle.min.css" rel="stylesheet">
+	<link rel="stylesheet" type="text/css" href="{{url_for('static', filename='webconfig/webconfig.css')}}">
 {% endblock %}
+
 {% block script %}
 	<script src="https://cdn.jsdelivr.net/gh/gitbrent/bootstrap4-toggle@3.6.1/js/bootstrap4-toggle.min.js"></script>
 {% endblock %}
-{% block body %}
-	<div class="row d-flex justify-content-center">
+
+{% block content %}
+	<div class="row d-flex">
 		
-		<div class="row">
-			<h2>Configuración del Sistema</h2>
+		<div class="col-12 text-center">
+			<h1>Configuración del Sistema</h1>
 		</div>
 
-		<div class="row">
-			<form method="post">
-				<div class="form-group">
-					<label for="title-input">Título</label>
-					<input type="text" class="form-control" id="title-input" name="title" placeholder="{{config.title}}">
-				</div>
-				<div class="form-group">
-					<label for="description-input">Descripción</label>
-					<textarea class="form-control" id="description-input" maxlength="255" name="description" placeholder="{{config.description}}"></textarea>
-				</div>
-				<div class="form-group">
-					<label for="email-input">Email de Contacto</label>
-					<input type="email" class="form-control" id="email-input" name="email" placeholder="{{config.email}}">
-				</div>
-				<div class="form-group">
-					<label for="pagination-input">Número de elementos por listado</label>
-					<input type="number" class="form-control" min="1" max="100" id="pagination-input" name="pagination" placeholder="{{config.pagination}}">
-				</div>
-				<div class="form-group">
-					<label for="frontend-input">Estado del sitio</label>
-					<div>
-						<input type="checkbox" checked data-toggle="toggle" data-on="Habilitado" data-onstyle="danger" data-off="Deshabilitado" data-size="sm">
+		<div class="col-12">
+			<form method="post" action="configuracion/editar">
+
+				<div id="info-config" class="col-12">
+					<div class="col-12 text-center py-1">
+						<h3>Información del Sistema</h3>	
+					</div>
+
+					<div class="form-group">
+						<label for="title-input">Título</label>
+						<input type="text" class="form-control" id="title-input" name="title" value="{{config.title}}">
+					</div>
+					<div class="form-group">
+						<label for="description-input">Descripción</label>
+						<textarea class="form-control" id="description-input" maxlength="255" name="description" rows="10">{{config.description}}</textarea>
+					</div>
+					<div class="form-group">
+						<label for="email-input">Email de Contacto</label>
+						<input type="email" class="form-control" id="email-input" name="email" value="{{config.email}}">
 					</div>
 				</div>
+
+
+				<div id="general-config" class="col-12">
+					<div class="text-center py-1">
+						<h3>Configuración General</h3>	
+					</div>
+					<div class="form-group">
+						<label for="pagination-input">Número de elementos por listado</label>
+						<input type="number" class="form-control" min="1" max="100" id="pagination-input" name="pagination" value="{{config.pagination}}">
+					</div>
+					<div class="form-group">
+						<label for="frontend-input">Estado del sitio</label>
+						<br>
+						<input type="checkbox" {% if config.frontend_enabled %} checked {% endif %} data-toggle="toggle" data-on="Habilitado" data-onstyle="danger" data-off="Deshabilitado" data-size="sm" id="frontend-input" name="frontend_enabled">
+					</div>
+				</div>
+
+
+				<div id="form-buttons" class="col-12 text-center">
+					<button class="btn btn-success" type="button" data-toggle="modal" data-target="#confirmation">Guardar</button>
+					<a href="/">
+						<button class="btn btn-danger" type="button">Cancelar</button>
+					</a>
+				</div>
+
+				{% include "webconfig/confirmation.html" %}
+
 			</form>
 		</div>
 	</div>
+
+
 {% endblock %}

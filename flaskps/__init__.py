@@ -4,7 +4,7 @@ from .extensions.db import db
 from flask_migrate import Migrate
 from .extensions.bcrypt import bcrypt
 
-from flaskps.resources import user
+from flaskps.resources import user, webconfig
 from .models.webconfig import Webconfig
 
 # Configuración inicial de la app
@@ -42,7 +42,15 @@ def sections():
     return render_template('home/secciones.html')
 
 
-@app.route("/configuracion")
-def webconfig():
-    webconfig = Webconfig.query.first()
-    return render_template('webconfig/webconfig.html', config=webconfig)
+app.add_url_rule(
+    "/configuracion",
+    'webconfig',
+    webconfig.index
+)
+
+app.add_url_rule(
+    "/configuracion/editar",
+    'webconfig_edit',
+    webconfig.edit,
+    methods=['POST']
+)
