@@ -10,7 +10,6 @@ def get_config():
         module = __name__ + "." + mode
         config = import_module(module)
         config.ENV = mode
-        config.SQLALCHEMY_TRACK_MODIFICATIONS = False
         return config
     except ModuleNotFoundError:
         print(f"Configuration {module} is missing")
