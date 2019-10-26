@@ -1,6 +1,7 @@
+from flaskps.extensions.bcrypt import bcrypt as bc
+from flaskps.extensions.db import db
 from datetime import datetime
-from ..extensions.db import db
-from .role import Role
+from flaskps.models.role import Role
 
 
 user_role = db.Table(
@@ -22,7 +23,9 @@ class User(db.Model):
     first_name = db.Column(db.String(20), nullable=False)
     last_name = db.Column(db.String(30), nullable=False)
 
-    active = db.Column(db.Integer, nullable=False, default=True)
+    is_authenticated = db.Column(db.Boolean, nullable=False, default=False)
+    is_active = db.Column(db.Boolean, nullable=False, default=True)
+    is_anonymous = db.Column(db.Boolean, nullable=False, default=False)
 
     updated_at = db.Column(db.DateTime, nullable=False)
     created_at = db.Column(db.DateTime, nullable=False, default=datetime.now())
@@ -32,3 +35,9 @@ class User(db.Model):
 
     def __repr__(self):
         return '<User %r>' % self.username
+
+    def validate_pass(self, candidate_pass):
+        return bc.check_password_hash(self.password, candidate_pass)
+
+    def get_id(self):
+        return str(self.id)
