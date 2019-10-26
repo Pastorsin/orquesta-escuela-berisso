@@ -1,5 +1,5 @@
-from ..extensions.db import db
-from .permission import Permission
+from flaskps.extensions.db import db
+from flaskps.models.permission import Permission
 
 
 role_permission = db.Table(
