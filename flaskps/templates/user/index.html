@@ -1,0 +1,65 @@
+{% extends "sections_base.html" %}
+
+{% block font %}
+	<link rel='stylesheet' href='https://use.fontawesome.com/releases/v5.7.0/css/all.css' integrity='sha384-lZN37f5QGtY3VHgisS14W3ExzMWZxybE1SJSEsQp9S+oqd12jhcu+A56Ebc1zFSJ' crossorigin='anonymous'>
+{% endblock %}
+
+{% block script %}
+	<script src="{{url_for('static', filename='user/search.js')}}"></script>
+{% endblock %}
+
+
+{% block content %}
+	<div class="row d-flex justify-content-center">
+		<div class="col-12">
+			<div class="p-1 bg-light rounded rounded-pill shadow-sm col-12 my-2">
+				<div class="input-group">
+					<input type="search" placeholder="Buscar usuario" class="form-control border-0" id="search">
+					<div class="input-group-append">
+						<button class="btn btn-light text-primary" id="search-button"><i class="fa fa-search"></i></button>
+					</div>
+				</div>
+			</div>
+			<div class="col-12 my-4">
+				<div>
+					<h5>Filtrar</h5>
+				</div>
+				<div class="col-10 col-off-2">
+				<div class="custom-control custom-checkbox">
+					<input type="checkbox" class="custom-control-input" id="active-checkbox">
+					<label class="custom-control-label" for="active-checkbox">Mostrar sólo usuarios activos</label>
+				</div>
+				</div>
+			</div>
+		</div>
+		<div class="col-xl-10 table-responsive">
+			<table class="table table-hover">
+				<thead>
+					<tr>
+						<th scope="col">Usuario</th>
+						<th scope="col">Email</th>
+						<th scope="col">Nombres</th>
+						<th scope="col">Apellidos</th>
+						<th scope="col" class="text-center">
+							Activo
+						</th>
+					</tr>
+				</thead>
+				{% for user in users %}
+					<tr class="user-row">
+						<th scope="row" class="username">{{ user.username }}</th>
+						<td>{{ user.email }}</td>
+						<td>{{ user.first_name }}</td>
+						<td>{{ user.last_name }}</td>
+						<td class="text-center">
+							<i class="fa fa-{{'check text-success' if (user.active) else 'times text-danger'}} user-active" active={{user.active}}></i>
+						</td>
+					</tr>
+				{% endfor %}
+				<tbody>
+					
+				</tbody>
+			</table>
+		</div>
+	</div>
+{% endblock %}
