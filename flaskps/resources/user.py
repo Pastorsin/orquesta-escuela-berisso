@@ -1,8 +1,15 @@
 # -*- coding: utf-8 -*-
-from flask import redirect, render_template, request, url_for, session, abort, flash
+from flask import redirect, render_template, request, url_for, abort, flash
+
+from flaskps.extensions.login_manager import login_manager
 from flaskps.models.user import User
-from flaskps.helpers.auth import authenticated
-from flask_login import login_user
+
+from flask_login import login_user, logout_user, current_user, login_required
+
+
+@login_manager.user_loader
+def load_user(user_id):
+    return User.query.get(user_id)
 
 
 def index():
@@ -15,14 +22,14 @@ def index():
 
 
 def new():
-    if not authenticated(session):
+    if current_user:
         abort(401)
 
     return render_template('user/new.html')
 
 
 def create():
-    if not authenticated(session):
+    if current_user:
         abort(401)
 
     # User.db = get_db()
@@ -37,7 +44,13 @@ def login():
 
         if user and user.validate_pass(form['password']):
             login_user(user, remember=True)
-            flash('Se ha iniciado sesión correctamente')
+            flash('Se ha iniciado sesión correctamente', 'success')
             return redirect(url_for('secciones'))
-        flash('Nombre de usuario o contraseña invalidos')
+        flash('Nombre de usuario o contraseña invalidos', 'danger')
         return redirect(url_for('home'))
+
+
+@login_required
+def logout():
+    logout_user()
+    return redirect(url_for('home'))

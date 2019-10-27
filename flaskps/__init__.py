@@ -9,8 +9,6 @@ from .extensions.login_manager import login_manager
 
 from flask_migrate import Migrate
 
-from flaskps.resources import user, webconfig
-from .helpers.webconfig import web_config
 
 # Configuración inicial de la app
 app = Flask(__name__)
@@ -28,7 +26,7 @@ bcrypt.init_app(app)
 
 
 # Autenticación
-# app.add_url_rule('/cerrar_sesion', 'auth_logout', auth.logout)
+app.add_url_rule('/cerrar_sesion', 'logout', user.logout)
 app.add_url_rule('/iniciar_sesion', 'login', user.login, methods=['POST'])
 
 # Usuarios
