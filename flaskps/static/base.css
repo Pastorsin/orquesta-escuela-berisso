@@ -2,3 +2,16 @@ body {
 	height: 100vh;
 	width: 100vw;
 }
+
+.blue-button:hover {
+	background-color: white!important;
+	color: #1a91a1;
+}
+
+.blue-button {
+	background-color: #1a91a1;
+	border: 1px solid white;
+	color: white;
+	padding: 5px 15px 5px 15px;
+	border-radius: 5px;
+}

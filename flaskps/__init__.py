@@ -9,6 +9,11 @@ from .extensions.login_manager import login_manager
 
 from flask_migrate import Migrate
 
+<<<<<<< HEAD
+from flaskps.resources import user, webconfig
+from .helpers.webconfig import web_config
+=======
+>>>>>>> develop
 
 # Configuración inicial de la app
 app = Flask(__name__)
@@ -30,9 +35,22 @@ bcrypt.init_app(app)
 app.add_url_rule('/iniciar_sesion', 'login', user.login, methods=['POST'])
 
 # Usuarios
-app.add_url_rule('/usuarios', 'user_index', user.index)
-app.add_url_rule('/usuarios', 'user_create', user.create, methods=['POST'])
-app.add_url_rule('/usuarios/new', 'user_new', user.new)
+app.add_url_rule("/usuarios", 'user_index', user.index)
+app.add_url_rule("/usuarios", 'user_create', user.create, methods=['POST'])
+app.add_url_rule("/usuarios/new", 'user_new', user.new)
+
+
+@app.route("/")
+def home():
+    webconfig = web_config()
+    return render_template('home/home.html', config=webconfig)
+
+
+@app.route("/sections")
+def sections():
+    webconfig = web_config()
+    return render_template('home/secciones.html', config=webconfig)
+
 
 # Base
 app.add_url_rule('/', 'home', base.index)

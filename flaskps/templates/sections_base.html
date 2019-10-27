@@ -1,13 +1,49 @@
 {% extends "base.html" %}
 
+{% block style %}
+	<link rel="stylesheet" type="text/css" href="{{url_for('static', filename='sections_base.css')}}">
+{% endblock %}
+
 {% block body %}
 
-	<nav></nav>
+	<nav class="navbar navbar-expand-lg navbar-dark" id="navigation-bar">
+		<a class="navbar-brand" href="#">ORQUESTA ESCUELA DE BERISSO</a>
+		<button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#navbarSupportedContent" aria-controls="navbarSupportedContent" aria-expanded="false" aria-label="Toggle navigation">
+			<span class="navbar-toggler-icon"></span>
+		</button>
+				
+		<div class="collapse navbar-collapse" id="navbarSupportedContent">
+			<ul class="navbar-nav mr-auto">
+				<li class="nav-item active">
+					<a class="blue-button" href="/sections">Inicio</a>	
+				</li>
+			</ul>
+			<div class="dropdown">
+				<button class="blue-button dropdown-toggle" id="dropdownMenuButton" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
+					Panel de Control
+				</button>
+				<div class="dropdown-menu dropdown-menu-right" aria-labelledby="dropdownMenuButton">
+					<a class="dropdown-item" href="{{url_for('webconfig')}}"><i class="fa fa-cog"></i> Configuración del Sistema</a>
+					<a class="dropdown-item" href="#"><i class="fa fa-sign-out"></i> Cerrar Sesión</a>
+				</div>
+			</div>
+		</div>
+	</nav>
 
 	<div class="container">
-		{% block content %}	{% endblock %}
+		{% block content %}{% endblock %}
 	</div>
 	
-	<footer></footer>
+	<footer>
+		<section id="images">
+			<img src="http://www.oeberisso.com.ar/wp-content/themes/oe/img/logo1.png" alt="">
+			<img src="http://www.oeberisso.com.ar/wp-content/themes/oe/img/logo3.png" alt="">
+			<img src="http://www.oeberisso.com.ar/wp-content/themes/oe/img/logo4.png" alt="">
+		</section>
+		<section id="contact">
+			<span>Orquesta Escuela de Berisso - 2019</span>
+			<span>Contacto: {{config.email}}</span>
+		</section>
+	</footer>
 
 {% endblock %}

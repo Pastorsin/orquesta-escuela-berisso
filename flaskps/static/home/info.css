@@ -1,5 +1,6 @@
 #left-container {
     background-color: #1a91a1;
+    
 }
 
 /* Top */
@@ -59,7 +60,7 @@
     overflow-wrap: break-word;
     word-wrap: break-word;
     hyphens: auto;
-    color: #757575;
+    color: white;
     transition: color 0.2s;
 }
 
