@@ -26,3 +26,15 @@
 	font-family: Open Sans;
 	color: black;
 }
+
+.page {
+	display: none;
+}
+.page-active {
+  	display: table-row-group;
+}
+
+#pagination-container {
+	border-top: 1px solid #d3dadc;
+	padding-top: 1rem;	
+}
