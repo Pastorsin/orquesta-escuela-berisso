@@ -1,6 +1,8 @@
+# -*- coding: utf-8 -*-
 from flask import redirect, render_template, request, url_for, session, abort, flash
 from flaskps.models.user import User
-from flaskps.helpers.auth import authenticated, validate_pass
+from flaskps.helpers.auth import authenticated
+from flask_login import login_user
 
 
 def index():
@@ -32,7 +34,10 @@ def login():
     if request.method == 'POST':
         form = request.form
         user = User.query.filter_by(username=form['username']).first()
-        if user and validate_pass(user.password, form['password']):
-            return user.email
-        else:
-            flash('Nombre de usuario o contraseña invalidos')
+
+        if user and user.validate_pass(form['password']):
+            login_user(user, remember=True)
+            flash('Se ha iniciado sesión correctamente')
+            return redirect(url_for('secciones'))
+        flash('Nombre de usuario o contraseña invalidos')
+        return redirect(url_for('home'))
