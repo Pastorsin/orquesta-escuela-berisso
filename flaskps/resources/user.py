@@ -44,7 +44,7 @@ def login():
 
         if user and user.validate_pass(form['password']):
             login_user(user, remember=True)
-            flash('Se ha iniciado sesión correctamente', 'success')
+            flash('Se ha iniciado sesión correctamente', 'info')
             return redirect(url_for('secciones'))
         flash('Nombre de usuario o contraseña invalidos', 'danger')
         return redirect(url_for('home'))
@@ -53,4 +53,5 @@ def login():
 @login_required
 def logout():
     logout_user()
+    flash('Se ha cerrado sesión correctamente', 'info')
     return redirect(url_for('home'))
