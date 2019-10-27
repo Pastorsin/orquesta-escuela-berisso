@@ -9,11 +9,8 @@ from .extensions.login_manager import login_manager
 
 from flask_migrate import Migrate
 
-<<<<<<< HEAD
 from flaskps.resources import user, webconfig
 from .helpers.webconfig import web_config
-=======
->>>>>>> develop
 
 # Configuración inicial de la app
 app = Flask(__name__)
