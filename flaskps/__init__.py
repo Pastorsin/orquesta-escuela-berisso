@@ -36,19 +36,6 @@ app.add_url_rule("/usuarios", 'user_index', user.index)
 app.add_url_rule("/usuarios", 'user_create', user.create, methods=['POST'])
 app.add_url_rule("/usuarios/new", 'user_new', user.new)
 
-
-@app.route("/")
-def home():
-    webconfig = web_config()
-    return render_template('home/home.html', config=webconfig)
-
-
-@app.route("/sections")
-def sections():
-    webconfig = web_config()
-    return render_template('home/secciones.html', config=webconfig)
-
-
 # Base
 app.add_url_rule('/', 'home', base.index)
 app.add_url_rule('/secciones', 'secciones', base.sections)
