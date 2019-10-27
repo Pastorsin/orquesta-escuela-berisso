@@ -1,0 +1,28 @@
+#list-container {
+	background-color: #ebf9ff;
+  	border-radius: 1em;
+  	border: 1px solid #d3dadc;
+}
+
+#search-container {
+  	border: 1px solid #d3dadc;
+}
+
+.list-subtitle {
+	color: #3191a1;
+}
+
+#filters-container {
+	border-top: 1px solid #d3dadc;
+	padding-top: 1rem;
+	font-family: Quicksand;
+}
+
+#label-user-active {
+	user-select: none;
+}
+
+#table-container {
+	font-family: Open Sans;
+	color: black;
+}

@@ -2,6 +2,7 @@
 from flask import redirect, render_template, request, url_for, session, abort, flash
 from flaskps.models.user import User
 from flaskps.helpers.auth import authenticated
+from flaskps.helpers.webconfig import web_config
 from flask_login import login_user
 
 
@@ -11,7 +12,7 @@ def index():
 
     # User.db = get_db()
     users = User.query.all()
-    return render_template('user/index.html', users=users)
+    return render_template('user/index.html', users=users, config=web_config())
 
 
 def new():
