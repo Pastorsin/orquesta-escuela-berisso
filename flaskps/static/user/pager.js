@@ -33,8 +33,8 @@ class Pager {
     }
 
     render(pages) {
-        $('#pagination-demo').twbsPagination('destroy');
-        $('#pagination-demo').twbsPagination({
+        $('#pagination').twbsPagination('destroy');
+        $('#pagination').twbsPagination({
             totalPages: pages,
             // the current page that show on start
             startPage: 1,
