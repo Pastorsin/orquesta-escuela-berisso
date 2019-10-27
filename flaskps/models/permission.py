@@ -1,4 +1,4 @@
-from ..extensions.db import db
+from flaskps.extensions.db import db
 
 
 class Permission(db.Model):

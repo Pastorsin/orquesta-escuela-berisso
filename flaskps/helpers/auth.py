@@ -1,10 +1,12 @@
-from ..extensions.bcrypt import bcrypt as bc
+from flaskps.extensions.login_manager import login_manager
+from flask_login import current_user
+from flaskps.models.user import User
 
 
 def authenticated(session):
-    return session.get('user')
+    return current_user
 
 
-def validate_pass(user_pass, candidate_pass):
-    foo = bc.check_password_hash(user_pass, candidate_pass)
-    return foo
+@login_manager.user_loader
+def load_user(user_id):
+    return User.query.get(user_id)

@@ -1,3 +1,5 @@
+from .default import *
+
 SECRET_KEY = "dev"
 DEBUG = True
 DB_HOST = 'localhost'
