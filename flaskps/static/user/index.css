@@ -26,3 +26,24 @@
 	font-family: Open Sans;
 	color: black;
 }
+
+.page {
+	display: none;
+}
+.page-active {
+  	display: table-row-group;
+}
+
+#pagination-container {
+	border-top: 1px solid #d3dadc;
+	padding-top: 1rem;	
+}
+
+thead {
+	background-color: #3191a1;
+    color: white;
+}
+
+tbody {
+	background-color: #b8d7e4;
+}

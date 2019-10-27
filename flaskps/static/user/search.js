@@ -1,8 +1,10 @@
 class Search {
 
-    constructor() {
+    constructor(pager) {
+        this.pager = pager
         this.initSelectors()
         this.initEvents()
+        this.start()
     }
 
     initSelectors() {
@@ -10,27 +12,30 @@ class Search {
         this.rowsSelector = document.querySelectorAll(".user-row")
         this.searchButton = document.querySelector("#search-button")
         this.activeCheckbox = document.querySelector("#active-checkbox")
+        this.resultText = document.querySelector("#result")
     }
 
     initEvents() {
-    	this.searchInput.addEventListener("keyup", this.start.bind(this))
-    	this.searchButton.addEventListener("clickup", this.start.bind(this))
-    	this.activeCheckbox.addEventListener("change", this.start.bind(this))
+        this.searchInput.addEventListener("keyup", this.start.bind(this))
+        this.searchButton.addEventListener("clickup", this.start.bind(this))
+        this.activeCheckbox.addEventListener("change", this.start.bind(this))
     }
 
     start() {
         this.hideRows()
-        let result = this.search()
-        this.showRows(result)
+        let rows = this.search()
+        this.showResult(rows)
+        this.showRows(rows)
     }
 
     hideRows() {
+        this.pager.clear()
         this.rowsSelector.forEach((row) => row.style.display = 'none')
     }
 
-	search() {
-        let value = this.searchInput.value.trim()		
-		let rows = Array.from(this.rowsSelector) 
+    search() {
+        let value = this.searchInput.value.trim()
+        let rows = Array.from(this.rowsSelector)
         return rows.filter((row) => this.satisfy(row, value))
     }
 
@@ -39,28 +44,29 @@ class Search {
     }
 
     includesUsername(row, value) {
-    	let selector = row.querySelector(".username")
-    	let username = selector.textContent
+        let selector = row.querySelector(".username")
+        let username = selector.textContent
         return username.includes(value)
     }
 
     isActive(row, value) {
-    	let checked = $("#active-checkbox").is(":checked")
-    	if (!checked) {
-    		return true
-    	} else {
-    		let selector = row.querySelector(".user-active")
-    		let userActive = selector.getAttribute("active")
-    		return Boolean(Number(userActive))
-    	}    	
+        let checked = $("#active-checkbox").is(":checked")
+        if (!checked) {
+            return true
+        } else {
+            let selector = row.querySelector(".user-active")
+            let userActive = selector.getAttribute("active")
+            return Boolean(Number(userActive))
+        }
     }
 
     showRows(rows) {
         rows.forEach((row) => row.style.display = '');
+        this.pager.paginate(rows);
+    }
+
+    showResult(rows) {
+        let text = rows.length + " " + "resultados."
+        this.resultText.textContent = text
     }
 }
-
-
-$(document).ready(() => {
-	const search = new Search()
-});

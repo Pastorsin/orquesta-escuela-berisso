@@ -3,38 +3,38 @@ textarea {
 }
 
 #form-container {
-    background-color: #ebf9ff;
-    border-radius: 1em;
-    border: 1px solid #d3dadc;
+	background-color: #ebf9ff;
+  	border-radius: 1em;
+  	border: 1px solid #d3dadc;
 }
 
 #config-title {
-    color: #24a9bf;
-    border-bottom: 1px solid #d3dadc;
+	color: #24a9bf;
+	border-bottom: 1px solid #d3dadc;
     font-family: Quicksand;
 }
 
 .config-subsection {
-    border-bottom: 1px solid #d3dadc;
+	border-bottom: 1px solid #d3dadc;
 }
 
 .config-subtitle {
-    font-family: Quicksand;
-    color: #046575;
-    padding-top: 1rem;
-    padding-bottom: 1rem;
+  	font-family: Quicksand;
+	color: #046575;
+	padding-top: 1rem;
+	padding-bottom: 1rem;
 }
 
 .form-group:focus-within label {
-    color: #3aa9bf;
-    background-color: #ecffff;
-    border-radius: 0.2rem;
+  color: #3aa9bf;
+  background-color: #ecffff;
+  border-radius: 0.2rem;
 }
 
 label {
-    color: black;
+	color: black;
 }
 
 .form-group {
-    font-family: Open Sans;
+  font-family: Open Sans;
 }
