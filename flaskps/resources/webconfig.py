@@ -1,13 +1,10 @@
 from flask import request, render_template, url_for, redirect
 from flaskps.models.webconfig import Webconfig
+from flaskps.helpers.webconfig import get_web_config
 
 
 def index():
-    webconfig = Webconfig.query.first()
-    return render_template(
-        'webconfig/webconfig.html',
-        config=webconfig
-    )
+    return render_template('webconfig/webconfig.html', config=get_web_config())
 
 
 def edit():

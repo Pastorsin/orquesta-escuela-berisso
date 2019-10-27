@@ -6,27 +6,31 @@
 	{{ super() }}
 {% endblock %}
 
+{% block font %}
+	<link href="https://fonts.googleapis.com/css?family=Open+Sans:300" rel="stylesheet">
+{% endblock %}
+
 {% block script %}
 	<script src="https://cdn.jsdelivr.net/gh/gitbrent/bootstrap4-toggle@3.6.1/js/bootstrap4-toggle.min.js"></script>
 {% endblock %}
 
 {% block content %}
-	<div class="row d-flex">
+	<div class="row d-flex" id="form-container">
 		
-		<div class="col-12 text-center">
+		<div class="col-12 text-center" id="config-title">
 			<h1>Configuración del Sistema</h1>
 		</div>
 
 		<div class="col-12">
 			<form method="post" action="configuracion/editar">
 
-				<div id="info-config" class="col-12">
-					<div class="col-12 text-center py-1">
+				<div id="config-info" class="col-12 config-subsection">
+					<div class="col-12 text-center config-subtitle">
 						<h3>Información del Sistema</h3>	
 					</div>
 
 					<div class="form-group">
-						<label for="title-input">Título</label>
+						<label for="title-input" class="control-label">Título</label>
 						<input type="text" class="form-control" id="title-input" name="title" value="{{config.title}}" required>
 					</div>
 					<div class="form-group">
@@ -40,13 +44,13 @@
 				</div>
 
 
-				<div id="general-config" class="col-12">
-					<div class="text-center py-1">
+				<div id="general-config" class="col-12 config-subsection">
+					<div class="text-center config-subtitle">
 						<h3>Configuración General</h3>	
 					</div>
 					<div class="form-group">
 						<label for="pagination-input">Número de elementos por listado</label>
-						<input type="number" class="form-control" min="1" max="100" id="pagination-input" name="pagination" value="{{config.pagination}}" required>
+						<input type="number" class="form-control" min="5" max="100" id="pagination-input" name="pagination" value="{{config.pagination}}" required>
 					</div>
 					<div class="form-group">
 						<label for="frontend-input">Estado del sitio</label>
@@ -56,7 +60,7 @@
 				</div>
 
 
-				<div id="form-buttons" class="col-12 text-center">
+				<div id="form-buttons" class="col-12 text-center py-4">
 					<button class="btn btn-success" type="button" data-toggle="modal" data-target="#confirmation">Guardar</button>
 					<a href="/">
 						<button class="btn btn-danger" type="button">Cancelar</button>

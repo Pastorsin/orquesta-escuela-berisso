@@ -3,6 +3,7 @@ from flask import redirect, render_template, request, url_for, abort, flash
 
 from flaskps.extensions.login_manager import login_manager
 from flaskps.models.user import User
+from flaskps.helpers.webconfig import get_web_config
 
 from flask_login import login_user, logout_user, current_user, login_required
 
@@ -12,13 +13,10 @@ def load_user(user_id):
     return User.query.get(user_id)
 
 
+@login_required
 def index():
-    # if not authenticated(session):
-    #    abort(401)
-
-    # User.db = get_db()
     users = User.query.all()
-    return render_template('user/index.html', users=users)
+    return render_template('user/index.html', users=users, config=get_web_config())
 
 
 def new():

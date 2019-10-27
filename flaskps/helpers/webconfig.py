@@ -1,5 +1,5 @@
-from ..models.webconfig import Webconfig
+from flaskps.models.webconfig import Webconfig
 
 
-def web_config():
+def get_web_config():
     return Webconfig.query.first()
