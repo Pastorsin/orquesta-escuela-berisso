@@ -1,12 +1,12 @@
-{% extends "base.html" %}
+{% extends "sections_base.html" %}
 
 {% block style%}
 	<link rel="stylesheet" type="text/css" href="{{url_for('static', filename='home/sections.css')}}">
-	<link href="https://stackpath.bootstrapcdn.com/font-awesome/4.7.0/css/font-awesome.min.css" rel="stylesheet" integrity="sha384-wvfXpqpZZVQGK6TAh5PVlGOfQNHSoD2xbE+QkPxCAFlNEevoEH3Sl0sibVcOQVnN" crossorigin="anonymous">
-	<link href="https://fonts.googleapis.com/css?family=Poppins:400,500,600,800,900%7cRaleway:300,400,500,600,700" rel="stylesheet">
+   <link href="https://fonts.googleapis.com/css?family=Poppins:400,500,600,800,900%7cRaleway:300,400,500,600,700" rel="stylesheet">
+   {{ super() }}
 {% endblock%}
 
-{% block body %}
+{% block content %}
 	<div id="section-container">
 		<section class="services pt-100 pb-50" id="services">
          <div class="container">

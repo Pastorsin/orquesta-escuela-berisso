@@ -1,5 +1,5 @@
 #right-container {
-  background-color: #003740;
+  background-color: #fafafa;
 }
 
 .container-login {
@@ -8,16 +8,18 @@
   align-items:center;
   height:100%;
   flex-direction: column;
-  color: white;
+  color: black;
   font-family: Quicksand;
 }
 
 .title-login {
   width: 55%;
   text-align: center;
-  background-color: #191919f2;
+  background-color: white;
   border-top-left-radius: 0.5em;
   border-top-right-radius: 0.5em;
+  box-shadow: 0px 0px 1px black;
+  padding-top: 10px;
 }
 
 .form-item-login {
@@ -28,19 +30,19 @@
   display:flex;
   flex-direction: column;
   align-items: center;
-  width: 85%;
-  background-color: #2f5765;
+  width: 75%;
+  background-color: white;
   padding: 1em;
-  box-shadow: 0px 0px 20px #1c2729;
+  box-shadow: 0px 0px 1px black;
 }
 
 .forgot-password-login {
-  color: white;
+  color: black;
   transition: color 0.3s;
 }
 
 .forgot-password-login:hover {
-  color: #5be6fc;
+  color: #1a91a1;
 }
 
 .form-item-login {
@@ -49,10 +51,24 @@
 
 .label-login {
   width: 100%;
-  background-color: black;
   margin-bottom: 0px;
   padding-left: 4px;
   border-top-left-radius: 1em;
   border-top-right-radius: 1em;
+  border-top: 1px solid #1a91a1;
+  border-left: 1px solid #1a91a1;
+  border-right: 1px solid #1a91a1;
   text-align: center;
+  font-size: 1em;
+}
+
+#button-login {
+  background-color: #1a91a1;
+  color: white;
+}
+
+#button-login:hover {
+  background-color: white;
+  border: 1px solid #1a91a1;
+  color: black;
 }

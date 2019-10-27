@@ -5,7 +5,7 @@ from flask_migrate import Migrate
 from .extensions.bcrypt import bcrypt
 
 from flaskps.resources import user, webconfig
-from .models.webconfig import Webconfig
+from .helpers.webconfig import web_config
 
 # Configuración inicial de la app
 app = Flask(__name__)
@@ -33,13 +33,14 @@ app.add_url_rule("/usuarios/new", 'user_new', user.new)
 
 @app.route("/")
 def home():
-    webconfig = Webconfig.query.first()
+    webconfig = web_config()
     return render_template('home/home.html', config=webconfig)
 
 
 @app.route("/sections")
 def sections():
-    return render_template('home/secciones.html')
+    webconfig = web_config()
+    return render_template('home/secciones.html', config=webconfig)
 
 
 app.add_url_rule(
