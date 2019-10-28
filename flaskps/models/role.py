@@ -20,3 +20,7 @@ class Role(db.Model):
 
     def __repr__(self):
         return '<Role %r>' % self.name
+
+    @classmethod
+    def get_by_name(cls, rolname):
+        return cls.query.filter_by(name=rolname).first()

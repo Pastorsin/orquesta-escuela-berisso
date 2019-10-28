@@ -1,0 +1,43 @@
+{% extends "sections_base.html" %}
+
+{% block content %}
+	<div class="row d-flex">
+		<h1>Registrar usuario</h1>
+	</div>
+
+	<div class="col-12">
+		<form method="post" action="/usuarios">
+			<div>
+				<input type="text" name="username" required placeholder="Nombre de usuario">
+			</div>
+			<div>
+				<input type="email" name="email" required placeholder="Email">
+			</div>
+			<div>
+				<input type="password" name="" required placeholder="Contraseña">
+			</div>
+			<div>
+				<input type="password" name="password" required placeholder="Confirmar contraseña">
+			</div>
+			<div>
+				<input type="text" name="first_name" required placeholder="Nombres">
+			</div>
+			<div>
+				<input type="text" name="last_name" required placeholder="Apellidos">
+			</div>
+			{% for rol in roles %}
+				<div>
+					<label>
+						<input type="checkbox" name="roles" value="{{rol.name}}">
+						{{rol.name}}
+					</label>
+				</div>
+			{% endfor %}
+			<div>
+				<button type="submit">Guardar</button>
+			</div>
+		</form>
+	</div>
+
+
+{% endblock %}
