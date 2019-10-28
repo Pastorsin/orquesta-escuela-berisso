@@ -17,6 +17,13 @@ def edit():
 def not_empty_fields(form):
     return all(form.values())
 
+def activateSite():
+    if(request.method=='GET'):
+        return redirect(url_for('webconfig'))
+    else:
+        #Habilitar sitio
+        return True
+
 
 def form_values(form):
     form['frontend_enabled'] = 'frontend_enabled' in request.form

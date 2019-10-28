@@ -16,7 +16,7 @@ def load_user(user_id):
 @login_required
 def index():
     users = User.query.all()
-    return render_template('user/index.html', users=users, config=get_web_config())
+    return render_template('user/index.html', users=users, config=get_web_config(), current_user=current_user)
 
 
 def new():
@@ -47,6 +47,19 @@ def login():
         flash('Nombre de usuario o contraseña invalidos', 'danger')
         return redirect(url_for('home'))
 
+@login_required
+def activateUser(userId):
+    user = User.query.get(userId)
+    user.activate()
+    flash('El usuario %s, %s ha sido activado correctamente.' % (user.last_name, user.first_name), 'success')
+    return redirect(url_for('user_index'))
+
+@login_required
+def deactivateUser(userId):
+    user = User.query.get(userId)
+    user.deactivate()
+    flash('El usuario %s, %s ha sido desactivado correctamente.' % (user.last_name, user.first_name), 'success')
+    return redirect(url_for('user_index'))
 
 @login_required
 def logout():

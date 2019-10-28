@@ -16,6 +16,18 @@ body {
 	border-radius: 5px;
 }
 
+.white-button:hover {
+	background-color: #f3f3f3!important;
+}
+
+.white-button {
+	background-color: white;
+	border: 1px solid #1a91a1;
+	color: black;
+	padding: 5px 15px 5px 15px;
+	border-radius: 5px;
+}
+
 .messages {
   position: absolute;
   right: 2em;

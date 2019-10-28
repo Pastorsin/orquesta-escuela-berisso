@@ -41,3 +41,13 @@ class User(db.Model):
 
     def get_id(self):
         return str(self.id)
+
+    def activate(self):
+        self.is_active=1
+        db.session.commit()
+        return self
+
+    def deactivate(self):
+        self.is_active=0
+        db.session.commit()
+        return self
