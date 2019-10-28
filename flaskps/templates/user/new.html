@@ -8,27 +8,27 @@
 	<div class="col-12">
 		<form method="post" action="/usuarios">
 			<div>
-				<input type="text" name="username" required placeholder="Nombre de usuario">
+				<input type="text" name="username" required placeholder="Nombre de usuario" value="{{user.username}}">
 			</div>
 			<div>
-				<input type="email" name="email" required placeholder="Email">
+				<input type="email" name="email" required placeholder="Email" value="{{user.email}}">
 			</div>
 			<div>
-				<input type="password" name="" required placeholder="Contraseña">
+				<input type="password" name="" required placeholder="Contraseña" value="{{user.password}}">
 			</div>
 			<div>
 				<input type="password" name="password" required placeholder="Confirmar contraseña">
 			</div>
 			<div>
-				<input type="text" name="first_name" required placeholder="Nombres">
+				<input type="text" name="first_name" required placeholder="Nombres" value="{{user.first_name}}">
 			</div>
 			<div>
-				<input type="text" name="last_name" required placeholder="Apellidos">
+				<input type="text" name="last_name" required placeholder="Apellidos" value="{{user.last_name}}">
 			</div>
 			{% for rol in roles %}
 				<div>
 					<label>
-						<input type="checkbox" name="roles" value="{{rol.name}}">
+						<input {% if rol.name in user.roles %} checked {% endif%} type="checkbox" name="roles" value="{{rol.name}}">
 						{{rol.name}}
 					</label>
 				</div>

@@ -38,7 +38,6 @@ class User(db.Model):
     def __init__(self, data):
         self.__init_attributes(data)
         self.__init_relationships(data)
-        self.__create()
 
     def __init_attributes(self, data):
         self.username = data['username']
@@ -48,11 +47,12 @@ class User(db.Model):
         self.last_name = data['last_name']
 
     def __init_relationships(self, data):
-        roles = [Role.get_by_name(rol) for rol in data['roles']]
-        self.roles = roles
+        self.roles = Role.get_list_by_name(data['roles'])
 
-    def __create(self):
-        db.session.add(self)
+    @classmethod
+    def create(cls, data):
+        user = cls(data)
+        db.session.add(user)
         db.session.commit()
 
     def __repr__(self):
