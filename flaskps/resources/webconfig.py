@@ -1,6 +1,6 @@
-from flask import request, render_template, url_for, redirect
+from flask import request, render_template, url_for, redirect, flash
 from flaskps.models.webconfig import Webconfig
-from flaskps.helpers.webconfig import get_web_config
+from flaskps.helpers.webconfig import get_web_config, WebconfigForm
 
 
 def index():
@@ -8,23 +8,19 @@ def index():
 
 
 def edit():
-    form = dict(request.form)
-    if not_empty_fields(form):
-        Webconfig.update(form_values(form))
+    form = WebconfigForm(request.form)
+    if form.is_valid():
+        flash(form.success_message(), 'success')
+        Webconfig.update(form.values)
+    else:
+        for error in form.error_messages():
+            flash(error, 'danger')
     return redirect(url_for('webconfig'))
 
 
-def not_empty_fields(form):
-    return all(form.values())
-
 def activateSite():
-    if(request.method=='GET'):
+    if(request.method == 'GET'):
         return redirect(url_for('webconfig'))
     else:
-        #Habilitar sitio
+        # Habilitar sitio
         return True
-
-
-def form_values(form):
-    form['frontend_enabled'] = 'frontend_enabled' in request.form
-    return form

@@ -7,6 +7,9 @@ from flaskps.helpers.webconfig import get_web_config
 
 from flask_login import login_user, logout_user, current_user, login_required
 
+from flaskps.models.role import Role
+from flaskps.helpers.user import UserForm
+
 
 @login_manager.user_loader
 def load_user(user_id):
@@ -19,20 +22,26 @@ def index():
     return render_template('user/index.html', users=users, config=get_web_config(), current_user=current_user)
 
 
-def new():
-    if current_user:
+def new(user=None):
+    if not current_user:
         abort(401)
 
-    return render_template('user/new.html')
+    roles = Role.query.all()
+    return render_template('user/new.html', roles=roles, user=user)
 
 
 def create():
-    if current_user:
-        abort(401)
 
-    # User.db = get_db()
-    # User.create(request.form)
-    return redirect(url_for('user_index'))
+    form = UserForm(request.form)
+
+    if form.is_valid():
+        User.create(form.fields)
+        flash(form.success_message(), 'success')
+        return redirect(url_for('user_index'))
+    else:
+        for error in form.error_messages():
+            flash(error, 'danger')
+        return new(user=form)
 
 
 def login():

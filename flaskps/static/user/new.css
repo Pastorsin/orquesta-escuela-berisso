@@ -1,0 +1,40 @@
+.rol-label {
+	user-select: none;
+}
+
+.title {
+    font-family: Quicksand;
+}
+
+.subtitle {
+	font-family: Quicksand;
+	border-top: 1px solid #d3dadc;
+}
+
+.form-group:focus-within label {
+  color: #3aa9bf;
+  background-color: #ecffff;
+  border-radius: 0.2rem;
+}
+
+label {
+	color: black;
+}
+
+.form-group {
+  font-family: Open Sans;
+}
+
+#roles-error {
+	font-family: Open Sans;
+}
+
+.buttons {
+	border-top: 1px solid #d3dadc;
+}
+
+#form-container {
+	background-color: #ebf9ff;
+  	border-radius: 1em;
+  	border: 1px solid #d3dadc;
+}	

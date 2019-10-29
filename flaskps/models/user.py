@@ -5,9 +5,11 @@ from flaskps.models.role import Role
 
 
 user_role = db.Table(
-        'user_role',
-        db.Column('user_id', db.Integer, db.ForeignKey('user.id'), primary_key=True),
-        db.Column('role_id', db.Integer, db.ForeignKey('role.id'), primary_key=True)
+    'user_role',
+    db.Column('user_id', db.Integer, db.ForeignKey(
+        'user.id'), primary_key=True),
+    db.Column('role_id', db.Integer, db.ForeignKey(
+        'role.id'), primary_key=True)
 )
 
 
@@ -23,15 +25,45 @@ class User(db.Model):
     first_name = db.Column(db.String(20), nullable=False)
     last_name = db.Column(db.String(30), nullable=False)
 
-    is_authenticated = db.Column(db.Boolean, nullable=False, default=False)
+    is_authenticated = db.Column(db.Boolean, nullable=False, default=True)
     is_active = db.Column(db.Boolean, nullable=False, default=True)
     is_anonymous = db.Column(db.Boolean, nullable=False, default=False)
 
-    updated_at = db.Column(db.DateTime, nullable=False)
+    updated_at = db.Column(db.DateTime, nullable=False, default=datetime.now())
     created_at = db.Column(db.DateTime, nullable=False, default=datetime.now())
 
     roles = db.relationship('Role', secondary=user_role, lazy='subquery',
                             backref=db.backref('users', lazy=True))
+
+    def __init__(self, data):
+        self.__init_attributes(data)
+        self.__init_relationships(data)
+
+    def __init_attributes(self, data):
+        self.username = data['username']
+        self.email = data['email']
+        self.password = bc.generate_password_hash(data['password'])
+        self.first_name = data['first_name']
+        self.last_name = data['last_name']
+
+    def __init_relationships(self, data):
+        self.roles = Role.get_list_by_name(data['roles'])
+
+    @classmethod
+    def create(cls, data):
+        user = cls(data)
+        db.session.add(user)
+        db.session.commit()
+
+    @classmethod
+    def exist_username(cls, username):
+        user = cls.query.filter_by(username=username).first()
+        return bool(user)
+
+    @classmethod
+    def exist_email(cls, email):
+        user = cls.query.filter_by(email=email).first()
+        return bool(user)
 
     def __repr__(self):
         return '<User %r>' % self.username
