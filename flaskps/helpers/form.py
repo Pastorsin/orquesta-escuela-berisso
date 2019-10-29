@@ -7,7 +7,7 @@ class Validator(ABC):
     def validate(self):
         pass
 
-    @abstractproperty
+    @abstractmethod
     def message(self):
         pass
 
@@ -38,7 +38,7 @@ class Form(ABC):
             lambda validator: validator.validate(), self.validators
         )
 
-    @abstractproperty
+    @abstractmethod
     def success_message(self):
         pass
 
@@ -52,3 +52,7 @@ class Form(ABC):
         return filter(
             lambda validator: not validator.validate(), self.validators
         )
+
+    @abstractproperty
+    def values(self):
+        pass

@@ -1,4 +1,4 @@
-from .validator import Validator, Form
+from .form import Validator, Form
 from flaskps.models.user import User
 
 # Validators
@@ -45,3 +45,7 @@ class UserForm(Form):
 
     def success_message(self):
         return 'Usuario creado con éxito.'
+
+    @property
+    def values(self):
+        return self.fields

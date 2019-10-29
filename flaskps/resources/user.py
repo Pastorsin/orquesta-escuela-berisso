@@ -4,7 +4,6 @@ from flask import redirect, render_template, request, url_for, abort, flash
 from flaskps.extensions.login_manager import login_manager
 from flaskps.models.user import User
 from flaskps.helpers.webconfig import get_web_config
-from flaskps.helpers.forms import empty_fields
 
 from flask_login import login_user, logout_user, current_user, login_required
 
@@ -36,7 +35,7 @@ def create():
     form = UserForm(request.form)
 
     if form.is_valid():
-        User.create(form)
+        User.create(form.fields)
         flash(form.success_message(), 'success')
         return redirect(url_for('user_index'))
     else:
