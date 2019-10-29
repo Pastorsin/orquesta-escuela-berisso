@@ -25,7 +25,7 @@ class User(db.Model):
     first_name = db.Column(db.String(20), nullable=False)
     last_name = db.Column(db.String(30), nullable=False)
 
-    is_authenticated = db.Column(db.Boolean, nullable=False, default=False)
+    is_authenticated = db.Column(db.Boolean, nullable=False, default=True)
     is_active = db.Column(db.Boolean, nullable=False, default=True)
     is_anonymous = db.Column(db.Boolean, nullable=False, default=False)
 
@@ -42,7 +42,7 @@ class User(db.Model):
     def __init_attributes(self, data):
         self.username = data['username']
         self.email = data['email']
-        self.password = data['password']
+        self.password = bc.generate_password_hash(data['password'])
         self.first_name = data['first_name']
         self.last_name = data['last_name']
 
@@ -54,6 +54,16 @@ class User(db.Model):
         user = cls(data)
         db.session.add(user)
         db.session.commit()
+
+    @classmethod
+    def exist_username(cls, username):
+        user = cls.query.filter_by(username=username).first()
+        return bool(user)
+
+    @classmethod
+    def exist_email(cls, email):
+        user = cls.query.filter_by(email=email).first()
+        return bool(user)
 
     def __repr__(self):
         return '<User %r>' % self.username

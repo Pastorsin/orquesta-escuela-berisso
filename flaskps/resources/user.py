@@ -4,11 +4,12 @@ from flask import redirect, render_template, request, url_for, abort, flash
 from flaskps.extensions.login_manager import login_manager
 from flaskps.models.user import User
 from flaskps.helpers.webconfig import get_web_config
-from flaskps.helpers.forms import not_empty_fields
+from flaskps.helpers.forms import empty_fields
 
 from flask_login import login_user, logout_user, current_user, login_required
 
 from flaskps.models.role import Role
+from flaskps.helpers.user import UserForm
 
 
 @login_manager.user_loader
@@ -31,21 +32,16 @@ def new(user=None):
 
 
 def create():
-    if not current_user:
-        abort(401)
 
-    ERROR = 'Ha ocurrido un error, verifique los campos ingresados porfavor.'
-    SUCCESS = 'Usuario creado con éxito.'
+    form = UserForm(request.form)
 
-    form = dict(request.form)
-    form['roles'] = request.form.getlist('roles')
-
-    if not_empty_fields(form):
+    if form.is_valid():
         User.create(form)
-        flash(SUCCESS, 'success')
+        flash(form.success_message(), 'success')
         return redirect(url_for('user_index'))
     else:
-        flash(ERROR, 'danger')
+        for error in form.error_messages():
+            flash(error, 'danger')
         return new(user=form)
 
 
