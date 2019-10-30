@@ -44,4 +44,4 @@ app.add_url_rule('/secciones', 'secciones', base.sections)
 # Configuracion
 app.add_url_rule("/configuracion", 'webconfig', webconfig.index)
 app.add_url_rule("/configuracion/editar", 'webconfig_edit', webconfig.edit, methods=['POST'])
-app.add_url_rule("/habilitar_sitio", 'activate_site', webconfig.activateSite, methods=['POST','GET'])
+app.add_url_rule("/habilitar_sitio", 'activate_site', webconfig.activateSite, methods=['POST', 'GET'])

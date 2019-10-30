@@ -95,7 +95,7 @@ def login():
         form = request.form
         user = User.query.filter_by(username=form['username']).first()
 
-        if user and user.validate_pass(form['password']):
+        if user and user.validate_pass(form['password']) and user.is_active:
             login_user(user, remember=True)
             flash('Se ha iniciado sesión correctamente', 'info')
             return redirect(url_for('secciones'))
