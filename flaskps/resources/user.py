@@ -22,13 +22,9 @@ def index():
     users = User.query.all()
     return render_template('user/index.html', users=users, config=get_web_config(), current_user=current_user)
 
-<<<<<<< HEAD
-@login_required
-=======
 
 @login_required
 @permissions_enabled('user_new', current_user)
->>>>>>> develop
 def new(user=None):
     roles = Role.query.all()
 
@@ -39,13 +35,9 @@ def new(user=None):
         current_user=current_user
     )
 
-<<<<<<< HEAD
-@login_required
-=======
 
 @login_required
 @permissions_enabled('user_create', current_user)
->>>>>>> develop
 def create():
 
     form = UserCreateForm(request.form)
@@ -59,13 +51,9 @@ def create():
             flash(error, 'danger')
         return new(user=form.values)
 
-<<<<<<< HEAD
-@login_required
-=======
 
 @login_required
 @permissions_enabled('user_update', current_user)
->>>>>>> develop
 def edit(user_id):
     roles = Role.query.all()
     user = User.query.get(user_id)
