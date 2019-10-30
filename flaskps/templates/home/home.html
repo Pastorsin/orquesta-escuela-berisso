@@ -7,6 +7,7 @@
 
 {% block style %}
 	<link rel="stylesheet" type="text/css" href="{{url_for('static', filename='home/info.css')}}">
+	<link rel="stylesheet" type="text/css" href="{{url_for('static', filename='home/in_maintenance.css')}}">
 	<link rel="stylesheet" type="text/css" href="{{url_for('static', filename='home/login.css')}}">
 {% endblock %}
 
@@ -20,7 +21,11 @@
 
 			<!-- Info section -->
 			<div class="col-xl-7 h-100" id="left-container">
-				{% include "home/info.html" %}
+				{% if config.frontend_enabled==1 %}
+					{% include "home/info.html" %}
+				{% else %}
+					{% include "home/in_maintenance.html" %}
+				{% endif %}
 			</div>
 
 			<!-- Login section -->

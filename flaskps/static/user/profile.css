@@ -1,0 +1,39 @@
+.subtitle {
+    font-weight: bold;
+}
+
+.profile-information {
+    text-align: center;
+}
+
+.title {
+    border-bottom: 2px solid #1a91a1;
+}
+
+.information {
+    font-size: 1.2em;
+    display: block;
+}
+
+h1 {
+    margin-bottom: 5%;
+}
+
+h4 {
+    margin-top: 2%;
+}
+
+#roles {
+    list-style-type: unset;
+    padding: 0;
+}
+
+#user-list-button {
+    text-decoration: none;
+    cursor: pointer;
+}
+
+#user-list-button:hover {
+    text-decoration: none;
+    color:black;
+}

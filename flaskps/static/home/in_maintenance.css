@@ -1,0 +1,43 @@
+#in-maintenance-container {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    flex-direction: column;
+    height:100%;
+    width:100%;
+    font-family: Quicksand;
+    text-align:center;
+}
+
+#in-maintenance-login-redirect {
+    display: none;
+}
+
+#violin-image {
+    height: 128px;
+    width: 128px;
+}
+
+@media (max-width: 1200px) {
+    #in-maintenance-login-redirect {
+        display: flex;
+    }
+
+    #in-maintenance-login-redirect > button > a {
+        text-decoration: none;
+        color: black;
+        font-size: 2.5vh;
+        font-family: 'Quicksand', sans-serif;
+    }
+
+    #in-maintenance-login-redirect > button {
+        border-radius: 2em;
+        border: 1px solid black;
+        transition: all 0.3s;
+    }
+
+    #in-maintenance-login-redirect > button:hover {
+        background-color: #17b7b7;
+        color: white;
+    }
+}

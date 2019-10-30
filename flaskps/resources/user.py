@@ -9,7 +9,7 @@ from flask_login import login_user, logout_user, current_user, login_required
 
 from flaskps.models.role import Role
 from flaskps.helpers.user import UserCreateForm, UserEditForm
-from flaskps.helpers.constraints import permissions_enabled
+from flaskps.helpers.constraints import permissions_enabled, permissions_enabled_or_my_profile
 
 
 @login_manager.user_loader
@@ -21,6 +21,12 @@ def load_user(user_id):
 def index():
     users = User.query.all()
     return render_template('user/index.html', users=users, config=get_web_config(), current_user=current_user)
+
+@login_required
+@permissions_enabled_or_my_profile('user_index', current_user)
+def profile(user_id):
+    user = User.query.get(user_id)
+    return render_template('user/profile.html', user=user, config=get_web_config(), current_user=current_user)
 
 
 @login_required
@@ -106,8 +112,8 @@ def login():
 
 @login_required
 @permissions_enabled('user_activate', current_user)
-def activateUser(userId):
-    user = User.query.get(userId)
+def activateUser(user_id):
+    user = User.query.get(user_id)
     user.activate()
     flash('El usuario %s, %s ha sido activado correctamente.' %
           (user.last_name, user.first_name), 'success')
@@ -116,9 +122,9 @@ def activateUser(userId):
 
 @login_required
 @permissions_enabled('user_deactivate', current_user)
-def deactivateUser(userId):
+def deactivateUser(user_id):
     if int(userId)!=int(current_user.id):
-        user = User.query.get(userId)
+        user = User.query.get(user_id)
         user.deactivate()
         flash('El usuario %s, %s ha sido desactivado correctamente.' %
             (user.last_name, user.first_name), 'success')

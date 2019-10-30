@@ -22,11 +22,3 @@ def edit():
         for error in form.error_messages():
             flash(error, 'danger')
     return redirect(url_for('webconfig'))
-
-
-def activateSite():
-    if(request.method == 'GET'):
-        return redirect(url_for('webconfig'))
-    else:
-        # Habilitar sitio
-        return True

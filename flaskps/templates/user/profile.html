@@ -1,0 +1,33 @@
+{% extends "sections_base.html" %}
+
+{% block style %}
+	<link rel="stylesheet" type="text/css" href="{{url_for('static', filename='user/profile.css')}}">
+	{{ super() }}
+{% endblock %}
+
+{% block content %}
+
+    <section class="container-fluid profile-information">
+        <h1 class="title">Perfil de {{user.last_name}}, {{user.first_name}}</h1>
+        <h4><span class="title subtitle">Usuario</span></h4>
+        <span class="information">{{user.username}}</span>
+        <h4><span class="title subtitle">E-Mail</span></h4>
+        <span class="information">{{user.email}}</span>
+        <h4><span class="title subtitle">Apellidos</span></h4>
+        <span class="information">{{user.last_name}}</span>
+        <h4><span class="title subtitle">Nombres</span></h4>
+        <span class="information">{{user.first_name}}</span>
+        <h4><span class="title subtitle">Activo</span></h4>
+        <i class="fa fa-{{'check text-success' if (user.is_active) else 'times text-danger'}} user-active" active={{user.is_active|int}}></i>
+        <h4><span class="title subtitle">Roles</span></h4>
+        <ul id="roles">
+        {% for role in user.roles %}
+            <li class="information">{{role.name}}</li>
+        {% endfor %}
+        </ul>
+        {% if current_user.has_permission('user_index') %}
+            <a class="white-button" id="user-list-button" href="{{url_for('user_index')}}"><i class="fa fa-list"></i> Volver al Listado</a>
+        {% endif %}
+    </section>
+
+{% endblock %}
