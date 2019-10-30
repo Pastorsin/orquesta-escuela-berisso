@@ -8,12 +8,6 @@
     min-height: 100%;
 }
 
-#navigation-items {
-    display: flex;
-    flex-direction: row;
-    justify-content: space-between;
-}
-
 footer {
     bottom: 0;
     background-color:#1a91a1;

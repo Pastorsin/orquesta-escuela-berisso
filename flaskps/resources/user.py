@@ -21,17 +21,18 @@ def index():
     users = User.query.all()
     return render_template('user/index.html', users=users, config=get_web_config(), current_user=current_user)
 
-
+@login_required
 def new(user=None):
     roles = Role.query.all()
 
     return render_template(
         'user/new.html',
         roles=roles,
-        user=user
+        user=user,
+        current_user=current_user
     )
 
-
+@login_required
 def create():
 
     form = UserCreateForm(request.form)
@@ -45,7 +46,7 @@ def create():
             flash(error, 'danger')
         return new(user=form.values)
 
-
+@login_required
 def edit(user_id):
     roles = Role.query.all()
     user = User.query.get(user_id)
@@ -61,9 +62,9 @@ def edit(user_id):
             'user/edit.html',
             roles=roles,
             user=user,
-            user_id=user_id
+            user_id=user_id,
+            current_user=current_user
         )
-
 
 def update(form, user, roles):
     form = UserEditForm(form, user)
@@ -107,10 +108,13 @@ def activateUser(userId):
 
 @login_required
 def deactivateUser(userId):
-    user = User.query.get(userId)
-    user.deactivate()
-    flash('El usuario %s, %s ha sido desactivado correctamente.' %
-          (user.last_name, user.first_name), 'success')
+    if int(userId)!=int(current_user.id):
+        user = User.query.get(userId)
+        user.deactivate()
+        flash('El usuario %s, %s ha sido desactivado correctamente.' %
+            (user.last_name, user.first_name), 'success')
+    else:
+        flash('¡No podes desactivarte a vos mismo!', 'danger')
     return redirect(url_for('user_index'))
 
 

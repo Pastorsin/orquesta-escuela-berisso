@@ -11,4 +11,4 @@ def index():
 
 @login_required
 def sections():
-    return render_template('home/secciones.html', config=get_web_config())
+    return render_template('home/secciones.html', config=get_web_config(), current_user=current_user)
