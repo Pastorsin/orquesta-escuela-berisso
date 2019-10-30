@@ -1,5 +1,6 @@
 from flask import redirect, url_for, flash, request
 from functools import wraps
+from flaskps.models.user import User
 
 PERMISSION_ERROR = 'No tenés permisos para acceder a esta sección. \
 Contacte con un administrador.'
@@ -20,17 +21,19 @@ def permissions_enabled(permisson, user):
 
     return decorate_view
 
-def permissions_enabled_or_my_profile(permisson, current_user):
+
+def profile_permissions(permisson, current_user):
 
     def decorate_view(controller):
 
-        @wraps(permissions_enabled(permisson,current_user))
+        @wraps(permissions_enabled)
         def wrapper(*args, **kwargs):
-            if not request.url[-1]==current_user.id:
-                flash(PERMISSION_ERROR, 'danger')
-                return redirect(url_for('home'))
-            else:
+            user_id = kwargs.get('user_id')
+            if user_id == str(current_user.id):
                 return controller(*args, **kwargs)
+            else:
+                permissions = permissions_enabled(permisson, current_user)
+                return permissions(controller)(*args, **kwargs)
         return wrapper
 
     return decorate_view

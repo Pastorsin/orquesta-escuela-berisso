@@ -1,5 +1,5 @@
 # -*- coding: utf-8 -*-
-from flask import redirect, request, url_for, flash
+from flask import redirect, request, url_for, flash, render_template
 
 from flaskps.extensions.login_manager import login_manager
 from flaskps.models.user import User
@@ -7,19 +7,22 @@ from flaskps.models.user import User
 from flask_login import login_user, logout_user, current_user, login_required
 
 from flaskps.models.role import Role
+from flaskps.helpers.webconfig import get_web_config
 from flaskps.helpers.user import UserCreateForm, UserEditForm
-from flaskps.helpers.constraints import permissions_enabled, permissions_enabled_or_my_profile
+from flaskps.helpers.constraints import permissions_enabled, profile_permissions
 
 
 @login_manager.user_loader
 def load_user(user_id):
     return User.query.get(user_id)
 
+
 @login_required
-@permissions_enabled_or_my_profile('user_index', current_user)
+@profile_permissions('user_index', current_user)
 def profile(user_id):
     user = User.query.get(user_id)
     return render_template('user/profile.html', user=user, config=get_web_config(), current_user=current_user)
+
 
 def login():
     if request.method == 'POST':
@@ -40,6 +43,7 @@ def login():
             message = 'Nombre de usuario o contraseña invalidos'
         flash(message, 'danger')
         return redirect(url_for('home'))
+
 
 @login_required
 def logout():
