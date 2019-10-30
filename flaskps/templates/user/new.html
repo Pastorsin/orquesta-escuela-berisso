@@ -1,83 +1,21 @@
-{% extends "sections_base.html" %}
+{% extends "user/form.html" %}
 
-{% block script %}
-	<script text="javascript" src="{{url_for('static', filename='user/new.js')}}"></script>
+{% block title %}
+	Crear usuario
 {% endblock %}
 
-{% block font %}
-	<link href="https://fonts.googleapis.com/css?family=Open+Sans:300" rel="stylesheet">
+{% block post_url %}
+	{{ url_for('user_create') }}
 {% endblock %}
 
-{% block style %}
-	<link rel="stylesheet" type="text/css" href="{{url_for('static', filename='user/new.css')}}">
-	{{ super() }}
-{% endblock %}
-
-{% block content %}
-	<div class="row" id="form-container">
-		<div class="col-12 text-center p-2 title">
-			<h1>Registrar usuario</h1>
-		</div>
-		<div class="col-12 p-4">
-			<form method="post" action="/usuarios">
-
-				<div class="col-12">
-					<div class="form-group">
-						<label for="username-input">Nombre de usuario</label>
-						<input id="username-input" class="form-control" type="text" name="username" required placeholder="Nombre de usuario" value="{{user.username}}">
-					</div>
-
-					<div class="form-group">
-						<label for="email-input">Email</label>
-						<input id="email-input" class="form-control" type="email" name="email" required placeholder="Email" value="{{user.email}}">
-					</div>
-
-					<div class="form-group">
-						<label for="password-input">Contraseña</label>
-						<input id="password-input" class="form-control" type="password" name="" required placeholder="Contraseña" value="{{user.password}}">
-					</div>
-
-					<div class="form-group">
-						<label for="confirm-password-input">Confirmar contraseña</label>
-						<input id="confirm-password-input" class="form-control" type="password" name="password" required placeholder="Confirmar contraseña">
-						<small class="text-danger" id="confirm-password-error"></small>
-					</div>
-
-					<div class="form-group">
-						<label for="first-name-input">Nombres</label>
-						<input id="first-name-input" class="form-control" type="text" name="first_name" required placeholder="Nombres" value="{{user.first_name}}">
-					</div>
-
-					<div class="form-group">
-						<label for="last-name-input">Apellidos</label>
-						<input id="last-name-input" class="form-control" type="text" name="last_name" required placeholder="Apellidos" value="{{user.last_name}}">
-					</div>
-				</div>
-
-				<div class="col-12" id="roles-section">
-					<div class="col-12 text-center subtitle py-2">
-						<h4>Asignar roles</h4>
-						<small class="text-danger" id="roles-error"></small>												
-					</div>
-					<div class="col-4 checkbox-group required">
-						{% for rol in roles %}
-							<div class="form-group">
-								<div class="custom-control custom-checkbox">
-									<input {% if rol.name in user.roles %} checked {% endif%} class="custom-control-input rol-checkbox" id="active-checkbox-{{rol.name}}" type="checkbox" name="roles" value="{{rol.name}}">
-									<label class="rol-label custom-control-label" for="active-checkbox-{{rol.name}}">{{rol.name}}</label>
-								</div>
-							</div>
-						{% endfor %}
-					</div>
-				</div>
-
-				<div class="col-12 text-center buttons pt-4">
-					<button class="btn btn-success" id="save-button">Guardar</button>
-					<a href="/">
-						<button class="btn btn-danger" type="button">Cancelar</button>
-					</a>
-				</div>
-			</form>
-		</div>
+{% block password %}
+	<div class="form-group">
+		<label for="password-input">Contraseña</label>
+		<input id="password-input" class="form-control" type="password" name="" required placeholder="Contraseña">
+	</div>
+	<div class="form-group">
+		<label for="confirm-password-input">Confirmar contraseña</label>
+		<input id="confirm-password-input" class="form-control" type="password" name="password" required placeholder="Confirmar contraseña">
+		<small class="text-danger" id="confirm-password-error"></small>
 	</div>
 {% endblock %}

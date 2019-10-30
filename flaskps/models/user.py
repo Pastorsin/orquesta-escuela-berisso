@@ -37,17 +37,20 @@ class User(db.Model):
 
     def __init__(self, data):
         self.__init_attributes(data)
+        self.__init_hashes(data)
         self.__init_relationships(data)
 
     def __init_attributes(self, data):
         self.username = data['username']
         self.email = data['email']
-        self.password = bc.generate_password_hash(data['password'])
         self.first_name = data['first_name']
         self.last_name = data['last_name']
 
+    def __init_hashes(self, data):
+        self.password = bc.generate_password_hash(data['password'])
+
     def __init_relationships(self, data):
-        self.roles = Role.get_list_by_name(data['roles'])
+        self.roles = data['roles']
 
     @classmethod
     def create(cls, data):
@@ -75,11 +78,16 @@ class User(db.Model):
         return str(self.id)
 
     def activate(self):
-        self.is_active=1
+        self.is_active = 1
         db.session.commit()
         return self
 
     def deactivate(self):
-        self.is_active=0
+        self.is_active = 0
         db.session.commit()
         return self
+
+    def update(self, values):
+        self.__init_attributes(values)
+        self.__init_relationships(values)
+        db.session.commit()

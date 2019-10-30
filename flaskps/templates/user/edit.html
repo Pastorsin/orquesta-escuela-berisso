@@ -1,0 +1,9 @@
+{% extends "user/form.html" %}
+
+{% block title %}
+	Modificar usuario
+{% endblock %}
+
+{% block post_url %}
+	{{ url_for('user_edit', user_id=user_id) }}	
+{% endblock %}
