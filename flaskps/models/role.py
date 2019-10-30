@@ -43,3 +43,9 @@ class Role(db.Model):
     def get_list_by_name(cls, rolnames):
         roles = map(lambda rolname: Role.get_by_name(rolname), rolnames)
         return list(roles)
+
+    def has_permission(self, permission_name):
+        permissions = map(
+            lambda p: p.name == permission_name, self.permissions
+        )
+        return any(permissions)
