@@ -34,8 +34,10 @@ app.add_url_rule("/usuarios", 'user_index', admin.index)
 app.add_url_rule("/usuarios/new", 'user_create', admin.create, methods=['POST'])
 app.add_url_rule("/usuarios/new", 'user_new', admin.new)
 app.add_url_rule("/usuarios/editar/<user_id>", 'user_edit', admin.edit,  methods=['GET', 'POST'])
-app.add_url_rule("/desactivar_usuario/<userId>", 'deactivate_user', admin.deactivateUser)
-app.add_url_rule("/activar_usuario/<userId>", 'activate_user', admin.activateUser)
+app.add_url_rule("/desactivar_usuario/<user_id>", 'deactivate_user', admin.deactivateUser)
+app.add_url_rule("/activar_usuario/<user_id>", 'activate_user', admin.activateUser)
+app.add_url_rule("/usuario/<user_id>", 'user_profile', user.profile)
+
 
 # Base
 app.add_url_rule('/', 'home', base.index)

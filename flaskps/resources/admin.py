@@ -11,8 +11,8 @@ from flaskps.helpers.constraints import permissions_enabled
 
 @login_required
 @permissions_enabled('user_activate', current_user)
-def activateUser(userId):
-    user = User.query.get(userId)
+def activateUser(user_id):
+    user = User.query.get(user_id)
     user.activate()
     flash('El usuario %s, %s ha sido activado correctamente.' %
           (user.last_name, user.first_name), 'success')
@@ -21,8 +21,8 @@ def activateUser(userId):
 
 @login_required
 @permissions_enabled('user_deactivate', current_user)
-def deactivateUser(userId):
-    user = User.query.get(userId)
+def deactivateUser(user_id):
+    user = User.query.get(user_id)
     user.deactivate()
     flash('El usuario %s, %s ha sido desactivado correctamente.' %
           (user.last_name, user.first_name), 'success')
