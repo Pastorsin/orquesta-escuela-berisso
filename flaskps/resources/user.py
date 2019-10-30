@@ -1,15 +1,10 @@
 # -*- coding: utf-8 -*-
-from flask import redirect, render_template, request, url_for, flash
+from flask import redirect, request, url_for, flash
 
 from flaskps.extensions.login_manager import login_manager
 from flaskps.models.user import User
-from flaskps.helpers.webconfig import get_web_config
 
-from flask_login import login_user, logout_user, current_user, login_required
-
-from flaskps.models.role import Role
-from flaskps.helpers.user import UserCreateForm, UserEditForm
-from flaskps.helpers.constraints import permissions_enabled
+from flask_login import login_user, logout_user, login_required
 
 
 @login_manager.user_loader
@@ -17,110 +12,25 @@ def load_user(user_id):
     return User.query.get(user_id)
 
 
-@login_required
-def index():
-    users = User.query.all()
-    return render_template('user/index.html', users=users, config=get_web_config(), current_user=current_user)
-
-
-@login_required
-@permissions_enabled('user_new', current_user)
-def new(user=None):
-    roles = Role.query.all()
-
-    return render_template(
-        'user/new.html',
-        roles=roles,
-        user=user
-    )
-
-
-@login_required
-@permissions_enabled('user_create', current_user)
-def create():
-
-    form = UserCreateForm(request.form)
-
-    if form.is_valid():
-        User.create(form.values)
-        flash(form.success_message(), 'success')
-        return redirect(url_for('user_index'))
-    else:
-        for error in form.error_messages():
-            flash(error, 'danger')
-        return new(user=form.values)
-
-
-@login_required
-@permissions_enabled('user_update', current_user)
-def edit(user_id):
-    roles = Role.query.all()
-    user = User.query.get(user_id)
-
-    if request.method == 'POST':
-        return update(
-            form=request.form,
-            user=user,
-            roles=roles
-        )
-    else:
-        return render_template(
-            'user/edit.html',
-            roles=roles,
-            user=user,
-            user_id=user_id
-        )
-
-
-def update(form, user, roles):
-    form = UserEditForm(form, user)
-
-    if form.is_valid():
-        user.update(form.values)
-        flash(form.success_message(), 'success')
-        return redirect(url_for('user_edit', user_id=user.id))
-    else:
-        for error in form.error_messages():
-            flash(error, 'danger')
-        return render_template(
-            'user/edit.html',
-            roles=roles,
-            user=form.values,
-            user_id=user.id
-        )
-
-
 def login():
     if request.method == 'POST':
         form = request.form
         user = User.query.filter_by(username=form['username']).first()
 
+        message = None
+
         if user and user.validate_pass(form['password']) and user.is_active:
-            login_user(user, remember=True)
-            flash('Se ha iniciado sesión correctamente', 'info')
-            return redirect(url_for('secciones'))
-        flash('Nombre de usuario o contraseña invalidos', 'danger')
+            if user.is_active:
+                login_user(user, remember=True)
+                message = 'Se ha iniciado sesión correctamente'
+                flash(message, 'info')
+                return redirect(url_for('secciones'))
+            else:
+                message = 'La cuenta se encuentra desactivada, contacte a un administrador'
+        else:
+            message = 'Nombre de usuario o contraseña invalidos'
+        flash(message, 'danger')
         return redirect(url_for('home'))
-
-
-@login_required
-@permissions_enabled('user_activate', current_user)
-def activateUser(userId):
-    user = User.query.get(userId)
-    user.activate()
-    flash('El usuario %s, %s ha sido activado correctamente.' %
-          (user.last_name, user.first_name), 'success')
-    return redirect(url_for('user_index'))
-
-
-@login_required
-@permissions_enabled('user_deactivate', current_user)
-def deactivateUser(userId):
-    user = User.query.get(userId)
-    user.deactivate()
-    flash('El usuario %s, %s ha sido desactivado correctamente.' %
-          (user.last_name, user.first_name), 'success')
-    return redirect(url_for('user_index'))
 
 
 @login_required
