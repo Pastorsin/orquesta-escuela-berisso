@@ -1,5 +1,5 @@
 # -*- coding: utf-8 -*-
-from flask import redirect, render_template, request, url_for, abort, flash
+from flask import redirect, render_template, request, url_for, flash
 
 from flaskps.extensions.login_manager import login_manager
 from flaskps.models.user import User
@@ -9,6 +9,7 @@ from flask_login import login_user, logout_user, current_user, login_required
 
 from flaskps.models.role import Role
 from flaskps.helpers.user import UserCreateForm, UserEditForm
+from flaskps.helpers.constraints import permissions_enabled
 
 
 @login_manager.user_loader
@@ -22,6 +23,8 @@ def index():
     return render_template('user/index.html', users=users, config=get_web_config(), current_user=current_user)
 
 
+@login_required
+@permissions_enabled('user_new', current_user)
 def new(user=None):
     roles = Role.query.all()
 
@@ -32,6 +35,8 @@ def new(user=None):
     )
 
 
+@login_required
+@permissions_enabled('user_create', current_user)
 def create():
 
     form = UserCreateForm(request.form)
@@ -46,6 +51,8 @@ def create():
         return new(user=form.values)
 
 
+@login_required
+@permissions_enabled('user_update', current_user)
 def edit(user_id):
     roles = Role.query.all()
     user = User.query.get(user_id)
@@ -97,6 +104,7 @@ def login():
 
 
 @login_required
+@permissions_enabled('user_activate', current_user)
 def activateUser(userId):
     user = User.query.get(userId)
     user.activate()
@@ -106,6 +114,7 @@ def activateUser(userId):
 
 
 @login_required
+@permissions_enabled('user_deactivate', current_user)
 def deactivateUser(userId):
     user = User.query.get(userId)
     user.deactivate()

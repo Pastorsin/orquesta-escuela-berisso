@@ -91,3 +91,9 @@ class User(db.Model):
         self.__init_attributes(values)
         self.__init_relationships(values)
         db.session.commit()
+
+    def has_permission(self, permission_name):
+        permissions = map(
+            lambda rol: rol.has_permission(permission_name), self.roles
+        )
+        return any(permissions)
