@@ -8,16 +8,13 @@
 
 	<nav class="navbar navbar-expand-lg navbar-dark" id="navigation-bar">
         <a class="navbar-brand" href="{{ url_for('home') }}">{{config.title}}</a>
-		<button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#navbarSupportedContent" aria-controls="navbarSupportedContent" aria-expanded="false" aria-label="Toggle navigation">
-			<span class="navbar-toggler-icon"></span>
-		</button>
-				
-		<div class="collapse navbar-collapse" id="navbarSupportedContent">
-			<ul class="navbar-nav mr-auto">
-				<li class="nav-item active">
-                    <a class="blue-button" href=" {{ url_for('secciones') }}"><i class="fa fa-list"></i> Secciones</a>	
-				</li>
-			</ul>
+        <ul class="navbar-nav mr-auto">
+            <li class="nav-item active">
+                <a class="blue-button" href=" {{ url_for('secciones') }}"><i class="fa fa-list"></i> Secciones</a>	
+            </li>
+        </ul>
+
+		<div id="navbarSupportedContent">
 			<div class="dropdown">
 				<button class="blue-button dropdown-toggle" id="dropdownMenuButton" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
 					<i class="fa fa-user"></i> {{current_user.last_name}}, {{current_user.first_name}}
@@ -29,6 +26,7 @@
 				</div>
 			</div>
 		</div>
+
 	</nav>
 
 	<div class="container">
