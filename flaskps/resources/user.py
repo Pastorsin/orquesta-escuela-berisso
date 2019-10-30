@@ -1,9 +1,8 @@
 # -*- coding: utf-8 -*-
-from flask import redirect, render_template, request, url_for, flash
+from flask import redirect, request, url_for, flash
 
 from flaskps.extensions.login_manager import login_manager
 from flaskps.models.user import User
-from flaskps.helpers.webconfig import get_web_config
 
 from flask_login import login_user, logout_user, current_user, login_required
 
@@ -102,11 +101,19 @@ def login():
         form = request.form
         user = User.query.filter_by(username=form['username']).first()
 
-        if user and user.validate_pass(form['password']):
-            login_user(user, remember=True)
-            flash('Se ha iniciado sesión correctamente', 'info')
-            return redirect(url_for('secciones'))
-        flash('Nombre de usuario o contraseña invalidos', 'danger')
+        message = None
+
+        if user and user.validate_pass(form['password']) and user.is_active:
+            if user.is_active:
+                login_user(user, remember=True)
+                message = 'Se ha iniciado sesión correctamente'
+                flash(message, 'info')
+                return redirect(url_for('secciones'))
+            else:
+                message = 'La cuenta se encuentra desactivada, contacte a un administrador'
+        else:
+            message = 'Nombre de usuario o contraseña invalidos'
+        flash(message, 'danger')
         return redirect(url_for('home'))
 
 
