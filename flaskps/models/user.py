@@ -1,3 +1,4 @@
+import itertools
 from flaskps.extensions.bcrypt import bcrypt as bc
 from flaskps.extensions.db import db
 from datetime import datetime
@@ -95,3 +96,8 @@ class User(db.Model):
     def has_permission(self, permission_name):
         permissions = map(lambda rol: rol.has_permission(permission_name), self.roles)
         return any(permissions)
+
+    def permissions(self):
+        roles_permissions = map(lambda rol: rol.permissions, self.roles)
+        flat_permissions = itertools.chain(*roles_permissions)
+        return set(flat_permissions)

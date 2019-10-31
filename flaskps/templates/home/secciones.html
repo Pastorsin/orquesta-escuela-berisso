@@ -6,9 +6,18 @@
    {{ super() }}
 {% endblock%}
 
+{% block script %}
+   <script type="text/javascript" src="{{url_for('static', filename='home/sections.js')}}"></script>
+{% endblock %}
+
+{% block font %}
+   <link rel='stylesheet' href='https://use.fontawesome.com/releases/v5.7.0/css/all.css' integrity='sha384-lZN37f5QGtY3VHgisS14W3ExzMWZxybE1SJSEsQp9S+oqd12jhcu+A56Ebc1zFSJ' crossorigin='anonymous'>
+{% endblock %}
+
+
 {% block content %}
 	<div id="section-container">
-		<section class="services pt-100 pb-50" id="services">
+		<section class="services" id="services">
          <div class="container">
             <div class="row">
                <div class="col-xl-6 mx-auto text-center">
@@ -18,22 +27,16 @@
                </div>
             </div>
             <div class="row">
-               <div class="col-lg-4 col-md-6">
+               {% for permission in current_user.permissions() %}
+               <div class="col-lg-4 col-md-6 section" id="{{permission.name}}">
                   <!-- Single Service -->
-                  <a href="">
+                  <a class="item-url">
                   <div class="single-service">
-                     <i class="fa fa-user-plus"></i>
-                     <h4>Agregar Usuario</h4>
+                     <i class="fa item-icon fas"></i>
+                     <h4 class="item-title"></h4>
                   </div></a>
                </div>
-               <div class="col-lg-4 col-md-6">
-                  <!-- Single Service -->
-                  <a href="">
-                  <div class="single-service">
-                     <i class="fa fa-user-times"></i>
-                     <h4>Inhabilitar Usuario</h4>
-                  </div></a>
-               </div>
+               {% endfor %}
             </div>
          </div>
       </section>

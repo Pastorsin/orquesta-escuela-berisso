@@ -46,8 +46,9 @@
     margin-bottom:100px;
 }
 .services {
-	/*background-color: #FBFBFB;*/
-	background-color: #ccc;
+	background-color: #ebf9ff;
+	border-radius: 1em;
+  	border: 1px solid #d3dadc;
 }
 
 .row a{
@@ -96,8 +97,6 @@
 }
 .single-service:hover {
 	box-shadow: 1px 3px 10px 0 rgba(0, 0, 0, 0.10);
-	width: 360px;
-	height: 210px;
 	text-decoration: none;
 	transform: scale(1.05);
 }
