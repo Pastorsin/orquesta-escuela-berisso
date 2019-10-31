@@ -48,7 +48,11 @@ body {
     }
 
     #images {
-        width: 70%;
+        overflow: hidden;
+    }
+
+    #images img{
+        max-width: 100%;
     }
 
     .dropdown {
