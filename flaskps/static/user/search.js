@@ -36,7 +36,7 @@ class Search {
     }
 
     search() {
-        let value = this.searchInput.value.trim()
+        let value = this.searchInput.value.trim().toLowerCase()
         let rows = Array.from(this.rowsSelector)
         return rows.filter((row) => this.satisfy(row, value))
     }
@@ -47,7 +47,7 @@ class Search {
 
     includesUsername(row, value) {
         let selector = row.querySelector(".username")
-        let username = selector.textContent
+        let username = selector.textContent.toLowerCase()
         return username.includes(value)
     }
 
