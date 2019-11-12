@@ -16,8 +16,9 @@
 
 {% block script %}
 	<script src="https://www.solodev.com/assets/pagination/jquery.twbsPagination.js"></script>
+	<script src="{{url_for('static', filename='forms/pager.js')}}"></script>
+	<script src="{{url_for('static', filename='forms/search.js')}}"></script>
 	<script src="{{url_for('static', filename='user/search.js')}}"></script>
-	<script src="{{url_for('static', filename='user/pager.js')}}"></script>
 	<script src="{{url_for('static', filename='user/index.js')}}"></script>
 {% endblock %}
 
