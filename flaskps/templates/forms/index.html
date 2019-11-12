@@ -1,0 +1,68 @@
+{% extends "sections_base.html" %}
+
+{% block meta %}
+	{{super()}}
+	<meta name="elements" content="{{config.pagination}}">
+{% endblock %}
+
+{% block font %}
+	{{super()}}
+	<link rel='stylesheet' href='https://use.fontawesome.com/releases/v5.7.0/css/all.css' integrity='sha384-lZN37f5QGtY3VHgisS14W3ExzMWZxybE1SJSEsQp9S+oqd12jhcu+A56Ebc1zFSJ' crossorigin='anonymous'>
+	<link href="https://fonts.googleapis.com/css?family=Open+Sans:300" rel="stylesheet">
+{% endblock %}
+
+{% block style %}
+	{{super()}}
+	<link rel="stylesheet" type="text/css" href="{{url_for('static', filename='forms/index.css')}}">
+{% endblock %}
+
+{% block script %}
+	{{super()}}
+	<script src="https://www.solodev.com/assets/pagination/jquery.twbsPagination.js"></script>
+	<script src="{{url_for('static', filename='forms/pager.js')}}"></script>
+	<script src="{{url_for('static', filename='forms/search.js')}}"></script>
+{% endblock %}
+
+{% block content %}
+	<div class="row d-flex justify-content-center" id="list-container">
+		<div class="col-12">
+			<div class="px-0 bg-light rounded rounded-pill shadow-sm col-12 my-2" id="search-container">
+				<div class="input-group">
+					<input type="search" placeholder="{% block placeholder %}{% endblock %}" class="form-control border-0 rounded-pill rounded" id="search">
+					<div class="input-group-append">
+						<button class="btn btn-light text-primary rounded-pill" id="search-button"><i class="fa fa-search"></i></button>
+					</div>
+				</div>
+			</div>
+			<div class="col-12">
+				<small id="result"></small>
+			</div>
+			<div class="col-12 my-4" id="filters-container">
+				{% block filters %}
+					
+				{% endblock %}
+			</div>
+		</div>
+		<div class="col-12 table-responsive" id="table-container">
+			<table class="table table-hover">
+				<thead>
+					<tr>
+						{% block table_head %}
+							
+						{% endblock %}
+					</tr>
+				</thead>
+				<tbody>
+					{% block table_body %}
+						
+					{% endblock %}
+				</tbody>			
+		</table>
+	</div>
+	<div class="col-12" id="pagination-container">
+		<nav class="d-flex justify-content-center">
+		<ul class="pagination" id="pagination"></ul>
+	</nav>
+</div>
+</div>
+{% endblock %}
