@@ -15,4 +15,4 @@ class Level(db.Model):
         nullable=False
     )
 
-    students = db.relationship('Student', backref='nivel', lazy=True)
+    students = db.relationship('Student', backref='level', lazy=True)

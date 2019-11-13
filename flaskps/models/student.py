@@ -49,14 +49,14 @@ class Student(db.Model):
         nullable=False
     )
 
-    neighborhood = db.Column(
+    neighborhood_id = db.Column(
         'barrio_id',
         db.Integer,
         db.ForeignKey('barrio.id'),
         nullable=False
     )
 
-    gender = db.Column(
+    gender_id = db.Column(
         'genero_id',
         db.Integer,
         db.ForeignKey('genero.id'),
@@ -81,14 +81,14 @@ class Student(db.Model):
         nullable=False
     )
 
-    school = db.Column(
+    school_id = db.Column(
         'escuela_id',
         db.Integer,
         db.ForeignKey('escuela.id'),
         nullable=False
     )
 
-    level = db.Column(
+    level_id = db.Column(
         'nivel_id',
         db.Integer,
         db.ForeignKey('nivel.id'),

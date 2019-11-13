@@ -1,7 +1,7 @@
 class Pager {
 
-    constructor(elementsPerPage) {
-        this.elementsPerPage = elementsPerPage
+    constructor() {
+        this.elementsPerPage = Number($("meta[name='elements']").attr("content"));
     }
 
     paginate(rows) {

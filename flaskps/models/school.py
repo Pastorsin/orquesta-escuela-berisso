@@ -27,4 +27,4 @@ class School(db.Model):
         nullable=True
     )
 
-    students = db.relationship('Student', backref='escuela', lazy=True)
+    students = db.relationship('Student', backref='school', lazy=True)

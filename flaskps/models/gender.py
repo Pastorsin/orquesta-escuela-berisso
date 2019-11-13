@@ -15,4 +15,4 @@ class Gender(db.Model):
         nullable=False
     )
 
-    students = db.relationship('Student', backref='genero', lazy=True)
+    students = db.relationship('Student', backref='gender', lazy=True)

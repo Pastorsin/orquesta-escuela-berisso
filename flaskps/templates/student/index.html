@@ -1,7 +1,40 @@
 {% extends "forms/index.html" %}
 
+{% block script %}
+	{{super()}}
+	<script src="{{url_for('static', filename='student/search.js')}}"></script>	
+	<script src="{{url_for('static', filename='student/index.js')}}"></script>	
+{% endblock %}
+
+{% block placeholder %}Buscar estudiante{% endblock %}
+
+{% block table_head %}
+	<th scope="col">Nombres</th>
+	<th scope="col">Apellidos</th>
+	<th scope="col">Escuela</th>
+	<th scope="col" class="text-center">Opciones</th>
+{% endblock %}
+
 {% block table_body %}
-	{% for s in students %}
-		{{s.first_name}}
-	{% endfor %}	
+
+	{% for student in students %}
+	<tr class="item-row">
+		<th scope="row" class="first-name">{{ student.first_name }}</th>
+		<th scope="row" class="last-name">{{ student.last_name }}</th>
+		<td scope="row" class="school">{{ student.school.name }}</td>
+		<td scope="row" class="text-center">
+			<div class="dropdown">
+				<button type="button" class="white-button btn-sm dropdown-toggle" id="dropdownMenuButton" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
+					<i class="fa fa-cog"></i>
+				</button>
+				<div class="dropdown-menu" aria-labelledby="dropdownMenuButton">
+					<a class="dropdown-item" href="#"><i class="fa fa-user"></i> Ver detalle</a>
+					<a class="dropdown-item" href="#"><i class="fa fa-edit"></i> Modificar datos</a>
+					<a class="dropdown-item deactivate" href="#"><i class="fa fa-ban"></i>Deshabilitar</a>
+				</div>
+			</div>
+		</td>
+	</tr>
+	{% endfor %}
+
 {% endblock %}

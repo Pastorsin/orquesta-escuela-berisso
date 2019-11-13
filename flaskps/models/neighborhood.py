@@ -15,4 +15,4 @@ class Neighborhood(db.Model):
         nullable=False
     )
 
-    students = db.relationship('Student', backref='barrio', lazy=True)
+    students = db.relationship('Student', backref='neighborhood', lazy=True)

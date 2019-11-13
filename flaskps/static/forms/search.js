@@ -2,7 +2,7 @@
 class Search {
 
     constructor(pager) {
-        this.pager = pager
+        this.pager = new Pager();
         this.initSelectors()
         this.initEvents()
         this.start()
@@ -10,7 +10,7 @@ class Search {
 
     initSelectors() {
         this.searchInput = document.querySelector("#search")
-        this.rowsSelector = document.querySelectorAll(".user-row")
+        this.rowsSelector = document.querySelectorAll(".item-row")
         this.searchButton = document.querySelector("#search-button")
         this.resultText = document.querySelector("#result")
     }
