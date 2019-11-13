@@ -1,1 +1,7 @@
 {% extends "forms/index.html" %}
+
+{% block table_body %}
+	{% for s in students %}
+		{{s.first_name}}
+	{% endfor %}	
+{% endblock %}
