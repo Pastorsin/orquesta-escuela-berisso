@@ -31,11 +31,11 @@ class Student(db.Model):
         nullable=False
     )
 
-    # birth_location = db.Column(
-    #     'lugar_nac',
-    #     db.String(255),
-    #     nullable=False
-    # )
+    birth_location = db.Column(
+        'lugar_nac',
+        db.String(255),
+        nullable=False
+    )
 
     location_id = db.Column(
         'localidad_id',
