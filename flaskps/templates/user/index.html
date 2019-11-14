@@ -8,22 +8,6 @@
 
 {% block search_placeholder %}Buscar usuario{% endblock %}
 
-{% block filters %}
-	<div class="list-subtitle">
-		<h5>Filtrar</h5>
-	</div>
-	<div class="col-10 col-off-2">
-		<div class="custom-control custom-radio">
-			<input type="radio" class="custom-control-input" name="radio-active" id="active-checkbox">
-			<label class="custom-control-label" for="active-checkbox" id="label-user-active">Mostrar sólo usuarios activos</label>
-		</div>
-		<div class="custom-control custom-radio">
-			<input type="radio" class="custom-control-input" name="radio-active" id="inactive-checkbox">
-			<label class="custom-control-label" for="inactive-checkbox" id="label-user-inactive">Mostrar sólo usuarios inactivos</label>
-		</div>
-	</div>
-{% endblock %}
-
 {% block table_head %}
 	<th scope="col">Usuario</th>
 	<th scope="col">Email</th>
@@ -45,7 +29,7 @@
 			<td class="name">{{ user.first_name }}</td>
 			<td class="surname">{{ user.last_name }}</td>
 			<td class="text-center">
-				<i class="fa fa-{{'check text-success' if (user.is_active) else 'times text-danger'}} user-active" active={{user.is_active|int}}></i>
+				<i class="fa fa-{{'check text-success' if (user.is_active) else 'times text-danger'}} td-active" active={{user.is_active|int}}></i>
 			</td>
 			<td class="text-center">
 				<div class="dropdown">

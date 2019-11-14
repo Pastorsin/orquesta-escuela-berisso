@@ -24,7 +24,7 @@
 		<th scope="row" class="last-name">{{ student.last_name }}</th>
 		<td scope="row" class="school">{{ student.school.name }}</td>
 		<td class="text-center">
-			<i class="fa fa-{{'check text-success' if (student.is_active) else 'times text-danger'}} student-active" active={{student.is_active|int}}></i>
+			<i class="fa fa-{{'check text-success' if (student.is_active) else 'times text-danger'}} td-active" active={{student.is_active|int}}></i>
 		</td>
 		<td scope="row" class="text-center">
 			<div class="dropdown">

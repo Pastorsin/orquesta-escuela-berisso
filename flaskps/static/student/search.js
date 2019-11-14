@@ -1,7 +1,7 @@
 class StudentSearch extends Search {
 
-    satisfy(row, value) {
-        return this.includesName(row, value)
+    satisfyText(row, value) {    	
+    	return this.fullName(row).includes(value)
     }
 
     fullName(row) {
@@ -13,9 +13,4 @@ class StudentSearch extends Search {
 
     	return firstName + " " + lastName
     }
-
-    includesName(row, value) {    	
-    	return this.fullName(row).includes(value)
-    }
-
 }

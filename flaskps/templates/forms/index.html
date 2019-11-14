@@ -20,6 +20,7 @@
 	{{super()}}
 	<script src="https://www.solodev.com/assets/pagination/jquery.twbsPagination.js"></script>
 	<script src="{{url_for('static', filename='forms/pager.js')}}"></script>
+	<script src="{{url_for('static', filename='forms/filters.js')}}"></script>
 	<script src="{{url_for('static', filename='forms/search.js')}}"></script>
 {% endblock %}
 
@@ -38,6 +39,19 @@
 				<small id="result"></small>
 			</div>
 			<div class="col-12 my-4" id="filters-container">
+					<div class="list-subtitle">
+						<h5>Filtrar</h5>
+					</div>
+					<div class="col-10 col-off-2">
+						<div class="custom-control custom-radio">
+							<input type="radio" class="custom-control-input" name="radio-active" id="active-checkbox">
+							<label class="custom-control-label" for="active-checkbox" id="label-user-active">Mostrar sólo activos</label>
+						</div>
+						<div class="custom-control custom-radio">
+							<input type="radio" class="custom-control-input" name="radio-active" id="inactive-checkbox">
+							<label class="custom-control-label" for="inactive-checkbox" id="label-user-inactive">Mostrar sólo inactivos</label>
+						</div>
+					</div>
 				{% block filters %}
 					
 				{% endblock %}
