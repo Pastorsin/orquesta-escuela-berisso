@@ -80,7 +80,8 @@ def edit(user_id):
             'user/edit.html',
             roles=roles,
             user=user,
-            user_id=user_id
+            user_id=user_id,
+            config=get_web_config()
         )
 
 
@@ -98,5 +99,6 @@ def update(form, user, roles):
             'user/edit.html',
             roles=roles,
             user=form.values,
-            user_id=user.id
+            user_id=user.id,
+            config=get_web_config()
         )
