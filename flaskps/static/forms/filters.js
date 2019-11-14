@@ -9,6 +9,7 @@ class Filter {
 class ActiveFilter extends Filter {
 
     constructor() {
+        super()
         this.initSelectors()
     }
 
