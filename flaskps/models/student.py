@@ -40,7 +40,7 @@ class Student(db.Model):
     location_id = db.Column(
         'localidad_id',
         db.Integer,
-        primary_key=True
+        nullable=False
     )
 
     residency = db.Column(
@@ -94,3 +94,21 @@ class Student(db.Model):
         db.ForeignKey('nivel.id'),
         nullable=False
     )
+
+    is_active = db.Column(
+        'activo',
+        db.Boolean,
+        nullable=False,
+        default=True
+    )
+
+    def __repr__(self):
+        return f'<Student {self.first_name}, {self.last_name}>'
+
+    def activate(self):
+        self.is_active = True
+        db.session.commit()
+
+    def deactivate(self):
+        self.is_active = False
+        db.session.commit()
