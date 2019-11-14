@@ -16,6 +16,11 @@ $(document).ready(() => {
 			'name' : 'Configuración',
 			'icon' : 'fa-cogs',
 			'url'  : 'configuracion'
+		},
+		'student_index' : {
+			'name' : 'Listado de estudiantes',
+			'icon' : 'fa-graduation-cap',
+			'url'  : 'estudiantes'
 		}
 	}
 

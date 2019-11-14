@@ -41,7 +41,7 @@
 							</button>
 						</form>
 					{% else %}
-						<form class="deactivate" action="{{ url_for('activate_student', student_id=student.id) }}" method="post">
+						<form class="activate" action="{{ url_for('activate_student', student_id=student.id) }}" method="post">
 							<button type="submit" class="dropdown-item">
 								<i class="fa fa-check"></i> Activar
 							</button>

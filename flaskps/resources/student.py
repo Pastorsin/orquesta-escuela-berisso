@@ -1,6 +1,7 @@
 from flask import render_template, flash, redirect, url_for
 from flask_login import current_user, login_required
 from flaskps.helpers.webconfig import get_web_config
+from flaskps.helpers.constraints import permissions_enabled
 
 from flaskps.models.student import Student
 
@@ -11,6 +12,7 @@ SUCCESS_MSG = {
 
 
 @login_required
+@permissions_enabled('student_index', current_user)
 def index():
     students = Student.query.all()
     return render_template(
@@ -22,6 +24,7 @@ def index():
 
 
 @login_required
+@permissions_enabled('student_deactivate', current_user)
 def deactivate(student_id):
     student = Student.query.get(student_id)
     student.deactivate()
@@ -33,6 +36,7 @@ def deactivate(student_id):
 
 
 @login_required
+@permissions_enabled('student_activate', current_user)
 def activate(student_id):
     student = Student.query.get(student_id)
     student.activate()
