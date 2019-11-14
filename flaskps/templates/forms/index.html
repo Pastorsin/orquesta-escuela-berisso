@@ -51,10 +51,10 @@
 							<input type="radio" class="custom-control-input" name="radio-active" id="inactive-checkbox">
 							<label class="custom-control-label" for="inactive-checkbox" id="label-user-inactive">Mostrar sólo inactivos</label>
 						</div>
+						{% block filters %}
+							
+						{% endblock %}
 					</div>
-				{% block filters %}
-					
-				{% endblock %}
 			</div>
 		</div>
 		<div class="col-12 table-responsive" id="table-container">

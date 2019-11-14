@@ -6,7 +6,7 @@ class Filter {
     }
 }
 
-class ActiveFilter {
+class ActiveFilter extends Filter {
 
     constructor() {
         this.initSelectors()
