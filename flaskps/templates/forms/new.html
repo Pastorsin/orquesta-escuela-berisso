@@ -1,0 +1,35 @@
+{% extends "sections_base.html" %}
+
+{% block script %}
+	<script text="javascript" src="{{url_for('static', filename='user/new.js')}}"></script>
+{% endblock %}
+
+{% block font %}
+	<link href="https://fonts.googleapis.com/css?family=Open+Sans:300" rel="stylesheet">
+{% endblock %}
+
+{% block style %}
+	<link rel="stylesheet" type="text/css" href="{{url_for('static', filename='forms/new.css')}}">
+	{{ super() }}
+{% endblock %}
+
+{% block content %}
+	<div class="row" id="form-container">
+		<div class="col-12 text-center p-2 title">
+			<h1>{% block form_title %}{% endblock %}</h1>
+		</div>
+		<div class="col-12 p-4">
+			<form method="post" action="{% block post_url %} {% endblock %}">
+				{% block fields %}
+
+				{% endblock %}
+				<div class="col-12 text-center buttons pt-4">
+					<button class="btn btn-success" id="save-button">Guardar</button>
+					<a href="/">
+						<button class="btn btn-danger" type="button">Cancelar</button>
+					</a>
+				</div>
+			</form>
+		</div>
+	</div>
+{% endblock %}
