@@ -1,0 +1,53 @@
+{% extends "forms/index.html" %}
+
+{% block script %}
+	{{super()}}
+	<script src="{{url_for('static', filename='teacher/search.js')}}"></script>	
+	<script src="{{url_for('static', filename='teacher/index.js')}}"></script>	
+{% endblock %}
+
+{% block placeholder %}Buscar docente{% endblock %}
+
+{% block table_head %}
+	<th scope="col">Nombres</th>
+	<th scope="col">Apellidos</th>
+	<th scope="col" class="text-center">Activo</th>
+	<th scope="col" class="text-center">Opciones</th>
+{% endblock %}
+
+{% block table_body %}
+	{% for teacher in teachers %}
+	<tr class="item-row">
+		<th scope="row" class="first-name">{{ teacher.first_name }}</th>
+		<th scope="row" class="last-name">{{ teacher.last_name }}</th>
+		<td class="text-center">
+			<i class="fa fa-{{'check text-success' if (teacher.is_active) else 'times text-danger'}} td-active" active={{teacher.is_active|int}}></i>
+		</td>
+		<td scope="row" class="text-center">
+			<div class="dropdown">
+				<button type="button" class="white-button btn-sm dropdown-toggle" id="dropdownMenuButton" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
+					<i class="fa fa-cog"></i>
+				</button>
+				<div class="dropdown-menu" aria-labelledby="dropdownMenuButton">
+					<a class="dropdown-item" href="#"><i class="fa fa-user"></i> Ver detalle</a>
+					<a class="dropdown-item" href="#"><i class="fa fa-edit"></i> Modificar datos</a>
+					{% if teacher.is_active %}
+						<form class="deactivate" action="{{ url_for('deactivate_teacher', teacher_id=teacher.id) }}" method="post">
+							<button type="submit" class="dropdown-item">
+								<i class="fa fa-ban"></i> Deshabilitar
+							</button>
+						</form>
+					{% else %}
+						<form class="activate" action="{{ url_for('activate_teacher', teacher_id=teacher.id) }}" method="post">
+							<button type="submit" class="dropdown-item">
+								<i class="fa fa-check"></i> Activar
+							</button>
+						</form>					    
+					{% endif %}
+				</div>
+			</div>
+		</td>
+	</tr>
+	{% endfor %}
+
+{% endblock %}

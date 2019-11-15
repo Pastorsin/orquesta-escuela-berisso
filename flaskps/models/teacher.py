@@ -30,7 +30,6 @@ class Teacher(db.Model):
     location_id = db.Column(
         'localidad_id',
         db.Integer,
-        primary_key=True
     )
 
     residency = db.Column(
@@ -63,3 +62,19 @@ class Teacher(db.Model):
         db.String(255),
         nullable=False
     )
+
+    is_active = db.Column(
+        db.Boolean, 
+        nullable=False, 
+        default=True
+    )
+
+    def activate(self):
+        self.is_active = True
+        db.session.commit()
+        return self
+
+    def deactivate(self):
+        self.is_active = False
+        db.session.commit()
+        return self

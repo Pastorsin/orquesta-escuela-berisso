@@ -21,7 +21,17 @@ $(document).ready(() => {
 			'name' : 'Listado de estudiantes',
 			'icon' : 'fa-graduation-cap',
 			'url'  : 'estudiantes'
-		}
+		},
+		'teacher_index' : {
+			'name' : 'Listado de docentes',
+			'icon' : 'fa-graduation-cap',
+			'url'  : 'docentes'
+		},
+		'teacher_new' : {
+			'name' : 'Crear docentes',
+			'icon' : 'fa-graduation-cap',
+			'url'  : 'docentes/new'
+		},
 	}
 
 	section.forEach((item) => {
