@@ -78,3 +78,9 @@ class Teacher(db.Model):
         self.is_active = False
         db.session.commit()
         return self
+
+    @classmethod
+    def create(cls, data):
+        teacher = cls(data)
+        db.session.add(teacher)
+        db.session.commit()

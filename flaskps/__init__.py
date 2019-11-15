@@ -57,3 +57,6 @@ app.add_url_rule("/estudiantes/activar/<student_id>", 'activate_student', studen
 app.add_url_rule("/docentes", 'teacher_index', teacher.index)
 app.add_url_rule("/docentes/desactivar/<teacher_id>", 'deactivate_teacher', teacher.deactivate,  methods=['POST'])
 app.add_url_rule("/docentes/activar/<teacher_id>", 'activate_teacher', teacher.activate,  methods=['POST'])
+app.add_url_rule("/docentes/new", 'teacher_new', teacher.new,  methods=['POST','GET'])
+app.add_url_rule("/docentes/editar/<teacher_id>", 'teacher_edit', teacher.edit,  methods=['POST','GET'])
+#app.add_url_rule("/docentes/<teacher_id>", 'teacher_profile', teacher.profile)

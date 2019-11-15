@@ -28,7 +28,7 @@ $(document).ready(() => {
 			'url'  : 'docentes'
 		},
 		'teacher_new' : {
-			'name' : 'Crear docentes',
+			'name' : 'Crear docente',
 			'icon' : 'fa-graduation-cap',
 			'url'  : 'docentes/new'
 		},

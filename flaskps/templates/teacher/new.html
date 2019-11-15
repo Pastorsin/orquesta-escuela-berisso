@@ -1,9 +1,75 @@
 {% extends "forms/new.html" %}
 
+{% block script %}
+    <script text="javascript" src="{{url_for('static', filename='teacher/new.js')}}"></script>
+{% endblock %}
+
 {% block form_title %}
     Crear docente
 {% endblock %}
 
 {% block post_url %}
-	{{ url_for('teacher_create') }}
+	{{ url_for('teacher_new') }}
+{% endblock %}
+
+{% block fields %}
+    <div class="col-12">
+        <div class="form-group">
+            <label for="first-name-input">Nombres</label>
+            <input id="first-name-input" class="form-control" type="text" name="first_name" required placeholder="Nombres" value="{{teacher.first_name}}">
+        </div>
+
+        <div class="form-group">
+            <label for="last-name-input">Apellidos</label>
+            <input id="last-name-input" class="form-control" type="text" name="last_name" required placeholder="Apellidos" value="{{teacher.last_name}}">
+        </div>
+
+        <div class="form-group">
+            <label for="birthdate-input">Fecha de Nacimiento</label>
+            <input id="birthdate-input" class="form-control" type="text" name="birthdate" required placeholder="Fecha de nacimiento" value="{{teacher.birth_date}}">
+        </div>
+
+        <div class="form-row align-items-center">
+            <div class="form-group col-md-4">
+                <label for="location-input">Localidad</label>
+                <select id="location-input" class="form-control" name="location" required placeholder="Localidad" value="{{teacher.location_id}}">
+                    <option value="" default></option>
+                </select>
+            </div>
+
+            <div class="form-group col-md-8">
+                <label for="residency-input">Domicilio</label>
+                <input id="residency-input" class="form-control" type="text" name="residency" required placeholder="Domicilio" value="{{teacher.residency}}">
+            </div>
+        </div>
+
+        <div class="form-group">
+            <label for="gender-input">Género</label>
+            <select id="gender-input" class="form-control" name="gender" required placeholder="Género" value="{{teacher.gender_id}}">
+                <option value="" default></option>
+                {% for gender in genders %}
+                    <option value="{{gender.id}}" default>{{gender.name}}</option>
+                {% endfor %}
+            </select>
+        </div>
+
+        <div class="form-row align-items-center">
+            <div class="form-group col-md-2">
+                <label for="doctype-input">Tipo de Documento</label>
+                <select id="doctype-input" class="form-control" name="doctype" required placeholder="Tipo de Documento" value="{{teacher.doc_type_id}}">
+                    <option value="" default></option>
+                </select>
+            </div>
+
+            <div class="form-group col-md-10">
+                <label for="docnumber-input">Número de Documento</label>
+                <input id="docnumber-input" class="form-control" type="text" name="docnumber" required placeholder="Número de Documento" value="{{teacher.doc_number}}">
+            </div>
+        </div>
+
+        <div class="form-group">
+            <label for="telephone-input">Teléfono</label>
+            <input id="telephone-input" class="form-control" type="text" name="telephone" placeholder="Teléfono" value="{{teacher.telephone}}">
+        </div>
+    </div>
 {% endblock %}
