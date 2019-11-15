@@ -1,8 +1,8 @@
 from flaskps.extensions.db import db
 
 
-class Student(db.Model):
-    __tablename__ = 'estudiante'
+class Teacher(db.Model):
+    __tablename__ = 'docente'
 
     id = db.Column(
         db.Integer,
@@ -10,7 +10,7 @@ class Student(db.Model):
     )
 
     last_name = db.Column(
-        'apellido',
+        'apellido', 
         db.String(30),
         nullable=False
     )
