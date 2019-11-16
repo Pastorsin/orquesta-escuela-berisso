@@ -10,14 +10,14 @@ class Teacher(db.Model):
     )
 
     last_name = db.Column(
-        'apellido', 
-        db.String(30),
+        'apellido',
+        db.String(255),
         nullable=False
     )
 
     first_name = db.Column(
         'nombre',
-        db.String(20),
+        db.String(255),
         nullable=False
     )
 
@@ -30,6 +30,7 @@ class Teacher(db.Model):
     location_id = db.Column(
         'localidad_id',
         db.Integer,
+        nullable=False
     )
 
     residency = db.Column(

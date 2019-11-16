@@ -1,6 +1,5 @@
-from flask import redirect, url_for, flash, request
+from flask import redirect, url_for, flash
 from functools import wraps
-from flaskps.models.user import User
 
 PERMISSION_ERROR = 'No tenés permisos para acceder a esta sección. \
 Contacte con un administrador.'
