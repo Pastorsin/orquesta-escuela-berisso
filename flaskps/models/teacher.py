@@ -1,4 +1,5 @@
 from flaskps.extensions.db import db
+from .teacher_resp_workshop import school_year_workshop
 
 
 class Teacher(db.Model):
@@ -65,10 +66,16 @@ class Teacher(db.Model):
     )
 
     is_active = db.Column(
-        db.Boolean, 
-        nullable=False, 
+        db.Boolean,
+        nullable=False,
         default=True
     )
+
+    school_years = db.relationship('SchoolYear', secondary=school_year_workshop,
+                                   lazy='subquery', backref=db.backref('teachers', lazy=True))
+
+    workshops = db.relationship('Workshop', secondary=school_year_workshop,
+                                lazy='subquery', backref=db.backref('teachers', lazy=True))
 
     def activate(self):
         self.is_active = True
