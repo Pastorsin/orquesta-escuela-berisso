@@ -161,5 +161,4 @@ def assign_workshop(teacher_id):
     else:
         teacher = Teacher.query.get(teacher_id)
         cicles = SchoolYear.query.all()
-        workshops = Workshop.query.all()
-        return render_template('teacher/assign_workshop.html', academic=teacher, cicles=cicles, workshops=workshops)
+        return render_template('teacher/assign_workshop.html', academic=teacher, cicles=cicles)

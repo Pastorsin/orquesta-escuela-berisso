@@ -1,0 +1,79 @@
+{% extends "sections_base.html" %}
+
+{% block style %}
+	<link rel="stylesheet" type="text/css" href="{{url_for('static', filename='user/profile.css')}}">
+	{{ super() }}
+{% endblock %}
+
+{% block script %}
+    <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.4.1/jquery.min.js"></script>
+    <script>
+        $(document).ready(() => {
+
+          function replace_workshops(json_response) {
+            let container = $('div.workshops-list');
+            container.empty();
+            if (! $.isEmptyObject(json_response)) {
+              for (var key of Object.keys(json_response)) {
+                container.append(
+                  `
+                    <div class="form-check" id="select-ciclos">
+                      <input class="form-check-input" type="checkbox" name="workshop" value="${key}" id="check-box-${key}">
+                      <label class="form-check-label" for="check-box-${key}"> ${json_response[key][0]} - ${json_response[key][1]} </label>
+                    </div>
+                  `
+                );
+              }
+            } else {
+              container.append(`<p>El usuario está inscripto a todos los tallers de este ciclo</p>`)
+            }
+          }
+
+          $('#select-ciclos').change(function(){
+            let select_val = $('#select-ciclos').val()
+            // no encontré una mejor forma de armar esta url, la dejo para la posteridad
+            $.get(`/api/estudiante/` + {{ academic.id |tojson}} + `/ciclo/${select_val}`, function(response) {
+                let json_response = JSON.parse(response);
+                replace_workshops(json_response);
+            });
+          });
+        });
+    </script>
+{% endblock script %}
+
+{% block content %}
+
+    <section class="container-fluid profile-information">
+        <h1 class="title">Asignar talleres a {{ academic.last_name }}, {{ academic.first_name }}</h1>
+
+        <form action="{{ url_for('student_assign', student_id=academic.id) }}" method="POST">
+          <div class="d-flex justify-content-center">
+            <div class="row w-75">
+
+              <div class="col">
+                <select name="cicle" id="select-ciclos" class="form-control" required>
+                  <option value="" selected disabled hidden>Seleccione un ciclo lectivo</option>
+                  {% for cicle in cicles %}
+                    <option value="{{ cicle.id }}">{{ cicle.start_date }} - {{ cicle.finish_date }}</option>
+                  {% endfor %}
+                </select>
+              </div>
+
+              <div class="workshops-list col">
+              </div>
+            </div>
+
+          </div>
+
+          <div class="text-center buttons pt-4">
+              <button class="btn btn-success">Guardar</button>
+              <a href="{{ url_for('student_index') if current_user.has_permission('student_index') else url_for('home')}}">
+                  <button class="btn btn-danger" type="button">Cancelar</button>
+              </a>
+          </div>
+
+        </form>
+
+    </section>
+
+{% endblock %}

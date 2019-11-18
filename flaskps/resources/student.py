@@ -1,9 +1,15 @@
-from flask import render_template, flash, redirect, url_for
+from flask import render_template, flash, redirect, url_for, request
 from flask_login import current_user, login_required
+
+from flaskps.extensions.db import db
+
 from flaskps.helpers.webconfig import get_web_config
 from flaskps.helpers.constraints import permissions_enabled
 
 from flaskps.models.student import Student
+from flaskps.models.school_year import SchoolYear
+from flaskps.models.student_workshop import school_year_workshop_student
+
 
 SUCCESS_MSG = {
     'deactivate': 'El estudiante {first_name}, {last_name} ha sido desactivado correctamente.',
@@ -62,3 +68,25 @@ def activate(student_id):
         last_name=student.last_name
     ), 'success')
     return redirect(url_for('student_index'))
+
+
+@login_required
+@permissions_enabled('student_update', current_user)
+def assign_workshop(student_id):
+    if request.method == 'POST':
+        form_cicle = request.form.get('cicle')
+        form_workshops = request.form.getlist('workshop')
+        if form_cicle is not None and form_workshops:
+            for whp in form_workshops:
+                statement = school_year_workshop_student.insert().values(
+                        estudiante_id=student_id, ciclo_lectivo_id=form_cicle, taller_id=whp)
+                db.session.execute(statement)
+            db.session.commit()
+            return redirect(url_for('student_index'))
+        else:
+            flash('No se ha enviado el formulario, especifique un ciclo y al menos un taller por favor', 'danger')
+            return redirect(url_for('student_assign', student_id=student_id))
+    else:
+        student = Student.query.get(student_id)
+        cicles = SchoolYear.query.all()
+        return render_template('student/assign_workshop.html', academic=student, cicles=cicles)

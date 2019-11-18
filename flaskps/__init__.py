@@ -62,6 +62,7 @@ app.add_url_rule("/estudiantes/desactivar/<student_id>", 'deactivate_student', s
 app.add_url_rule("/estudiantes/activar/<student_id>", 'activate_student', student.activate, methods=['POST'])
 app.add_url_rule("/estudiantes/<student_id>", 'student_profile', student.profile)
 app.add_url_rule("/estudiantes/<student_id>/talleres", 'student_workshops', student.workshops)
+app.add_url_rule("/estudiantes/inscribe/<student_id>", 'student_assign', student.assign_workshop, methods=['POST', 'GET'])
 
 # Teachers
 app.add_url_rule("/docentes", 'teacher_index', teacher.index)
@@ -74,4 +75,5 @@ app.add_url_rule("/docentes/<teacher_id>/talleres", 'teacher_workshops', teacher
 app.add_url_rule("/docentes/inscribe/<teacher_id>", 'teacher_assign', teacher.assign_workshop, methods=['POST', 'GET'])
 
 # API
-app.add_url_rule('/api/docente/<docente_id>/ciclo/<ciclo_id>', 'cicle_workshops', api.cicle_workshops_docente)
+app.add_url_rule('/api/docente/<docente_id>/ciclo/<ciclo_id>', 'cicle_workshops_teacher', api.cicle_workshops_teacher)
+app.add_url_rule('/api/estudiante/<estudiante_id>/ciclo/<ciclo_id>', 'cicle_workshops_student', api.cicle_workshops_student)
