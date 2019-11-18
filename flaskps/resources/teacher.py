@@ -114,3 +114,13 @@ def update(form, teacher):
             teacher_id=teacher.id,
             config=get_web_config()
         )
+
+
+@login_required
+def workshops(teacher_id):
+    teacher = Teacher.query.get(teacher_id)
+    return render_template(
+        'teacher/workshops.html',
+        teacher=teacher,
+        config=get_web_config()
+    )

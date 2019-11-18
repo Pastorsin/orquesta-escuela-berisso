@@ -26,6 +26,12 @@
 
 {% block content %}
 	<div class="row d-flex justify-content-center" id="list-container">
+		<div class="col-12 text-center p-2 title">
+			<h2>
+				{% block index_title %}
+				{% endblock %}
+			</h2>
+		</div>
 		<div class="col-12">
 			<div class="px-0 bg-light rounded rounded-pill shadow-sm col-12 my-2" id="search-container">
 				<div class="input-group">
@@ -39,25 +45,12 @@
 				<small id="result"></small>
 			</div>
 			<div class="col-12 my-4" id="filters-container">
-					<div class="list-subtitle">
-						<h5>Filtrar</h5>
-					</div>
-					<div class="col-10 col-off-2">
-						<div class="custom-control custom-radio">
-							<input type="radio" class="custom-control-input" name="radio-active" id="active-checkbox">
-							<label class="custom-control-label" for="active-checkbox" id="label-user-active">Mostrar sólo activos</label>
-						</div>
-						<div class="custom-control custom-radio">
-							<input type="radio" class="custom-control-input" name="radio-active" id="inactive-checkbox">
-							<label class="custom-control-label" for="inactive-checkbox" id="label-user-inactive">Mostrar sólo inactivos</label>
-						</div>
-						{% block filters %}
-							
-						{% endblock %}
-					</div>
+				{% block filters %}
+					
+				{% endblock %}
 			</div>
 		</div>
-		<div class="col-12 table-responsive" id="table-container">
+		<div class="col-12 table-responsive my-3" id="table-container">
 			<table class="table table-hover">
 				<thead>
 					<tr>

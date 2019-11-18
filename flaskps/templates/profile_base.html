@@ -25,8 +25,11 @@
 {% block content %}
 
     <section class="container-fluid profile-information">
+
         <h1 class="title">Perfil de {{ user.last_name }}, {{ user.first_name }}</h1>
 
+        {% block head_content %} {% endblock %}
+        
         <h4><span class="title subtitle">Activo</span></h4>
         <i class="fa fa-{{ 'check text-success' if (user.is_active) else 'times text-danger' }} user-active" active={{ user.is_active|int }}></i>
 
@@ -37,7 +40,7 @@
         <span class="information"><span id="location"></span> - {{ user.residency }}</span>
 
         <h4><span class="title subtitle">Género</span></h4>
-        <span class="information">{{ user.gender }}</span>
+        <span class="information">{{ user.gender.name }}</span>
 
         <h4><span class="title subtitle">Documento</span></h4>
         <span class="information"><span id="doc-type"></span>: {{ user.doc_number }} </span>

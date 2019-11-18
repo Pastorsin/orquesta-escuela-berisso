@@ -1,12 +1,10 @@
 {% extends "profile_base.html" %}
 
-
 {% block extra_content %}
 
-    <h4><span class="title subtitle">Talleres asignados al docente</span></h4>
-    {% include "snippets/cicle_workshop_list.html" %}
+    <h4 id="workshops" class="my-4"><a class="title subtitle" href="{{ url_for('teacher_workshops', teacher_id=user.id) }}">Listado de talleres asignados</a></h4>
 
-{% endblock extra_content %}
+{% endblock %}
 
 
 {% block buttons %}

@@ -1,5 +1,6 @@
 $(document).ready(() => {
-    const search = new TeacherSearch();
+	const filters = [new ActiveFilter()]
+    const search = new TeacherSearch(filters);
 });
 
 

@@ -1,0 +1,35 @@
+{% extends "forms/index.html" %}
+
+{% block script %}
+	{{super()}}
+	<script src="{{url_for('static', filename='teacher/workshops/search.js')}}"></script>	
+	<script src="{{url_for('static', filename='teacher/workshops/index.js')}}"></script>	
+{% endblock %}
+
+{% block index_title %}
+	Talleres asignados a <a href="{{ url_for('teacher_profile', teacher_id=teacher.id) }}">{{teacher.last_name}}, {{teacher.first_name}}</a>
+{% endblock %}
+
+{% block placeholder %}Buscar taller{% endblock %}
+
+{% block table_head %}
+	<th scope="col">Semestre</th>
+	<th scope="col">Año</th>
+	<th scope="col">Duración</th>
+	<th scope="col">Taller</th>
+{% endblock %}
+
+{% block table_body %}
+	{% for cicle in teacher.school_years %}
+		<tr class="item-row">
+			{% for workshop in teacher.get_workshops_of_cicle(cicle.id) %}
+			<th scope="row" class="semester">{{cicle.semester}}</th>
+			<td class="start-date">{{cicle.start_date.year}}</td>
+			<td class="duration">{{cicle.start_date}} al {{cicle.finish_date}}</td>
+			<td class="workshop">
+				{{ workshop.name }} (<strong>{{ workshop.short_name }}</strong>)
+			</td>
+			{% endfor %}
+		</tr>
+	{% endfor %}
+{% endblock %}

@@ -1,3 +1,4 @@
 $(document).ready(() => {
-    const search = new StudentSearch();
+	const filters = [new ActiveFilter()]
+    const search = new StudentSearch(filters);
 });

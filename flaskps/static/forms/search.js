@@ -1,11 +1,11 @@
 /* Abstract Class */
 class Search {
 
-    constructor(pager) {
+    constructor(filters) {
         this.pager = new Pager();
+        this.filters = filters
         this.initSelectors()
         this.initEvents()
-        this.initFilters()
         this.start()
     }
 
@@ -14,23 +14,12 @@ class Search {
         this.rowsSelector = document.querySelectorAll(".item-row")
         this.searchButton = document.querySelector("#search-button")
         this.resultText = document.querySelector("#result")
-        this.activeButton = document.querySelector("#active-checkbox")
-        this.deactiveButton = document.querySelector("#inactive-checkbox")
     }
 
     initEvents() {
         this.searchInput.addEventListener("keyup", this.start.bind(this))
         this.searchButton.addEventListener("clickup", this.start.bind(this))
-        this.activeButton.addEventListener("change", this.start.bind(this))
-        this.deactiveButton.addEventListener("change", this.start.bind(this))
-    }
-
-    initFilters() {
-        this.filters = [new ActiveFilter()]
-    }
-
-    addFilter(aFilter) {
-        this.filters.push(aFilter)
+        this.filters.forEach((filter) => filter.initEvents(this))
     }
 
     start() {

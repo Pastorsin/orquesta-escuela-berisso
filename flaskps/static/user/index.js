@@ -1,5 +1,6 @@
 $(document).ready(() => {
-    const search = new UserSearch();
+    const filters = [new ActiveFilter()]
+    const search = new UserSearch(filters);
 
     $('.deactivate').on('click', function(){
         let surname=$(this).parents('td').siblings('.surname').text();

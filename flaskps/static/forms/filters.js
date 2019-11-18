@@ -1,6 +1,11 @@
 class Filter {
 
-    /* Abstract method*/
+    /* Hook method - Optional */
+    initEvents(search) {
+        /* Define the events that trigger the search */
+    }
+
+    /* Abstract method */
     satisfy(row, value) {
         throw new Error('Satisfy method is not implemented');
     }
@@ -16,6 +21,11 @@ class ActiveFilter extends Filter {
     initSelectors() {
         this.activeButton = $("#active-checkbox")
         this.deactiveButton = $("#inactive-checkbox")
+    }
+
+    initEvents(search) {
+        this.activeButton.change(search.start.bind(search))
+        this.deactiveButton.change(search.start.bind(search))
     }
 
     satisfy(row, value) {

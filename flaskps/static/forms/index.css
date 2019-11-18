@@ -4,6 +4,11 @@
   	border: 1px solid #d3dadc;
 }
 
+.title {
+    font-family: Quicksand;
+    border-bottom: 1px solid #d3dadc;
+}
+
 #search-container {
   	border: 1px solid #d3dadc;
 }

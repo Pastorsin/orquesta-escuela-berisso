@@ -97,8 +97,4 @@ class Teacher(db.Model):
 
     def get_workshops_of_cicle(self, cicle_id):
         return Workshop.query.join(school_year_workshop_teacher).\
-                filter_by(docente_id=self.id, ciclo_lectivo_id=cicle_id)
-
-    @property
-    def gender(self):
-        return Gender.query.get(self.gender_id).name
+            filter_by(docente_id=self.id, ciclo_lectivo_id=cicle_id)
