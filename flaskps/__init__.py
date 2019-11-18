@@ -9,6 +9,8 @@ from .extensions.login_manager import login_manager
 
 from flask_migrate import Migrate
 
+from .models.webconfig import Webconfig
+
 
 # App initial config
 app = Flask(__name__)
@@ -23,6 +25,13 @@ migrate = Migrate(app, db)
 
 login_manager.init_app(app)
 bcrypt.init_app(app)
+
+
+# Jinja2 global context (permanent variables)
+@app.context_processor
+def global_context():
+    config = Webconfig.query.first()
+    return dict(config=config)
 
 
 # Auth
