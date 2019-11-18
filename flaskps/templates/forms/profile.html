@@ -1,0 +1,14 @@
+{% extends "sections_base.html" %}
+
+{% block style %}
+	<link rel="stylesheet" type="text/css" href="{{url_for('static', filename='user/profile.css')}}">
+	{{ super() }}
+{% endblock %}
+
+{% block content %}
+
+    <section class="container-fluid profile-information">
+        <h1 class="title">Perfil de {% block profile_name %}{% endblock %}</h1>
+        {% block profile_attributes %}{% endblock %}
+    </section>
+{% endblock %}

@@ -1,4 +1,4 @@
-{% extends "sections_base.html" %}
+{% extends "forms/profile.html" %}
 
 {% block style %}
 	<link rel="stylesheet" type="text/css" href="{{url_for('static', filename='user/profile.css')}}">
@@ -22,36 +22,35 @@
     </script>
 {% endblock %}
 
-{% block content %}
+{% block profile_name %}
+    {{ user.last_name }}, {{ user.first_name }}
+{% endblock %}
 
-    <section class="container-fluid profile-information">
+{% block profile_attributes %}
 
-        <h1 class="title">Perfil de {{ user.last_name }}, {{ user.first_name }}</h1>
+    {% block head_content %} {% endblock %}
+    
+    <h4><span class="title subtitle">Activo</span></h4>
+    <i class="fa fa-{{ 'check text-success' if (user.is_active) else 'times text-danger' }} user-active" active={{ user.is_active|int }}></i>
 
-        {% block head_content %} {% endblock %}
-        
-        <h4><span class="title subtitle">Activo</span></h4>
-        <i class="fa fa-{{ 'check text-success' if (user.is_active) else 'times text-danger' }} user-active" active={{ user.is_active|int }}></i>
+    <h4><span class="title subtitle">Fecha de nacimiento</span></h4>
+    <span class="information">{{ user.birth_date }}</span>
 
-        <h4><span class="title subtitle">Fecha de nacimiento</span></h4>
-        <span class="information">{{ user.birth_date }}</span>
+    <h4><span class="title subtitle">Dirección</span></h4>
+    <span class="information"><span id="location"></span> - {{ user.residency }}</span>
 
-        <h4><span class="title subtitle">Dirección</span></h4>
-        <span class="information"><span id="location"></span> - {{ user.residency }}</span>
+    <h4><span class="title subtitle">Género</span></h4>
+    <span class="information">{{ user.gender.name }}</span>
 
-        <h4><span class="title subtitle">Género</span></h4>
-        <span class="information">{{ user.gender.name }}</span>
+    <h4><span class="title subtitle">Documento</span></h4>
+    <span class="information"><span id="doc-type"></span>: {{ user.doc_number }} </span>
 
-        <h4><span class="title subtitle">Documento</span></h4>
-        <span class="information"><span id="doc-type"></span>: {{ user.doc_number }} </span>
+    <h4><span class="title subtitle">Teléfono</span></h4>
+    <span class="information">{{ user.telephone }}</span>
 
-        <h4><span class="title subtitle">Teléfono</span></h4>
-        <span class="information">{{ user.telephone }}</span>
+    {% block extra_content %} {% endblock extra_content %}
 
-        {% block extra_content %} {% endblock extra_content %}
+    {% block buttons %} {% endblock buttons %}
 
-        {% block buttons %} {% endblock buttons %}
-
-    </section>
 
 {% endblock %}
