@@ -1,5 +1,7 @@
 from flaskps.extensions.db import db
-from .teacher_resp_workshop import school_year_workshop
+from .teacher_resp_workshop import school_year_workshop_teacher
+from .workshop import Workshop
+from .gender import Gender
 
 
 class Teacher(db.Model):
@@ -71,10 +73,10 @@ class Teacher(db.Model):
         default=True
     )
 
-    school_years = db.relationship('SchoolYear', secondary=school_year_workshop,
+    school_years = db.relationship('SchoolYear', secondary=school_year_workshop_teacher,
                                    lazy='subquery', backref=db.backref('teachers', lazy=True))
 
-    workshops = db.relationship('Workshop', secondary=school_year_workshop,
+    workshops = db.relationship('Workshop', secondary=school_year_workshop_teacher,
                                 lazy='subquery', backref=db.backref('teachers', lazy=True))
 
     def activate(self):
@@ -92,3 +94,11 @@ class Teacher(db.Model):
         teacher = cls(data)
         db.session.add(teacher)
         db.session.commit()
+
+    def get_workshops_of_cicle(self, cicle_id):
+        return Workshop.query.join(school_year_workshop_teacher).\
+                filter_by(docente_id=self.id, ciclo_lectivo_id=cicle_id)
+
+    @property
+    def gender(self):
+        return Gender.query.get(self.gender_id).name

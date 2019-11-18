@@ -3,7 +3,7 @@ from .school_year import SchoolYear
 from .workshop import Workshop
 
 
-school_year_workshop = db.Table(
+school_year_workshop_teacher = db.Table(
     'docente_responsable_taller',
     db.Column(
         'docente_id',
