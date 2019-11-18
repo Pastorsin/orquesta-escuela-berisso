@@ -32,7 +32,7 @@ class SchoolYear(db.Model):
                                 lazy='subquery', backref=db.backref('school_years', lazy=True))
 
     @classmethod
-    def create(self,data):
-        school_year = cls(data)
+    def create(self, data):
+        school_year = self(data)
         db.session.add(school_year)
         db.session.commit()

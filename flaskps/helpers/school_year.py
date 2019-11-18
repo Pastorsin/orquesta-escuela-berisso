@@ -1,6 +1,6 @@
 from .form import Validator, Form
-from flaskps.models.school_year import SchoolYear
-from datetime import date,datetime
+from datetime import datetime
+
 
 class DateValidator(Validator):
 
@@ -9,10 +9,11 @@ class DateValidator(Validator):
         self.ending_date = end_date
 
     def validate(self):
-        return datetime.strptime(self.starting_date,'%Y-%m-%d').date() < datetime.strptime(self.ending_date,'%Y-%m-%d').date()
+        return datetime.strptime(self.starting_date, '%Y-%m-%d').date() < datetime.strptime(self.ending_date, '%Y-%m-%d').date()
 
     def message(self):
         return 'Error! La fecha de inicio no puede ser posterior a la fecha de fin.'
+
 
 class SchoolYearForm(Form):
 

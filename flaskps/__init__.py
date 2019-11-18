@@ -72,7 +72,5 @@ app.add_url_rule("/docentes/editar/<teacher_id>", 'teacher_edit', teacher.edit, 
 app.add_url_rule("/docentes/<teacher_id>", 'teacher_profile', teacher.profile)
 app.add_url_rule("/docentes/<teacher_id>/talleres", 'teacher_workshops', teacher.workshops)
 
-#SchoolYear
+# SchoolYear
 app.add_url_rule("/schoolyear/new", 'schoolyear_new', school_year.new, methods=['POST', 'GET'])
-
-
