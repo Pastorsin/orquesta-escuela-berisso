@@ -1,7 +1,7 @@
 from flask import Flask
 
 from flaskps.config import Config
-from flaskps.resources import user, base, webconfig, admin, student, teacher
+from flaskps.resources import user, base, webconfig, admin, student, teacher, api
 
 from .extensions.db import db
 from .extensions.bcrypt import bcrypt
@@ -58,16 +58,19 @@ app.add_url_rule("/configuracion/editar", 'webconfig_edit', webconfig.edit, meth
 
 # Students
 app.add_url_rule("/estudiantes", 'student_index', student.index)
-app.add_url_rule("/estudiantes/desactivar/<student_id>", 'deactivate_student', student.deactivate,  methods=['POST'])
-app.add_url_rule("/estudiantes/activar/<student_id>", 'activate_student', student.activate,  methods=['POST'])
+app.add_url_rule("/estudiantes/desactivar/<student_id>", 'deactivate_student', student.deactivate, methods=['POST'])
+app.add_url_rule("/estudiantes/activar/<student_id>", 'activate_student', student.activate, methods=['POST'])
 app.add_url_rule("/estudiantes/<student_id>", 'student_profile', student.profile)
 app.add_url_rule("/estudiantes/<student_id>/talleres", 'student_workshops', student.workshops)
 
 # Teachers
 app.add_url_rule("/docentes", 'teacher_index', teacher.index)
-app.add_url_rule("/docentes/desactivar/<teacher_id>", 'deactivate_teacher', teacher.deactivate,  methods=['POST'])
-app.add_url_rule("/docentes/activar/<teacher_id>", 'activate_teacher', teacher.activate,  methods=['POST'])
-app.add_url_rule("/docentes/new", 'teacher_new', teacher.new,  methods=['POST', 'GET'])
-app.add_url_rule("/docentes/editar/<teacher_id>", 'teacher_edit', teacher.edit,  methods=['POST', 'GET'])
+app.add_url_rule("/docentes/desactivar/<teacher_id>", 'deactivate_teacher', teacher.deactivate, methods=['POST'])
+app.add_url_rule("/docentes/activar/<teacher_id>", 'activate_teacher', teacher.activate, methods=['POST'])
+app.add_url_rule("/docentes/new", 'teacher_new', teacher.new, methods=['POST', 'GET'])
+app.add_url_rule("/docentes/editar/<teacher_id>", 'teacher_edit', teacher.edit, methods=['POST', 'GET'])
 app.add_url_rule("/docentes/<teacher_id>", 'teacher_profile', teacher.profile)
 app.add_url_rule("/docentes/<teacher_id>/talleres", 'teacher_workshops', teacher.workshops)
+
+# API
+app.add_url_rule('/api/docente/<docente_id>/ciclo/<ciclo_id>', 'cicle_workshops', api.cicle_workshops_docente)
