@@ -13,6 +13,18 @@ SUCCESS_MSG = {
 
 
 @login_required
+@permissions_enabled('teacher_profile', current_user)
+def workshops(teacher_id):
+    teacher = Teacher.query.get(teacher_id)
+    return render_template(
+        'teacher/workshops.html',
+        teacher=teacher,
+        config=get_web_config()
+    )
+
+
+@login_required
+@permissions_enabled('teacher_profile', current_user)
 def profile(teacher_id):
     docente = Teacher.query.get(teacher_id)
     return render_template('teacher/profile.html', user=docente, config=get_web_config())
@@ -114,13 +126,3 @@ def update(form, teacher):
             teacher_id=teacher.id,
             config=get_web_config()
         )
-
-
-@login_required
-def workshops(teacher_id):
-    teacher = Teacher.query.get(teacher_id)
-    return render_template(
-        'teacher/workshops.html',
-        teacher=teacher,
-        config=get_web_config()
-    )
