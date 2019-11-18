@@ -1,6 +1,6 @@
 from .form import Validator, Form
-from flaskps.models.teacher import Teacher
-from datetime import date,datetime
+from datetime import date, datetime
+
 
 # Validators
 
@@ -10,10 +10,11 @@ class BirthdateValidator(Validator):
         self.birthdate = field
 
     def validate(self):
-        return datetime.strptime(self.birthdate,'%Y-%m-%d').date() < date.today()
+        return datetime.strptime(self.birthdate, '%Y-%m-%d').date() < date.today()
 
     def message(self):
         return 'Error! La fecha de nacimiento no puede ser posterior a la fecha actual.'
+
 
 class DocNumberValidator(Validator):
 
@@ -25,6 +26,7 @@ class DocNumberValidator(Validator):
 
     def message(self):
         return 'Error! El tipo de documento debe ser numérico.'
+
 
 # Forms
 

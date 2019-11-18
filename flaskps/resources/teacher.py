@@ -8,12 +8,16 @@ from flaskps.helpers.teacher import TeacherCreateForm, TeacherEditForm
 from flaskps.models.teacher import Teacher
 from flaskps.models.gender import Gender
 from flaskps.models.school_year import SchoolYear
-from flaskps.models.workshop import Workshop
 from flaskps.models.teacher_resp_workshop import school_year_workshop_teacher
 
 SUCCESS_MSG = {
     'deactivate': 'El docente {first_name}, {last_name} ha sido desactivado correctamente.',
-    'activate': 'El docente {first_name}, {last_name} ha sido activado correctamente.'
+    'activate': 'El docente {first_name}, {last_name} ha sido activado correctamente.',
+    'assign': 'El docente ha sido asignado a los talleres correctamente.'
+}
+
+ERROR_MSG = {
+    'assign': 'No se ha enviado el formulario, especifique un ciclo y al menos un taller por favor.',
 }
 
 
@@ -142,6 +146,14 @@ def update(form, teacher):
         )
 
 
+def add_workshops_to_table(form_workshops, teacher_id, form_cicle):
+    for whp in form_workshops:
+        statement = school_year_workshop_teacher.insert().values(
+                docente_id=teacher_id, ciclo_lectivo_id=form_cicle, taller_id=whp)
+        db.session.execute(statement)
+    db.session.commit()
+
+
 @login_required
 @permissions_enabled('teacher_update', current_user)
 def assign_workshop(teacher_id):
@@ -149,14 +161,11 @@ def assign_workshop(teacher_id):
         form_cicle = request.form.get('cicle')
         form_workshops = request.form.getlist('workshop')
         if form_cicle is not None and form_workshops:
-            for whp in form_workshops:
-                statement = school_year_workshop_teacher.insert().values(
-                        docente_id=teacher_id, ciclo_lectivo_id=form_cicle, taller_id=whp)
-                db.session.execute(statement)
-            db.session.commit()
+            add_workshops_to_table(form_workshops, teacher_id, form_cicle)
+            flash(SUCCESS_MSG['assign'], 'success')
             return redirect(url_for('teacher_index'))
         else:
-            flash('No se ha enviado el formulario, especifique un ciclo y al menos un taller por favor', 'danger')
+            flash(ERROR_MSG['assign'], 'danger')
             return redirect(url_for('teacher_assign', teacher_id=teacher_id))
     else:
         teacher = Teacher.query.get(teacher_id)
