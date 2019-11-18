@@ -2,7 +2,6 @@
 
 {% block script %}
     {{super()}}
-    <script text="javascript" src="{{url_for('static', filename='teacher/edit.js')}}"></script>
 {% endblock %}
 
 {% block form_title %}
@@ -10,5 +9,5 @@
 {% endblock %}
 
 {% block post_url %}
-	{{ url_for('teacher_edit', teacher_id=teacher_id) }}	
+	{{ url_for('teacher_edit', teacher_id=academic_id) }}	
 {% endblock %}

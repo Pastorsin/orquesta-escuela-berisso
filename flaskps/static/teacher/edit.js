@@ -1,4 +1,4 @@
 $(document).ready(() => {
-    fillDocType();
-    fillLocality();
+    fillDocTypeSelect();
+    fillLocalitiesSelect();
 });

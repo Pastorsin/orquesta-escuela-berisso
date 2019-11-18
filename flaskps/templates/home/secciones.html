@@ -27,7 +27,7 @@
                </div>
             </div>
             <div class="row">
-               {% for permission in current_user.permissions() %}
+               {% for permission in current_user.permissions()|sort(attribute='id') %}
                <div class="col-lg-4 col-md-6 section" id="{{permission.name}}">
                   <!-- Single Service -->
                   <a class="item-url">

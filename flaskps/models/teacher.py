@@ -79,6 +79,20 @@ class Teacher(db.Model):
     workshops = db.relationship('Workshop', secondary=school_year_workshop_teacher,
                                 lazy='subquery', backref=db.backref('teachers', lazy=True))
 
+    def __init__(self, data):
+        self.__init_attributes(data)
+
+    def __init_attributes(self, data):
+        self.last_name = data['last_name']
+        self.first_name = data['first_name']
+        self.birth_date = data['birth_date']
+        self.location_id = data['location_id']
+        self.residency = data['residency']
+        self.gender_id = data['gender_id']
+        self.doc_type_id = data['doc_type_id']
+        self.doc_number = data['doc_number']
+        self.telephone = data['telephone']
+
     def activate(self):
         self.is_active = True
         db.session.commit()
@@ -93,6 +107,10 @@ class Teacher(db.Model):
     def create(cls, data):
         teacher = cls(data)
         db.session.add(teacher)
+        db.session.commit()
+
+    def update(self, values):
+        self.__init_attributes(values)
         db.session.commit()
 
     def get_workshops_of_cicle(self, cicle_id):
