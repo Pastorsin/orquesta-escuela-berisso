@@ -2,15 +2,18 @@
 
 {% block extra_content %}
 
-    <h4 id="workshops" class="my-4"><a class="title subtitle" href="{{ url_for('teacher_workshops', teacher_id=user.id) }}">Listado de talleres asignados</a></h4>
+    <!-- <h4 id="workshops" class="my-4"><a class="title subtitle" ></a></h4> -->
 
 {% endblock %}
 
 
 {% block buttons %}
+        <a class="white-button mr-2" id="teacher-list-button" href="{{ url_for('teacher_workshops', teacher_id=user.id) }}">
+          <i class="fa fa-list"></i> Listado de talleres
+        </a>
     {% if current_user.has_permission('user_index') %}
         <a class="white-button" id="user-list-button" href="{{url_for('teacher_index')}}">
-          <i class="fa fa-list"></i> Volver al Listado
+          <i class="fa fa-list"></i> Listado de docentes
         </a>
     {% endif %}
 {% endblock buttons %}
