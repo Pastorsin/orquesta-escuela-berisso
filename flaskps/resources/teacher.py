@@ -3,6 +3,7 @@ from flask_login import current_user, login_required
 from flaskps.helpers.webconfig import get_web_config
 from flaskps.helpers.constraints import permissions_enabled
 
+from flaskps.helpers.teacher import TeacherCreateForm, TeacherEditForm
 from flaskps.models.teacher import Teacher
 from flaskps.models.gender import Gender
 
@@ -68,7 +69,7 @@ def activate(teacher_id):
 
 @login_required
 @permissions_enabled('teacher_new', current_user)
-def new(teacher=None):
+def new():
     if request.method == 'POST':
 
         form = TeacherCreateForm(request.form)
@@ -80,13 +81,18 @@ def new(teacher=None):
         else:
             for error in form.error_messages():
                 flash(error, 'danger')
-            return new(teacher=form.values)
+            generos = Gender.query.all()
+            return render_template(
+                'teacher/new.html',
+                academic=form.values,
+                genders=generos,
+            )
 
     else:
         generos = Gender.query.all()
         return render_template(
             'teacher/new.html',
-            teacher=teacher,
+            academic=None,
             genders=generos,
         )
 
@@ -102,10 +108,12 @@ def edit(teacher_id):
             teacher=teacher,
         )
     else:
+        generos = Gender.query.all()
         return render_template(
             'teacher/edit.html',
-            teacher=teacher,
-            teacher_id=teacher_id,
+            academic=teacher,
+            genders=generos,
+            academic_id=teacher_id,
             config=get_web_config()
         )
 
@@ -120,9 +128,11 @@ def update(form, teacher):
     else:
         for error in form.error_messages():
             flash(error, 'danger')
+        generos = Gender.query.all()
         return render_template(
             'teacher/edit.html',
-            teacher=form.values,
-            teacher_id=teacher.id,
+            academic=form.values,
+            genders=generos,
+            academic_id=teacher.id,
             config=get_web_config()
         )
