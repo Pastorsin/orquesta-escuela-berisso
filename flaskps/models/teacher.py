@@ -1,7 +1,6 @@
 from flaskps.extensions.db import db
 from .teacher_resp_workshop import school_year_workshop_teacher
 from .workshop import Workshop
-from .gender import Gender
 
 
 class Teacher(db.Model):
