@@ -121,6 +121,7 @@ class Student(db.Model):
     def __repr__(self):
         return f'<Student {self.first_name}, {self.last_name}>'
 
+
     def activate(self):
         self.is_active = True
         db.session.commit()

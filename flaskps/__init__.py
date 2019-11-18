@@ -1,7 +1,7 @@
 from flask import Flask
 
 from flaskps.config import Config
-from flaskps.resources import user, base, webconfig, admin, student, teacher
+from flaskps.resources import user, base, webconfig, admin, student, teacher, school_year
 
 from .extensions.db import db
 from .extensions.bcrypt import bcrypt
@@ -71,3 +71,8 @@ app.add_url_rule("/docentes/new", 'teacher_new', teacher.new,  methods=['POST', 
 app.add_url_rule("/docentes/editar/<teacher_id>", 'teacher_edit', teacher.edit,  methods=['POST', 'GET'])
 app.add_url_rule("/docentes/<teacher_id>", 'teacher_profile', teacher.profile)
 app.add_url_rule("/docentes/<teacher_id>/talleres", 'teacher_workshops', teacher.workshops)
+
+#SchoolYear
+app.add_url_rule("/schoolyear/new", 'schoolyear_new', school_year.new, methods=['POST', 'GET'])
+
+

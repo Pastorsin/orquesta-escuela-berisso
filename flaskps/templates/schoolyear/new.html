@@ -1,0 +1,36 @@
+    {% extends "forms/new.html" %}
+
+{% block script %}
+    <script text="javascript" src="{{url_for('static', filename='snippets/api_interface.js')}}"></script>
+    <script text="javascript" src="{{url_for('static', filename='teacher/new.js')}}"></script>
+{% endblock %}
+
+{% block form_title %}
+    Crear ciclo lectivo
+{% endblock %}
+
+{% block post_url %}
+	{{ url_for('schoolyear_new') }}
+{% endblock %}
+
+{% block fields %}
+    <div class="col-12">
+        <div class="form-group">
+            <label for="starting-date-input">Fecha de Inicio</label>
+            <input id="starting-date-input" class="form-control" type="date" name="starting_date" required placeholder="Fecha de Fin" value="">
+        </div>
+
+        <div class="form-group">
+            <label for="ending-date-input">Fecha de Fin</label>
+            <input id="ending-date-input" class="form-control" type="date" name="ending_date" required placeholder="Fecha de Fin" value="">
+        </div>
+        <div class="form-row align-items-center">
+            <div class="form-group col-md-4">
+                <label for="semester-input">Semestre</label>
+                <select id="semester-input" class="form-control" name="semester_id" required placeholder="Semestre" value="">
+                    <option value="">Primer semestre</option>
+                    <option value="">Segundo semestre</option>
+                </select>
+            </div>
+    </div>
+{% endblock %}

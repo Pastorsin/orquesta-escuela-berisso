@@ -30,3 +30,9 @@ class SchoolYear(db.Model):
 
     workshops = db.relationship('Workshop', secondary=school_year_workshop,
                                 lazy='subquery', backref=db.backref('school_years', lazy=True))
+
+    @classmethod
+    def create(self,data):
+        school_year = cls(data)
+        db.session.add(school_year)
+        db.session.commit()
