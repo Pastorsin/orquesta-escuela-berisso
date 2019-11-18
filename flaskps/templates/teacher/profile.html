@@ -1,0 +1,18 @@
+{% extends "profile_base.html" %}
+
+
+{% block extra_content %}
+
+    <h4><span class="title subtitle">Talleres asignados al docente</span></h4>
+    {% include "snippets/cicle_workshop_list.html" %}
+
+{% endblock extra_content %}
+
+
+{% block buttons %}
+    {% if current_user.has_permission('user_index') %}
+        <a class="white-button" id="user-list-button" href="{{url_for('teacher_index')}}">
+          <i class="fa fa-list"></i> Volver al Listado
+        </a>
+    {% endif %}
+{% endblock buttons %}

@@ -1,0 +1,54 @@
+{% extends "sections_base.html" %}
+
+{% block style %}
+	<link rel="stylesheet" type="text/css" href="{{url_for('static', filename='user/profile.css')}}">
+	{{ super() }}
+{% endblock %}
+
+{% block script %}
+    <script text="javascript" src="{{url_for('static', filename='snippets/api_interface.js')}}"></script>
+    <script charset="utf-8">
+      $(document).ready(() => {
+
+        getLocalityWithId({{ user.location_id|tojson }}).then(function(result) {
+          $('#location').text(result)
+        });
+
+        getDocumentTypeWithId({{ user.doc_type_id|tojson }}).then(function(result) {
+          $('#doc-type').text(result)
+        });
+
+      });
+    </script>
+{% endblock %}
+
+{% block content %}
+
+    <section class="container-fluid profile-information">
+        <h1 class="title">Perfil de {{ user.last_name }}, {{ user.first_name }}</h1>
+
+        <h4><span class="title subtitle">Activo</span></h4>
+        <i class="fa fa-{{ 'check text-success' if (user.is_active) else 'times text-danger' }} user-active" active={{ user.is_active|int }}></i>
+
+        <h4><span class="title subtitle">Fecha de nacimiento</span></h4>
+        <span class="information">{{ user.birth_date }}</span>
+
+        <h4><span class="title subtitle">Dirección</span></h4>
+        <span class="information"><span id="location"></span> - {{ user.residency }}</span>
+
+        <h4><span class="title subtitle">Género</span></h4>
+        <span class="information">{{ user.gender }}</span>
+
+        <h4><span class="title subtitle">Documento</span></h4>
+        <span class="information"><span id="doc-type"></span>: {{ user.doc_number }} </span>
+
+        <h4><span class="title subtitle">Teléfono</span></h4>
+        <span class="information">{{ user.telephone }}</span>
+
+        {% block extra_content %} {% endblock extra_content %}
+
+        {% block buttons %} {% endblock buttons %}
+
+    </section>
+
+{% endblock %}

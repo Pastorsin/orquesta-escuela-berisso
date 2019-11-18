@@ -31,6 +31,7 @@
             <li class="information">{{role.name}}</li>
         {% endfor %}
         </ul>
+
         {% if current_user.has_permission('user_index') %}
             <a class="white-button" id="user-list-button" href="{{url_for('user_index')}}"><i class="fa fa-list"></i> Volver al Listado</a>
         {% endif %}

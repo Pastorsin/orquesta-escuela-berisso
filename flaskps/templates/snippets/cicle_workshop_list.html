@@ -1,0 +1,22 @@
+<div class="row">
+  <div class="col-6">
+    <div class="list-group pb-3" id="cicle-list" role="tablist">
+      {% for cicle in user.school_years %}
+      <a class="list-group-item list-group-item-action" id="list-{{ cicle.id }}-list" data-toggle="list" href="#list-tab-cicle-{{ cicle.id }}" role="tab" aria-controls="cicle-{{ cicle.id }}">
+          Ciclo Nº{{ cicle.id }} | {{ cicle.start_date }} - {{ cicle.finish_date }}
+      </a>
+      {% endfor %}
+    </div>
+  </div>
+  <div class="col-6">
+    <div class="tab-content" id="cicle-tab-content">
+      {% for cicle in user.school_years %}
+        <div class="tab-pane fade" id="list-tab-cicle-{{ cicle.id }}" role="tabpanel" aria-labelledby="list-{{ cicle.id }}-list">
+          {% for workshop in user.get_workshops_of_cicle(cicle.id) %}
+          <p>{{ workshop.name }} - {{ workshop.short_name }}</p>
+          {% endfor %}
+        </div>
+      {% endfor %}
+    </div>
+  </div>
+</div>

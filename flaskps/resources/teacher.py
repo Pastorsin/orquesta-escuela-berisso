@@ -13,6 +13,12 @@ SUCCESS_MSG = {
 
 
 @login_required
+def profile(teacher_id):
+    docente = Teacher.query.get(teacher_id)
+    return render_template('teacher/profile.html', user=docente, config=get_web_config())
+
+
+@login_required
 @permissions_enabled('teacher_index', current_user)
 def index():
     teachers = Teacher.query.all()
@@ -47,6 +53,7 @@ def activate(teacher_id):
     ), 'success')
     return redirect(url_for('teacher_index'))
 
+
 @login_required
 @permissions_enabled('teacher_new', current_user)
 def new(teacher=None):
@@ -62,7 +69,7 @@ def new(teacher=None):
             for error in form.error_messages():
                 flash(error, 'danger')
             return new(teacher=form.values)
-    
+
     else:
         generos = Gender.query.all()
         return render_template(
@@ -70,6 +77,7 @@ def new(teacher=None):
             teacher=teacher,
             genders=generos,
         )
+
 
 @login_required
 @permissions_enabled('teacher_update', current_user)
