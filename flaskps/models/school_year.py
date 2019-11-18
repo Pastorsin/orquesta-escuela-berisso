@@ -1,4 +1,5 @@
 from flaskps.extensions.db import db
+from flaskps.models.school_year_workshop import school_year_workshop
 
 
 class SchoolYear(db.Model):
@@ -11,13 +12,13 @@ class SchoolYear(db.Model):
 
     start_date = db.Column(
         'fecha_inicio',
-        db.DateTime,
+        db.Date,
         nullable=False
     )
 
     finish_date = db.Column(
         'fecha_fin',
-        db.DateTime,
+        db.Date,
         nullable=False
     )
 
@@ -26,3 +27,6 @@ class SchoolYear(db.Model):
         db.Integer,
         nullable=False
     )
+
+    workshops = db.relationship('Workshop', secondary=school_year_workshop,
+                                lazy='subquery', backref=db.backref('school_years', lazy=True))
