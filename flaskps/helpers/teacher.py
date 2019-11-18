@@ -15,6 +15,17 @@ class BirthdateValidator(Validator):
     def message(self):
         return 'Error! La fecha de nacimiento no puede ser posterior a la fecha actual.'
 
+class DocNumberValidator(Validator):
+
+    def __init__(self, field):
+        self.docnumber = field
+
+    def validate(self):
+        return self.docnumber.isdigit()
+
+    def message(self):
+        return 'Error! El tipo de documento debe ser numérico.'
+
 # Forms
 
 class TeacherForm(Form):
@@ -34,7 +45,8 @@ class TeacherCreateForm(TeacherForm):
         super(TeacherCreateForm, self).__init__(form)
 
         self.validators.extend([
-            BirthdateValidator(self.fields['birth_date'])
+            BirthdateValidator(self.fields['birth_date']),
+            DocNumberValidator(self.fields['doc_number'])
         ])
 
     def success_message(self):
@@ -47,7 +59,8 @@ class TeacherEditForm(TeacherForm):
         super(TeacherEditForm, self).__init__(form)
 
         self.validators.extend([
-            BirthdateValidator(self.fields['birth_date'])
+            BirthdateValidator(self.fields['birth_date']),
+            DocNumberValidator(self.fields['doc_number'])
         ])
 
     def success_message(self):
