@@ -12,6 +12,23 @@ SUCCESS_MSG = {
 
 
 @login_required
+@permissions_enabled('student_profile', current_user)
+def workshops(student_id):
+    student = Student.query.get(student_id)
+    return render_template(
+        'student/workshops.html',
+        academic=student,
+        config=get_web_config()
+    )
+
+
+@login_required
+@permissions_enabled('student_profile', current_user)
+def profile(student_id):
+    return 'ndeah'
+
+
+@login_required
 @permissions_enabled('student_index', current_user)
 def index():
     students = Student.query.all()

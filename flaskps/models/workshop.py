@@ -1,4 +1,5 @@
 from flaskps.extensions.db import db
+from .school_year_workshop import school_year_workshop
 
 
 class Workshop(db.Model):

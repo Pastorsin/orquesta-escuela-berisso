@@ -51,6 +51,8 @@ app.add_url_rule("/configuracion/editar", 'webconfig_edit', webconfig.edit, meth
 app.add_url_rule("/estudiantes", 'student_index', student.index)
 app.add_url_rule("/estudiantes/desactivar/<student_id>", 'deactivate_student', student.deactivate,  methods=['POST'])
 app.add_url_rule("/estudiantes/activar/<student_id>", 'activate_student', student.activate,  methods=['POST'])
+app.add_url_rule("/estudiantes/<student_id>", 'student_profile', student.profile)
+app.add_url_rule("/estudiantes/<student_id>/talleres", 'student_workshops', student.workshops)
 
 # Teachers
 app.add_url_rule("/docentes", 'teacher_index', teacher.index)

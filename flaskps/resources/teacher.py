@@ -18,7 +18,7 @@ def workshops(teacher_id):
     teacher = Teacher.query.get(teacher_id)
     return render_template(
         'teacher/workshops.html',
-        teacher=teacher,
+        academic=teacher,
         config=get_web_config()
     )
 

@@ -3,6 +3,8 @@ from .gender import Gender
 from .school import School
 from .level import Level
 from .neighborhood import Neighborhood
+from .student_workshop import school_year_workshop_student
+from .workshop import Workshop
 
 
 class Student(db.Model):
@@ -102,6 +104,20 @@ class Student(db.Model):
         default=True
     )
 
+    school_years = db.relationship(
+        'SchoolYear',
+        secondary=school_year_workshop_student,
+        lazy='subquery',
+        backref=db.backref('students', lazy=True)
+    )
+
+    workshops = db.relationship(
+        'Workshop',
+        secondary=school_year_workshop_student,
+        lazy='subquery',
+        backref=db.backref('students', lazy=True)
+    )
+
     def __repr__(self):
         return f'<Student {self.first_name}, {self.last_name}>'
 
@@ -112,3 +128,7 @@ class Student(db.Model):
     def deactivate(self):
         self.is_active = False
         db.session.commit()
+
+    def get_workshops_of_cicle(self, cicle_id):
+        return Workshop.query.join(school_year_workshop_student).\
+            filter_by(estudiante_id=self.id, ciclo_lectivo_id=cicle_id)

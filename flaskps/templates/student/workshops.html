@@ -1,5 +1,5 @@
 {% extends "academic/workshops.html" %}
 
 {% block profile_url %}
-	{{ url_for('teacher_profile', teacher_id=academic.id) }}
+	{{ url_for('student_profile', student_id=academic.id) }}
 {% endblock %}
