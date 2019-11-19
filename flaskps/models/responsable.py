@@ -64,6 +64,13 @@ class Responsable(db.Model):
         nullable=False
     )
 
+    is_active = db.Column(
+        'activo',
+        db.Boolean,
+        nullable=False,
+        default=True
+    )
+
     def __init__(self, data):
         self.__init_attributes(data)
 
@@ -84,3 +91,21 @@ class Responsable(db.Model):
         db.session.add(responsable)
         db.session.commit()
         return responsable
+
+    def activate(self):
+        self.is_active = True
+        db.session.commit()
+
+    def deactivate(self):
+        self.is_active = False
+        db.session.commit()
+
+    def update(self, values):
+        self.__init_attributes(values)
+        db.session.commit()
+
+    def can_deactivated(self):
+        return all(map(
+            lambda student: student.more_responsables_active_that(self),
+            self.students
+        ))

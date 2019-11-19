@@ -1,8 +1,7 @@
-from .teacher import TeacherCreateForm
+from .teacher import TeacherCreateForm, TeacherEditForm
 from .form import Form
 from flaskps.models.student import Student
 from flaskps.models.responsable import Responsable
-# Forms
 
 
 class ResponsableCreateForm(TeacherCreateForm):
@@ -15,6 +14,21 @@ class ResponsableCreateForm(TeacherCreateForm):
     def save(self):
         responsable = Responsable.create(self.values)
         return responsable
+
+    def success_message(self):
+        return 'Responsable creado con éxito'
+
+
+class ResponsableEditForm(TeacherEditForm):
+
+    def success_message(self):
+        return 'Responsable modificado con éxito'
+
+
+class StudentEditForm(TeacherEditForm):
+
+    def success_message(self):
+        return 'Estudiante modificado con éxito'
 
 
 class StudentCreateForm(TeacherCreateForm):

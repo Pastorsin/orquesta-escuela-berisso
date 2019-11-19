@@ -153,7 +153,6 @@ class Student(db.Model):
     def __responsables_by_id(self, responsables_id):
         return [Responsable.query.get(r_id) for r_id in responsables_id]
 
-
     def __repr__(self):
         return f'<Student {self.first_name}, {self.last_name}>'
 
@@ -173,4 +172,22 @@ class Student(db.Model):
     def create(cls, data):
         student = cls(data)
         db.session.add(student)
+        db.session.commit()
+
+    def update(self, values):
+        self.__init_attributes(values)
+        db.session.commit()
+
+    def more_responsables_active_that(self, responsable):
+        return any(map(
+            lambda r: r.is_active, self.other_responsables(responsable)
+        ))
+
+    def other_responsables(self, responsable):
+        return filter(
+            lambda r: r.id != responsable.id, self.responsables
+        )
+
+    def add_responsable(self, responsable):
+        self.responsables.append(responsable)
         db.session.commit()

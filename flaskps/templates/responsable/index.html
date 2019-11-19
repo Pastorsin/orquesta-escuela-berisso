@@ -2,18 +2,20 @@
 
 {% block script %}
 	{{super()}}
-	<script src="{{url_for('static', filename='student/search.js')}}"></script>	
-	<script src="{{url_for('static', filename='student/index.js')}}"></script>	
+	<script src="{{url_for('static', filename='teacher/search.js')}}"></script>	
+	<script src="{{url_for('static', filename='teacher/index.js')}}"></script>	
 {% endblock %}
 
-{% block index_title %}Listado de Estudiantes{% endblock %}
+{% block index_title %}
+	Listado de Responsables del alumno 
+	<a href="{{url_for('student_profile', student_id= student.id)}}"> {{student.first_name}}, {{student.last_name}} </a> 
+{% endblock %}
 
-{% block placeholder %}Buscar estudiante{% endblock %}
+{% block placeholder %}Buscar responsable{% endblock %}
 
 {% block table_head %}
 	<th scope="col">Nombres</th>
 	<th scope="col">Apellidos</th>
-	<th scope="col">Escuela</th>
 	<th scope="col" class="text-center">Activo</th>
 	<th scope="col" class="text-center">Opciones</th>
 {% endblock %}
@@ -34,15 +36,19 @@
 	</div>
 {% endblock %}
 
-{% block table_body %}
+{% block section_buttons %}
+    <a class="white-button mr-2" id="teacher-list-button" href="{{ url_for('responsable_new', student_id=student.id) }}">
+      <i class="fa fa-list"></i> Agregar responsable
+    </a>
+{% endblock %}
 
-	{% for student in students %}
+{% block table_body %}
+	{% for responsable in student.responsables %}
 	<tr class="item-row">
-		<th scope="row" class="first-name">{{ student.first_name }}</th>
-		<th scope="row" class="last-name">{{ student.last_name }}</th>
-		<td scope="row" class="school">{{ student.school.name }}</td>
+		<th scope="row" class="first-name">{{ responsable.first_name }}</th>
+		<th scope="row" class="last-name">{{ responsable.last_name }}</th>
 		<td class="text-center">
-			<i class="fa fa-{{'check text-success' if (student.is_active) else 'times text-danger'}} td-active" active={{student.is_active|int}}></i>
+			<i class="fa fa-{{'check text-success' if (responsable.is_active) else 'times text-danger'}} td-active" active={{responsable.is_active|int}}></i>
 		</td>
 		<td scope="row" class="text-center">
 			<div class="dropdown">
@@ -50,17 +56,16 @@
 					<i class="fa fa-cog"></i>
 				</button>
 				<div class="dropdown-menu" aria-labelledby="dropdownMenuButton">
-					<a class="dropdown-item" href="#"><i class="fa fa-user"></i> Ver detalle</a>
-					<a class="dropdown-item" href="{{ url_for('student_edit', student_id=student.id) }}"><i class="fa fa-edit"></i> Modificar datos</a>
-					<a class="dropdown-item" href="{{ url_for('student_assign', student_id=student.id) }}"><i class="fas fa-book"></i> Asignar Taller</a>
-					{% if student.is_active %}
-						<form class="deactivate" action="{{ url_for('deactivate_student', student_id=student.id) }}" method="post">
+					<a class="dropdown-item" href="{{url_for('responsable_profile', responsable_id=responsable.id)}}"><i class="fa fa-user"></i> Ver detalle</a>
+					<a class="dropdown-item" href="{{url_for('responsable_edit', responsable_id=responsable.id)}}"><i class="fa fa-edit"></i> Modificar datos</a>
+					{% if responsable.is_active %}
+						<form class="deactivate" action="{{url_for('deactivate_responsable', responsable_id=responsable.id)}}" method="post">
 							<button type="submit" class="dropdown-item">
 								<i class="fa fa-ban"></i> Deshabilitar
 							</button>
 						</form>
 					{% else %}
-						<form class="activate" action="{{ url_for('activate_student', student_id=student.id) }}" method="post">
+						<form class="activate" action="{{url_for('activate_responsable', responsable_id=responsable.id)}}" method="post">
 							<button type="submit" class="dropdown-item">
 								<i class="fa fa-check"></i> Activar
 							</button>
@@ -71,5 +76,4 @@
 		</td>
 	</tr>
 	{% endfor %}
-
 {% endblock %}

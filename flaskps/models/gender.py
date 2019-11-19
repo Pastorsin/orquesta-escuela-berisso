@@ -17,3 +17,4 @@ class Gender(db.Model):
 
     students = db.relationship('Student', backref='gender', lazy=True)
     teachers = db.relationship('Teacher', backref='gender', lazy=True)
+    responsables = db.relationship('Responsable', backref='gender', lazy=True)
