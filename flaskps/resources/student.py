@@ -73,11 +73,6 @@ def activate(student_id):
 
 
 def new():
-    neighborhoods = Neighborhood.query.all()
-    schools = School.query.all()
-    genders = Gender.query.all()
-    levels = Level.query.all()
-
     if request.method == 'POST':
         student_form = StudentCreateForm(request.get_json())
 
@@ -98,8 +93,8 @@ def new():
         return render_template(
             'student/new.html',
             academic=None,
-            genders=genders,
-            schools=schools,
-            levels=levels,
-            neighborhoods=neighborhoods
+            genders=Gender.query.all(),
+            schools=School.query.all(),
+            levels=Level.query.all(),
+            neighborhoods=Neighborhood.query.all()
         )
