@@ -19,7 +19,7 @@ def new():
         if form.is_valid():
             SchoolYear.create(form.values)
             flash(form.success_message(), 'success')
-            return redirect(url_for('webconfig'))
+            return redirect(url_for('schoolyear_new'))
         else:
             for error in form.error_messages():
                 flash(error, 'danger')

@@ -11,7 +11,7 @@ class SchoolYear(db.Model):
     )
 
     start_date = db.Column(
-        'fecha_inicio',
+        'fecha_ini',
         db.Date,
         nullable=False
     )
@@ -30,6 +30,14 @@ class SchoolYear(db.Model):
 
     workshops = db.relationship('Workshop', secondary=school_year_workshop,
                                 lazy='subquery', backref=db.backref('school_years', lazy=True))
+
+    def __init__(self, data):
+        self.__init_attributes(data)
+
+    def __init_attributes(self, data):
+        self.start_date = data['starting_date']
+        self.finish_date = data['ending_date']
+        self.semester = data['semester_id']
 
     @classmethod
     def create(self, data):
