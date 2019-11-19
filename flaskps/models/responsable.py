@@ -1,11 +1,12 @@
 from flaskps.extensions.db import db
 
 
-class Advisor(db.Model):
+class Responsable(db.Model):
     __tablename__ = 'responsable'
 
     id = db.Column(
         db.Integer,
+        autoincrement=True,
         primary_key=True
     )
 
@@ -29,8 +30,7 @@ class Advisor(db.Model):
 
     location_id = db.Column(
         'localidad_id',
-        db.Integer,
-        primary_key=True
+        db.Integer
     )
 
     residency = db.Column(
@@ -63,3 +63,24 @@ class Advisor(db.Model):
         db.String(255),
         nullable=False
     )
+
+    def __init__(self, data):
+        self.__init_attributes(data)
+
+    def __init_attributes(self, data):
+        self.last_name = data['last_name']
+        self.first_name = data['first_name']
+        self.birth_date = data['birth_date']
+        self.location_id = data['location_id']
+        self.residency = data['residency']
+        self.gender_id = data['gender_id']
+        self.doc_type_id = data['doc_type_id']
+        self.doc_number = data['doc_number']
+        self.telephone = data['telephone']
+
+    @classmethod
+    def create(cls, data):
+        responsable = cls(data)
+        db.session.add(responsable)
+        db.session.commit()
+        return responsable

@@ -19,7 +19,7 @@ $(document).ready(() => {
 		},
 		'student_index' : {
 			'name' : 'Listado de estudiantes',
-			'icon' : 'fa-graduation-cap',
+			'icon' : 'fa-book',
 			'url'  : 'estudiantes'
 		},
 		'teacher_index' : {
@@ -32,6 +32,11 @@ $(document).ready(() => {
 			'icon' : 'fa-graduation-cap',
 			'url'  : 'docentes/new'
 		},
+		'student_new' : {
+			'name' : 'Crear estudiante',
+			'icon' : 'fa-book',
+			'url'  : 'estudiantes/new'
+		}
 	}
 
 	section.forEach((item) => {

@@ -5,7 +5,7 @@ $(document).ready(() => {
 
 async function fillDocTypeSelect(){
     let doctypes=await getDocTypes();
-    let select=$('#doctype-input');
+    let select=$('.doctype-input');
     let selectVal=select.attr('value');
     doctypes.forEach(function(doctype) {
         element=$('<option />').val(doctype.id).text(doctype.nombre);
@@ -18,7 +18,7 @@ async function fillDocTypeSelect(){
 
 async function fillLocalitiesSelect(){
     let localities= await getLocalities();
-    let select=$('#location-input');
+    let select=$('.location-input');
     let selectVal=select.attr('value');
     localities.forEach(function(locality) {
         element=$('<option />').val(locality.partido_id).text(locality.nombre);
