@@ -30,7 +30,7 @@ ERROR_MSG = {
 
 
 @login_required
-@permissions_enabled('teacher_update', current_user)
+@permissions_enabled('student_update', current_user)
 def reponsable_new(student_id):
     student = Student.query.get(student_id)
     if request.method == 'POST':
@@ -63,7 +63,7 @@ def reponsable_new(student_id):
 
 
 @login_required
-@permissions_enabled('teacher_update', current_user)
+@permissions_enabled('student_update', current_user)
 def edit(student_id):
     student = Student.query.get(student_id)
 
