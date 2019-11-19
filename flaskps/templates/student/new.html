@@ -1,0 +1,91 @@
+{% extends "teacher/new.html" %}
+
+{% block style %}
+	{{super()}}
+	<link rel="stylesheet" type="text/css" href="{{url_for('static', filename='student/new.css')}}">
+{% endblock %}
+
+{% block script %}
+	{{super()}}
+	<script type="text/javascript" src="https://cdn.jsdelivr.net/gh/guillaumepotier/Parsley.js@2.9.1/dist/parsley.js"></script>
+	<script text="javascript" src="{{url_for('static', filename='student/new.js')}}"></script>
+{% endblock %}
+
+{% block form_title %}Crear estudiante{% endblock %}
+
+{% block post_url %}
+    {{ url_for('student_new') }}
+{% endblock %}
+
+{% block fields %}
+ 	<div class="form-section student">
+		<div class="col-12 text-center">			
+			<h3 class="subtitle border-bottom">Datos personales</h3>
+		</div>
+		{{super()}}
+	</div> 
+
+ 	<div class="form-section student">
+		<div class="col-12 text-center">			
+			<h3 class="subtitle border-bottom">Datos educativos</h3>
+		</div>
+
+		<div class="form-group">
+            <label for="birth-location-input">Localidad de nacimiento</label>
+            <input id="birth-location-input" class="form-control" type="text" name="birth_location" required placeholder="Localidad de nacimiento" value="{{academic.birth_location}}">
+        </div>
+        <div class="form-group">
+            <label for="neighborhood-input">Barrio</label>
+            <select id="neighborhood-input" class="form-control" name="neighborhood_id" required placeholder="Barrio">
+                <option value="" hidden></option>
+                {% for neighborhood in neighborhoods %}
+                    {% if (academic.neighborhood_id) and (academic.neighborhood_id|int==neighborhood.id) %}
+                    <option value="{{neighborhood.id}}"  selected="selected">{{neighborhood.name}}</option>
+                    {% else %}
+                    <option value="{{neighborhood.id}}">{{neighborhood.name}}</option>
+                    {% endif %}
+                {% endfor %}
+            </select>
+        </div>
+        <div class="form-group">
+            <label for="school-input">Escuela</label>
+            <select id="school-input" class="form-control" name="school_id" required placeholder="Escuela">
+                <option value="" hidden></option>
+                {% for school in schools %}
+                    {% if (academic.school_id) and (academic.school_id|int==school.id) %}
+                    <option value="{{school.id}}"  selected="selected">{{school.name}}</option>
+                    {% else %}
+                    <option value="{{school.id}}">{{school.name}}</option>
+                    {% endif %}
+                {% endfor %}
+            </select>
+        </div>
+        <div class="form-group">
+            <label for="level-input">Nivel educativo</label>
+            <select id="level-input" class="form-control" name="level_id" required placeholder="Nivel">
+                <option value="" hidden></option>
+                {% for level in levels %}
+                    {% if (academic.level_id) and (academic.level_id|int==level.id) %}
+                    <option value="{{level.id}}"  selected="selected">{{level.name}}</option>
+                    {% else %}
+                    <option value="{{level.id}}">{{level.name}}</option>
+                    {% endif %}
+                {% endfor %}
+            </select>
+        </div>
+	</div> 
+
+	<div class="form-section responsable">
+		<div class="col-12 text-center">			
+			<h3 class="subtitle border-bottom">Datos personales del tutor</h3>
+		</div>
+		{{super()}}
+	</div>
+{% endblock %}
+
+{% block buttons %}
+	<button type="button" class="previous btn btn-info pull-left mx-2">&lt; Anterior</button>
+	<input type="submit" class="btn btn-success pull-right mx-2">
+	<button type="button" class="next btn btn-info pull-right mx-2">Siguiente &gt;</button>
+	<span class="clearfix"></span>
+{% endblock %}

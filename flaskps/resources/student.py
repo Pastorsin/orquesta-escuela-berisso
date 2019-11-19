@@ -1,9 +1,18 @@
-from flask import render_template, flash, redirect, url_for
+from flask import render_template, flash, redirect, url_for, request
 from flask_login import current_user, login_required
 from flaskps.helpers.webconfig import get_web_config
 from flaskps.helpers.constraints import permissions_enabled
+from flaskps.helpers.student import ResponsableCreateForm, StudentCreateForm
+from flaskps.helpers.form import Form
 
 from flaskps.models.student import Student
+from flaskps.models.gender import Gender
+from flaskps.models.neighborhood import Neighborhood
+from flaskps.models.school import School
+from flaskps.models.level import Level
+
+import json
+
 
 SUCCESS_MSG = {
     'deactivate': 'El estudiante {first_name}, {last_name} ha sido desactivado correctamente.',
@@ -35,7 +44,6 @@ def index():
     return render_template(
         'student/index.html',
         students=students,
-        config=get_web_config(),
         current_user=current_user
     )
 
@@ -62,3 +70,36 @@ def activate(student_id):
         last_name=student.last_name
     ), 'success')
     return redirect(url_for('student_index'))
+
+
+def new():
+    neighborhoods = Neighborhood.query.all()
+    schools = School.query.all()
+    genders = Gender.query.all()
+    levels = Level.query.all()
+
+    if request.method == 'POST':
+        student_form = StudentCreateForm(request.get_json())
+
+        if student_form.is_valid():
+            student_form.save()
+            flash(student_form.success_message(), 'success')
+        else:
+            for error in student_form.invalid_messages():
+                flash(error, 'danger')
+
+        return json.dumps([
+            {'success': student_form.is_valid()},
+            {'messages': render_template('forms/messages.html')},
+            200,
+            {'ContentType': 'application/json'}
+        ])
+    else:
+        return render_template(
+            'student/new.html',
+            academic=None,
+            genders=genders,
+            schools=schools,
+            levels=levels,
+            neighborhoods=neighborhoods
+        )
