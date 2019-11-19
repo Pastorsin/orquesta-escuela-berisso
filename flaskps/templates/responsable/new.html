@@ -1,0 +1,9 @@
+{% extends "teacher/new.html" %}
+
+{% block form_title %}
+	Crear responsable
+{% endblock %}
+
+{% block post_url %}
+	{{ url_for('responsable_new', student_id=student.id) }}	
+{% endblock %}

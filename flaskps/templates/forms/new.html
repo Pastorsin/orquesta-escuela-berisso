@@ -22,11 +22,13 @@
 				{% block fields %}
 
 				{% endblock %}
-				<div class="col-12 text-center buttons pt-4">
-					<button class="btn btn-success" id="save-button">Guardar</button>
-                    <a href="{{ url_for('home') }}">
-						<button class="btn btn-danger" type="button">Cancelar</button>
-					</a>
+				<div class="col-12 d-flex justify-content-center buttons pt-4">
+					{% block buttons %}						
+						<button class="btn btn-success mx-2" id="save-button">Guardar</button>
+						<a href="/">
+							<button class="btn btn-danger mx-2" type="button">Cancelar</button>
+						</a>
+					{% endblock %}
 				</div>
 			</form>
 		</div>

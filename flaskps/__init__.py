@@ -1,11 +1,9 @@
 from flask import Flask
 
 from flaskps.config import Config
-<<<<<<< HEAD
-from flaskps.resources import user, base, webconfig, admin, student, teacher, api
-=======
-from flaskps.resources import user, base, webconfig, admin, student, teacher, school_year
->>>>>>> fix-creacion-ciclo
+
+from flaskps.resources import user, base, webconfig, admin, student, teacher, school_year, responsable, api
+
 
 from .extensions.db import db
 from .extensions.bcrypt import bcrypt
@@ -62,11 +60,22 @@ app.add_url_rule("/configuracion/editar", 'webconfig_edit', webconfig.edit, meth
 
 # Students
 app.add_url_rule("/estudiantes", 'student_index', student.index)
-app.add_url_rule("/estudiantes/desactivar/<student_id>", 'deactivate_student', student.deactivate, methods=['POST'])
-app.add_url_rule("/estudiantes/activar/<student_id>", 'activate_student', student.activate, methods=['POST'])
+app.add_url_rule("/estudiantes/desactivar/<student_id>", 'deactivate_student', student.deactivate,  methods=['POST'])
+app.add_url_rule("/estudiantes/activar/<student_id>", 'activate_student', student.activate,  methods=['POST'])
+app.add_url_rule("/estudiantes/new", 'student_new', student.new,  methods=['POST', 'GET'])
+app.add_url_rule("/estudiantes/editar/<student_id>", 'student_edit', student.edit, methods=['POST', 'GET'])
 app.add_url_rule("/estudiantes/<student_id>", 'student_profile', student.profile)
 app.add_url_rule("/estudiantes/<student_id>/talleres", 'student_workshops', student.workshops)
 app.add_url_rule("/estudiantes/inscribe/<student_id>", 'student_assign', student.assign_workshop, methods=['POST', 'GET'])
+app.add_url_rule("/estudiantes/<student_id>/responsables", 'student_responsables', student.responsables)
+app.add_url_rule("/estudiantes/<student_id>/responsables/new", "responsable_new", student.reponsable_new, methods=['POST', 'GET'])
+
+# Responsable
+app.add_url_rule("/responsable/<responsable_id>", 'responsable_profile', responsable.profile)
+app.add_url_rule("/responsable/desactivar/<responsable_id>", 'deactivate_responsable', responsable.deactivate,  methods=['POST'])
+app.add_url_rule("/responsable/activar/<responsable_id>", 'activate_responsable', responsable.activate,  methods=['POST'])
+app.add_url_rule("/responsable/editar/<responsable_id>", 'responsable_edit', responsable.edit, methods=['POST', 'GET'])
+
 
 # Teachers
 app.add_url_rule("/docentes", 'teacher_index', teacher.index)

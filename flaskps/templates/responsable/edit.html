@@ -1,0 +1,9 @@
+{% extends "teacher/new.html" %}
+
+{% block form_title %}
+	Modificar responsable
+{% endblock %}
+
+{% block post_url %}
+	{{ url_for('responsable_edit', responsable_id=academic.id) }}	
+{% endblock %}

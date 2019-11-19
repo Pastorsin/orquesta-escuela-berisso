@@ -33,7 +33,7 @@
         <div class="form-row align-items-center">
             <div class="form-group col-md-4">
                 <label for="location-input">Localidad</label>
-                <select id="location-input" class="form-control" name="location_id" required placeholder="Localidad" value="{{academic.location_id}}">
+                <select required id="location-input" class="form-control location-input" name="location_id" placeholder="Localidad" value="{{academic.location_id}}">
                     <option value="" hidden></option>
                 </select>
             </div>
@@ -61,7 +61,7 @@
         <div class="form-row align-items-center">
             <div class="form-group col-md-2">
                 <label for="doctype-input">Tipo de Documento</label>
-                <select id="doctype-input" class="form-control" name="doc_type_id" required placeholder="Tipo de Documento" value="{{academic.doc_type_id}}">
+                <select required id="doctype-input" class="form-control doctype-input" name="doc_type_id" placeholder="Tipo de Documento" value="{{academic.doc_type_id}}">
                     <option value="" hidden></option>
                 </select>
             </div>
@@ -77,4 +77,8 @@
             <input id="telephone-input" class="form-control" type="text" name="telephone" placeholder="Teléfono" value="{{academic.telephone}}">
         </div>
     </div>
+
+    {% block extra_fields %}
+        
+    {% endblock %}
 {% endblock %}

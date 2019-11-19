@@ -5,10 +5,18 @@ from flaskps.extensions.db import db
 
 from flaskps.helpers.webconfig import get_web_config
 from flaskps.helpers.constraints import permissions_enabled
+from flaskps.helpers.student import StudentCreateForm, ResponsableCreateForm
+from flaskps.helpers.student import StudentEditForm
 
 from flaskps.models.student import Student
 from flaskps.models.school_year import SchoolYear
 from flaskps.models.student_workshop import school_year_workshop_student
+from flaskps.models.gender import Gender
+from flaskps.models.neighborhood import Neighborhood
+from flaskps.models.school import School
+from flaskps.models.level import Level
+
+import json
 
 
 SUCCESS_MSG = {
@@ -22,6 +30,83 @@ ERROR_MSG = {
 
 
 @login_required
+@permissions_enabled('student_update', current_user)
+def reponsable_new(student_id):
+    student = Student.query.get(student_id)
+    if request.method == 'POST':
+        form = ResponsableCreateForm(request.form)
+
+        if form.is_valid():
+            responsable = form.save()
+            student.add_responsable(responsable)
+            flash(form.success_message(), 'success')
+            return redirect(url_for(
+                'student_responsables',
+                student_id=student.id
+            ))
+        else:
+            for error in form.error_messages():
+                flash(error, 'danger')
+            return render_template(
+                'responsable/new.html',
+                academic=form.values,
+                student=student,
+                genders=Gender.query.all()
+            )
+    else:
+        return render_template(
+            'responsable/new.html',
+            academic=None,
+            student=student,
+            genders=Gender.query.all(),
+        )
+
+
+@login_required
+@permissions_enabled('student_update', current_user)
+def edit(student_id):
+    student = Student.query.get(student_id)
+
+    if request.method == 'POST':
+        return update(
+            form=request.form,
+            student=student
+        )
+    else:
+        return render_template(
+            'student/edit.html',
+            academic=student,
+            genders=Gender.query.all(),
+            schools=School.query.all(),
+            levels=Level.query.all(),
+            neighborhoods=Neighborhood.query.all()
+        )
+
+
+def update(form, student):
+    form = StudentEditForm(form, student)
+
+    if form.is_valid():
+        student.update(form.values)
+        flash(form.success_message(), 'success')
+        return redirect(url_for(
+            'student_edit',
+            student_id=student.id
+        ))
+    else:
+        for error in form.error_messages():
+            flash(error, 'danger')
+        return render_template(
+            'responsable/edit.html',
+            academic=form.values,
+            genders=Gender.query.all(),
+            schools=School.query.all(),
+            levels=Level.query.all(),
+            neighborhoods=Neighborhood.query.all()
+        )
+
+
+@login_required
 @permissions_enabled('student_profile', current_user)
 def workshops(student_id):
     student = Student.query.get(student_id)
@@ -29,6 +114,15 @@ def workshops(student_id):
         'student/workshops.html',
         academic=student,
         config=get_web_config()
+    )
+
+
+@login_required
+@permissions_enabled('student_profile', current_user)
+def responsables(student_id):
+    return render_template(
+        'responsable/index.html',
+        student=Student.query.get(student_id)
     )
 
 
@@ -45,7 +139,6 @@ def index():
     return render_template(
         'student/index.html',
         students=students,
-        config=get_web_config(),
         current_user=current_user
     )
 
@@ -77,7 +170,7 @@ def activate(student_id):
 def add_workshops_to_table(form_workshops, student_id, form_cicle):
     for whp in form_workshops:
         statement = school_year_workshop_student.insert().values(
-                estudiante_id=student_id, ciclo_lectivo_id=form_cicle, taller_id=whp)
+            estudiante_id=student_id, ciclo_lectivo_id=form_cicle, taller_id=whp)
         db.session.execute(statement)
     db.session.commit()
 
@@ -99,3 +192,33 @@ def assign_workshop(student_id):
         student = Student.query.get(student_id)
         cicles = SchoolYear.query.all()
         return render_template('student/assign_workshop.html', academic=student, cicles=cicles)
+
+
+@login_required
+@permissions_enabled('student_new', current_user)
+def new():
+    if request.method == 'POST':
+        student_form = StudentCreateForm(request.get_json())
+
+        if student_form.is_valid():
+            student_form.save()
+            flash(student_form.success_message(), 'success')
+        else:
+            for error in student_form.invalid_messages():
+                flash(error, 'danger')
+
+        return json.dumps([
+            {'success': student_form.is_valid()},
+            {'messages': render_template('forms/messages.html')},
+            200,
+            {'ContentType': 'application/json'}
+        ])
+    else:
+        return render_template(
+            'student/new.html',
+            academic=None,
+            genders=Gender.query.all(),
+            schools=School.query.all(),
+            levels=Level.query.all(),
+            neighborhoods=Neighborhood.query.all()
+        )

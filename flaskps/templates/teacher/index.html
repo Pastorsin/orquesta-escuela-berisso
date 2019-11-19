@@ -1,37 +1,8 @@
-{% extends "forms/index.html" %}
-
-{% block script %}
-	{{super()}}
-	<script src="{{url_for('static', filename='teacher/search.js')}}"></script>	
-	<script src="{{url_for('static', filename='teacher/index.js')}}"></script>	
-{% endblock %}
+{% extends "responsable/index.html" %}
 
 {% block index_title %}Listado de Docentes{% endblock %}
 
 {% block placeholder %}Buscar docente{% endblock %}
-
-{% block table_head %}
-	<th scope="col">Nombres</th>
-	<th scope="col">Apellidos</th>
-	<th scope="col" class="text-center">Activo</th>
-	<th scope="col" class="text-center">Opciones</th>
-{% endblock %}
-
-{% block filters %}
-	<div class="list-subtitle">
-		<h5>Filtrar</h5>
-	</div>
-	<div class="col-10 col-off-2">
-		<div class="custom-control custom-radio">
-			<input type="radio" class="custom-control-input" name="radio-active" id="active-checkbox">
-			<label class="custom-control-label" for="active-checkbox" id="label-user-active">Mostrar sólo activos</label>
-		</div>
-		<div class="custom-control custom-radio">
-			<input type="radio" class="custom-control-input" name="radio-active" id="inactive-checkbox">
-			<label class="custom-control-label" for="inactive-checkbox" id="label-user-inactive">Mostrar sólo inactivos</label>
-		</div>
-	</div>
-{% endblock %}
 
 {% block table_body %}
 	{% for teacher in teachers %}
@@ -68,5 +39,4 @@
 		</td>
 	</tr>
 	{% endfor %}
-
 {% endblock %}
