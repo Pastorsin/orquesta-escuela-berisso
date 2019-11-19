@@ -1,4 +1,3 @@
-import itertools
 from .teacher import TeacherCreateForm
 from .form import Form
 from flaskps.models.student import Student

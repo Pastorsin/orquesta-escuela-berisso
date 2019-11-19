@@ -10,7 +10,7 @@ class BirthdateValidator(Validator):
         self.birthdate = field
 
     def validate(self):
-        return datetime.strptime(self.birthdate,'%Y-%m-%d').date() < date.today()
+        return self.birthdate and datetime.strptime(self.birthdate,'%Y-%m-%d').date() < date.today()
 
     def message(self):
         return 'Error! La fecha de nacimiento no puede ser posterior a la fecha actual.'
