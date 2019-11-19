@@ -72,6 +72,8 @@ def activate(student_id):
     return redirect(url_for('student_index'))
 
 
+@login_required
+@permissions_enabled('student_new', current_user)
 def new():
     if request.method == 'POST':
         student_form = StudentCreateForm(request.get_json())

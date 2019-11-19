@@ -35,7 +35,7 @@ class MultipleStepForm {
         let success = data[0]['success']
         let messagesHTML = data[1]['messages']
 
-        if (success){
+        if (success) {
             window.location.href = "/estudiantes"
         } else {
             $('.messages').empty().append(messagesHTML)
