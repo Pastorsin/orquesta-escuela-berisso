@@ -4,7 +4,7 @@ from flask_login import current_user, login_required
 from flaskps.helpers.webconfig import get_web_config
 from flaskps.helpers.constraints import permissions_enabled
 from flaskps.helpers.student import StudentCreateForm, ResponsableCreateForm
-from flaskps.helpers.student import StudentEditForm
+from flaskps.helpers.student import StudentEditForm, ResponsableAssignForm
 
 from flaskps.models.student import Student
 from flaskps.models.school_year import SchoolYear
@@ -20,12 +20,10 @@ import json
 SUCCESS_MSG = {
     'deactivate': 'El estudiante {first_name}, {last_name} ha sido desactivado correctamente.',
     'activate': 'El estudiante {first_name}, {last_name} ha sido activado correctamente.',
-    'assign': 'El estudiante ha sido asignado a los talleres correctamente.',
-    'assign_responsable': 'El responsable ha sido asignado correctamente.'
+    'assign': 'El estudiante ha sido asignado a los talleres correctamente.'
 }
 ERROR_MSG = {
     'assign': 'No se ha enviado el formulario, especifique un ciclo y al menos un taller por favor.',
-    'assign_responsable': 'Error! Ya existe ese responsable asignado para el alumno'
 }
 
 
@@ -33,14 +31,16 @@ ERROR_MSG = {
 @permissions_enabled('student_update', current_user)
 def assign_responsable(student_id):
     student = Student.query.get(student_id)
+
     if request.method == 'POST':
-        responsable_id = request.form['responsable_id']
-        responsable = Responsable.query.get(responsable_id)
-        if student.has_responsable(responsable):
-            flash(ERROR_MSG['assign_responsable'], 'danger')
+        form = ResponsableAssignForm(request.form, student)
+        if form.is_valid():
+            form.save()
+            flash(form.success_message(), 'success')
         else:
-            student.add_responsable(responsable)
-            flash(SUCCESS_MSG['assign_responsable'], 'success')
+            for error in form.error_messages():
+                flash(error, 'danger')
+
     return render_template(
         'student/assign_responsable.html',
         student=student,

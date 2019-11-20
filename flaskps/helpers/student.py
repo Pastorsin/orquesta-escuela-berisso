@@ -25,6 +25,42 @@ class ResponsableEditForm(TeacherEditForm):
         return 'Responsable modificado con éxito'
 
 
+class StudentHasResponsableValidator(Validator):
+
+    def __init__(self, student, responsable):
+        self.student = student
+        self.responsable = responsable
+
+    def validate(self):
+        return not self.student.has_responsable(self.responsable)
+
+    def message(self):
+        return 'Error! Ya existe ese responsable asignado para el alumno'
+
+
+class ResponsableAssignForm(Form):
+
+    def __init__(self, form, student):
+        super(ResponsableAssignForm, self).__init__(form)
+        self.student = student
+        self.validators.extend([
+            StudentHasResponsableValidator(
+                student=student,
+                responsable=self.values()
+            )
+        ])
+
+    def save(self):
+        self.student.add_responsable(self.values())
+
+    def success_message(self):
+        return 'El responsable ha sido asignado correctamente.'
+
+    def values(self):
+        responsable_id = self.fields['responsable_id']
+        return Responsable.query.get(responsable_id)
+
+
 class StudentEditForm(TeacherEditForm):
 
     def success_message(self):
