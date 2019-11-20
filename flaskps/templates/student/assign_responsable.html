@@ -1,0 +1,30 @@
+{% extends "forms/new.html" %}
+
+{% block post_url %}
+	{{ url_for('student_assign_responsable', student_id=student.id) }}
+{% endblock %}
+
+{% block form_title %}
+	Asignar un responsable para el alumno <a href="{{url_for('student_profile', student_id=student.id)}}"> {{student.first_name}}, {{student.last_name}} </a> 
+{% endblock %}
+
+{% block fields %}	
+    <select id="responsable-input" class="form-control" name="responsable_id" required placeholder="Responsable">
+        <option value="" hidden></option>
+		{% for responsable in responsables %}
+            <option value="{{responsable.id}}">{{responsable.full_name}}</option>
+        {% endfor %}
+    </select>
+    <div class="col-12 my-4">
+    	<div class="col-12 text-center my-3">
+	    	<small>
+	    		¿No aparece el responsable en el listado?
+	    	</small>    	
+    	</div>
+    	<div class="col-12 text-center my-3">    	
+		    <a class="white-button mr-2" id="teacher-list-button" href="{{ url_for('responsable_new', student_id=student.id) }}">
+				<i class="fa fa-list"></i> Crear responsable
+			</a>
+    	</div>
+    </div>
+{% endblock %}

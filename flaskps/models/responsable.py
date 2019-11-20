@@ -110,6 +110,16 @@ class Responsable(db.Model):
             self.students
         ))
 
+    @classmethod
+    def all_except(cls, responsables):
+        return Responsable.query.filter(
+            ~Responsable.id.in_(cls.responsables_id(responsables))
+        )
+
+    @classmethod
+    def responsables_id(cls, responsables):
+        return list(map(lambda responsable: int(responsable.id), responsables))
+
     @property
     def full_name(self):
         return f"{self.last_name}, {self.first_name}"

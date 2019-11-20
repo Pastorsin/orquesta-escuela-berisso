@@ -20,11 +20,32 @@ import json
 SUCCESS_MSG = {
     'deactivate': 'El estudiante {first_name}, {last_name} ha sido desactivado correctamente.',
     'activate': 'El estudiante {first_name}, {last_name} ha sido activado correctamente.',
-    'assign': 'El estudiante ha sido asignado a los talleres correctamente.'
+    'assign': 'El estudiante ha sido asignado a los talleres correctamente.',
+    'assign_responsable': 'El responsable ha sido asignado correctamente.'
 }
 ERROR_MSG = {
     'assign': 'No se ha enviado el formulario, especifique un ciclo y al menos un taller por favor.',
+    'assign_responsable': 'Error! Ya existe ese responsable asignado para el alumno'
 }
+
+
+@login_required
+@permissions_enabled('student_update', current_user)
+def assign_responsable(student_id):
+    student = Student.query.get(student_id)
+    if request.method == 'POST':
+        responsable_id = request.form['responsable_id']
+        responsable = Responsable.query.get(responsable_id)
+        if student.has_responsable(responsable):
+            flash(ERROR_MSG['assign_responsable'], 'danger')
+        else:
+            student.add_responsable(responsable)
+            flash(SUCCESS_MSG['assign_responsable'], 'success')
+    return render_template(
+        'student/assign_responsable.html',
+        student=student,
+        responsables=Responsable.all_except(student.responsables)
+    )
 
 
 @login_required

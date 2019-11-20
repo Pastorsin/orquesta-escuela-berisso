@@ -8,7 +8,7 @@
 {% block placeholder %}Buscar responsable{% endblock %}
 
 {% block section_buttons %}
-    <a class="white-button mr-2" id="teacher-list-button" href="{{ url_for('responsable_new', student_id=student.id) }}">
+    <a class="white-button mr-2" id="teacher-list-button" href="{{ url_for('student_assign_responsable', student_id=student.id) }}">
       <i class="fa fa-list"></i> Agregar responsable
     </a>
 {% endblock %}

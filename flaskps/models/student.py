@@ -198,3 +198,6 @@ class Student(db.Model):
                     estudiante_id=self.id, ciclo_lectivo_id=form_cicle, taller_id=whp)
             db.session.execute(statement)
         db.session.commit()
+
+    def has_responsable(self, responsable):
+        return responsable in self.responsables
