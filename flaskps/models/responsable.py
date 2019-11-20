@@ -109,3 +109,7 @@ class Responsable(db.Model):
             lambda student: student.more_responsables_active_that(self),
             self.students
         ))
+
+    @property
+    def full_name(self):
+        return f"{self.last_name}, {self.first_name}"

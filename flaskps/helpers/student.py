@@ -1,5 +1,5 @@
 from .teacher import TeacherCreateForm, TeacherEditForm
-from .form import Form
+from .form import Form, Validator
 from flaskps.models.student import Student
 from flaskps.models.responsable import Responsable
 
@@ -31,13 +31,31 @@ class StudentEditForm(TeacherEditForm):
         return 'Estudiante modificado con éxito'
 
 
+class ResponsablesFieldsValidator(Validator):
+
+    def __init__(self, responsables):
+        self.responsables = responsables
+
+    def validate(self):
+        return bool(self.responsables)
+
+    def message(self):
+        return 'Error! Se debe seleccionar o crear algún responsable.'
+
+
 class StudentCreateForm(TeacherCreateForm):
 
     def __init__(self, form):
         super(StudentCreateForm, self).__init__(form['student'])
+        self.responsables_id = form['responsable']['checked']
         self.responsables_forms = ResponsableCreateForm.forms(
-            form['responsable']
+            form['responsable']['created']
         )
+        self.validators.extend([
+            ResponsablesFieldsValidator(
+                self.responsables_id + self.responsables_forms
+            )
+        ])
 
     def success_message(self):
         return 'Estudiante creado con éxito'
@@ -60,10 +78,11 @@ class StudentCreateForm(TeacherCreateForm):
 
     @property
     def values(self):
-        self.fields['responsables_id'] = self.responsables_id()
+        self.fields['responsables_id'] = self.responsables_created_id() + \
+            self.responsables_id
         return self.fields
 
-    def responsables_id(self):
+    def responsables_created_id(self):
         return list(map(
             lambda responsable: responsable.id, self.responsables_saved
         ))

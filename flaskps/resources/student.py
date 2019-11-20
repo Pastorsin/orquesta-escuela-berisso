@@ -15,6 +15,7 @@ from flaskps.models.gender import Gender
 from flaskps.models.neighborhood import Neighborhood
 from flaskps.models.school import School
 from flaskps.models.level import Level
+from flaskps.models.responsable import Responsable
 
 import json
 
@@ -198,6 +199,7 @@ def assign_workshop(student_id):
 @permissions_enabled('student_new', current_user)
 def new():
     if request.method == 'POST':
+        print(json.dumps(request.get_json(), indent=4))
         student_form = StudentCreateForm(request.get_json())
 
         if student_form.is_valid():
@@ -217,6 +219,7 @@ def new():
         return render_template(
             'student/new.html',
             academic=None,
+            responsables=Responsable.query.all(),
             genders=Gender.query.all(),
             schools=School.query.all(),
             levels=Level.query.all(),
