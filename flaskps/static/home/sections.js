@@ -40,7 +40,7 @@ $(document).ready(() => {
 		'schoolyear_new' : {
 			'name' : 'Crear ciclo lectivo',
 			'icon' : 'fa-book',
-			'url'  : 'schoolyear/new'
+			'url'  : 'ciclo_lectivo/new'
 		}
 	}
 
