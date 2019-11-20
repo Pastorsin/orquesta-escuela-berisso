@@ -36,6 +36,11 @@ $(document).ready(() => {
 			'name' : 'Crear estudiante',
 			'icon' : 'fa-book',
 			'url'  : 'estudiantes/new'
+		},
+		'schoolyear_new' : {
+			'name' : 'Crear ciclo lectivo',
+			'icon' : 'fa-book',
+			'url'  : 'schoolyear/new'
 		}
 	}
 

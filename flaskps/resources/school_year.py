@@ -9,8 +9,8 @@ from flaskps.models.school_year import SchoolYear
 SUCCES_MSG = 'Ciclo lectivo generado.'
 
 
-# @login_required
-# @permissions_enabled('teacher_new', current_user)
+@login_required
+@permissions_enabled('schoolyear_new', current_user)
 def new():
     if request.method == 'POST':
 
