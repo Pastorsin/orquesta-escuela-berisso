@@ -4,7 +4,6 @@ from flask_login import current_user, login_required
 from flaskps.helpers.constraints import permissions_enabled
 from flaskps.helpers.school_year import SchoolYearCreateForm
 from flaskps.models.school_year import SchoolYear
-from flaskps.models.workshop import Workshop
 
 
 SUCCESS_MSG = {
@@ -49,14 +48,14 @@ def assign_workshop():
     if request.method == 'POST':
         form_cicle = request.form.get('cicle')
         form_workshops = request.form.getlist('workshop')
-        if form_cicle is not None and form_workshops is not None:
+        if form_cicle is not None and form_workshops:
             cicle = SchoolYear.query.get(form_cicle)
             cicle.assign_workshops(form_workshops)
             flash(SUCCESS_MSG['assign'], 'success')
             return redirect(url_for('secciones'))
         else:
             flash(ERROR_MSG['assign'], 'danger')
-            return redirect(url_for('secciones', 1))
+            return redirect(url_for('schoolyear_assign_workshop'))
     else:
         cicles = SchoolYear.query.all()
         return render_template('schoolyear/assign_workshop.html', cicles=cicles)
