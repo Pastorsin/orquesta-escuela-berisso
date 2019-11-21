@@ -50,7 +50,7 @@
 					<i class="fa fa-cog"></i>
 				</button>
 				<div class="dropdown-menu" aria-labelledby="dropdownMenuButton">
-					<a class="dropdown-item" href="#"><i class="fa fa-user"></i> Ver detalle</a>
+					<a class="dropdown-item" href="{{ url_for(student_profile, student_id=student.id) }}"><i class="fa fa-user"></i> Ver detalle</a>
 					<a class="dropdown-item" href="{{ url_for('student_edit', student_id=student.id) }}"><i class="fa fa-edit"></i> Modificar datos</a>
 					<a class="dropdown-item" href="{{ url_for('student_assign', student_id=student.id) }}"><i class="fas fa-book"></i> Asignar Taller</a>
 					{% if student.is_active %}

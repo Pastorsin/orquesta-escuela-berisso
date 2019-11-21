@@ -51,8 +51,8 @@ def add_workshops_to_table(form_workshops, form_cicle):
         db.session.execute(statement)
     db.session.commit()
 
-@login_required
-@permissions_enabled('student_update', current_user)
+# @login_required
+# @permissions_enabled('student_update', current_user)
 def assign_workshop():
     if request.method == 'POST':
         form_cicle = request.form.get('cicle')

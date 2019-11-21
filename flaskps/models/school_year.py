@@ -11,7 +11,7 @@ class SchoolYear(db.Model):
     )
 
     start_date = db.Column(
-        'fecha_inicio',
+        'fecha_ini',
         db.Date,
         nullable=False
     )
@@ -44,3 +44,10 @@ class SchoolYear(db.Model):
         school_year = self(data)
         db.session.add(school_year)
         db.session.commit()
+
+    def add_workshop(self, workshop):
+        self.workshops.append(workshop)
+        db.session.commit()
+
+    def has_workshop(self, workshop):
+        return workshop in self.workshops    
