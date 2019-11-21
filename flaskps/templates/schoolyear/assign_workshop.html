@@ -1,0 +1,75 @@
+{% extends "sections_base.html" %}
+
+{% block style %}
+	<link rel="stylesheet" type="text/css" href="{{url_for('static', filename='user/profile.css')}}">
+	{{ super() }}
+{% endblock %}
+
+{% block script %}
+    <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.4.1/jquery.min.js"></script>
+    <script>
+      function replace_workshops(json_response) {
+        let container = $('div.workshops-list');
+        container.empty();
+        if (! $.isEmptyObject(json_response)) {
+          for (var key of Object.keys(json_response)) {
+            container.append(
+              `
+              <div class="form-check" id="select-ciclos">
+              <input class="form-check-input" type="checkbox" name="workshop" value="${key}" id="check-box-${key}">
+              <label class="form-check-label" for="check-box-${key}"> ${json_response[key][0]} - ${json_response[key][1]} </label>
+              </div>
+              `
+            );
+          }
+        } else {
+          container.append(`<p>El usuario está inscripto a todos los tallers de este ciclo</p>`)
+        }
+      }
+
+    </script>
+    {% block academic_script %} {% endblock academic_script %}
+{% endblock script %}
+
+{% block content %}
+
+    <section class="container-fluid profile-information">
+        <h1 class="title">Asignar taller a un ciclo lectivo</h1>
+
+        <form action="{% block form_action %} {% endblock form_action %}" method="POST">
+          <div class="d-flex justify-content-center">
+            <div class="row w-75">
+
+              <div class="col">
+                <select name="cicle" id="select-ciclos" class="form-control" required>
+                  <option value="" selected disabled hidden>Seleccione un ciclo lectivo</option>
+                  {% for cicle in cicles %}
+                    <option value="{{ cicle.id }}">{{ cicle.start_date.strftime('%Y-%m-%d') }} al {{ cicle.finish_date.strftime('%Y-%m-%d') }} ( Semestre {{ cicle.semester }} )</option>
+                  {% endfor %}
+                </select>
+              </div>
+
+              <div class="workshops-list col">
+                <select name="workshop" id="select-taller" class="form-control" required>
+                  <option value="" selected disabled hidden>Seleccione un taller</option>
+                  {% for taller in workshop %}
+                    <option value="{{ taller.id }}">{{ taller.name }}</option>
+                  {% endfor %}
+                </select>
+              </div>
+            </div>
+
+          </div>
+
+          <div class="text-center buttons pt-4">
+              <button class="btn btn-success">Guardar</button>
+              <a href="{% block cancel_url %} {% endblock cancel_url %}">
+                  <button class="btn btn-danger" type="button">Cancelar</button>
+              </a>
+          </div>
+
+        </form>
+
+    </section>
+
+{% endblock %}

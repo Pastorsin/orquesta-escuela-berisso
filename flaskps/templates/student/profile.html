@@ -1,0 +1,10 @@
+{% extends "academic/profile.html" %}
+
+{% block buttons %}
+        <a class="white-button mr-2" id="teacher-list-button" href="{{ url_for('student_workshops', student_id=user.id) }}">
+          <i class="fa fa-list"></i> Listado de talleres
+        </a>
+        <a class="white-button mr-2" id="teacher-list-button" href="{{ url_for('student_responsables', student_id=user.id) }}">
+          <i class="fa fa-list"></i> Listado de responsables
+        </a>
+{% endblock buttons %}

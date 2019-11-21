@@ -129,7 +129,8 @@ def responsables(student_id):
 @login_required
 @permissions_enabled('student_profile', current_user)
 def profile(student_id):
-    return 'ndeah'
+    estudiante = Student.query.get(student_id)
+    return render_template('student/profile.html', user=estudiante, config=get_web_config())
 
 
 @login_required

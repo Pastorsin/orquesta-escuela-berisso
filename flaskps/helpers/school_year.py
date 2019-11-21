@@ -1,5 +1,5 @@
 from .form import Validator, Form
-from datetime import datetime
+from datetime import date, datetime
 
 
 class DateValidator(Validator):
@@ -9,10 +9,10 @@ class DateValidator(Validator):
         self.ending_date = end_date
 
     def validate(self):
-        return datetime.strptime(self.starting_date, '%Y-%m-%d').date() < datetime.strptime(self.ending_date, '%Y-%m-%d').date()
+        return datetime.strptime(self.starting_date, '%Y-%m-%d').date() < datetime.strptime(self.ending_date, '%Y-%m-%d').date() and datetime.strptime(self.starting_date, '%Y-%m-%d').date() >= date.today()
 
     def message(self):
-        return 'Error! La fecha de inicio no puede ser posterior a la fecha de fin.'
+        return 'Error! El rango de fechas es inválido!'
 
 
 class SchoolYearForm(Form):

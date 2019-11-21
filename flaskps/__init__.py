@@ -95,4 +95,5 @@ app.add_url_rule('/api/estudiante/<estudiante_id>/ciclo/<ciclo_id>', 'cicle_work
 
 # SchoolYear
 app.add_url_rule("/ciclo_lectivo/new", 'schoolyear_new', school_year.new, methods=['POST', 'GET'])
+app.add_url_rule("/ciclo_lectivo/assign_workshop", 'schoolyear_assign_workshop', school_year.assign_workshop, methods=['POST', 'GET'])
 
