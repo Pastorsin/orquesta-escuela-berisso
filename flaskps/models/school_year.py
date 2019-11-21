@@ -44,3 +44,17 @@ class SchoolYear(db.Model):
         school_year = self(data)
         db.session.add(school_year)
         db.session.commit()
+
+    def add_workshop(self, workshop):
+        self.workshops.append(workshop)
+        db.session.commit()
+
+    def has_workshop(self, workshop):
+        return workshop in self.workshops
+
+    def assign_workshops(self, form_workshops):
+        for whp in form_workshops:
+            statement = school_year_workshop.insert().values(
+                ciclo_lectivo_id=self.id, taller_id=whp)
+            db.session.execute(statement)
+        db.session.commit()

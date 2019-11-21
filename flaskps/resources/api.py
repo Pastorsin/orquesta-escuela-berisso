@@ -1,6 +1,7 @@
 from flaskps.models.school_year import SchoolYear
 from flaskps.models.teacher import Teacher
 from flaskps.models.student import Student
+from flaskps.models.workshop import Workshop
 import json
 
 
@@ -24,3 +25,15 @@ def cicle_workshops_teacher(docente_id, ciclo_id):
 def cicle_workshops_student(estudiante_id, ciclo_id):
     student = Student.query.get(estudiante_id)
     return get_available_workshops(student, ciclo_id)
+
+
+def cicle_workshops(ciclo_id):
+    workshops = Workshop.query.all()
+    assigned_workshops = SchoolYear.query.get(ciclo_id).workshops
+
+    workshops_to_deliver = filter(lambda whp: whp not in assigned_workshops, workshops)
+    workshop_dict = {}
+    for whp in workshops_to_deliver:
+        item = {whp.id: (whp.name, whp.short_name)}
+        workshop_dict.update(item)
+    return json.dumps(workshop_dict)
