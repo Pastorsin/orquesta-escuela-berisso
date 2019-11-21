@@ -1,43 +1,14 @@
-{% extends "forms/index.html" %}
-
-{% block script %}
-	{{super()}}
-	<script src="{{url_for('static', filename='teacher/search.js')}}"></script>	
-	<script src="{{url_for('static', filename='teacher/index.js')}}"></script>	
-{% endblock %}
+{% extends "teacher/index.html" %}
 
 {% block index_title %}
 	Listado de Responsables del alumno 
-	<a href="{{url_for('student_profile', student_id= student.id)}}"> {{student.first_name}}, {{student.last_name}} </a> 
+	<a href="{{url_for('student_profile', student_id=student.id)}}"> {{student.first_name}}, {{student.last_name}} </a> 
 {% endblock %}
 
 {% block placeholder %}Buscar responsable{% endblock %}
 
-{% block table_head %}
-	<th scope="col">Nombres</th>
-	<th scope="col">Apellidos</th>
-	<th scope="col" class="text-center">Activo</th>
-	<th scope="col" class="text-center">Opciones</th>
-{% endblock %}
-
-{% block filters %}
-	<div class="list-subtitle">
-		<h5>Filtrar</h5>
-	</div>
-	<div class="col-10 col-off-2">
-		<div class="custom-control custom-radio">
-			<input type="radio" class="custom-control-input" name="radio-active" id="active-checkbox">
-			<label class="custom-control-label" for="active-checkbox" id="label-user-active">Mostrar sólo activos</label>
-		</div>
-		<div class="custom-control custom-radio">
-			<input type="radio" class="custom-control-input" name="radio-active" id="inactive-checkbox">
-			<label class="custom-control-label" for="inactive-checkbox" id="label-user-inactive">Mostrar sólo inactivos</label>
-		</div>
-	</div>
-{% endblock %}
-
 {% block section_buttons %}
-    <a class="white-button mr-2" id="teacher-list-button" href="{{ url_for('responsable_new', student_id=student.id) }}">
+    <a class="white-button mr-2" id="teacher-list-button" href="{{ url_for('student_assign_responsable', student_id=student.id) }}">
       <i class="fa fa-list"></i> Agregar responsable
     </a>
 {% endblock %}

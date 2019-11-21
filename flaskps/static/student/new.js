@@ -3,7 +3,7 @@ class MultipleStepForm {
     constructor() {
         this.initEvents()
         this.navigateTo(0);
-        this.initSections()
+        this.initSections();
     }
 
     initEvents() {
@@ -44,17 +44,32 @@ class MultipleStepForm {
 
     formData() {
         let data = {}
-        let student = $(".student :input")
-        let responsables = $(".responsable")
 
-        data['student'] = this.serialize(student)
-        data['responsable'] = []
-
-        responsables.each((index, responsable) => {
-            let responsableSerialized = this.serialize($(responsable).find(':input'))
-            data['responsable'].push(responsableSerialized)
-        })
+        data['student'] = this.serializeStudent()
+        data['responsable'] = {}
+        data['responsable']['created'] = this.serializeResponsablesCreated()
+        data['responsable']['checked'] = this.serializeResponsablesChecked()
         return data
+    }
+
+    serializeStudent() {
+        let student = $(".student :input")
+        return this.serialize(student)
+
+    }
+
+    serializeResponsablesCreated() {
+        let responsables = Array.from($(".form-section.responsable"))
+        return responsables.map((responsable) =>
+            this.serialize($(responsable).find(':input'))
+        )
+    }
+
+    serializeResponsablesChecked() {
+        let responsablesChecked = Array.from($(".responsable-checkbox:checkbox:checked"))
+        return responsablesChecked.map(
+            (responsable) => $(responsable).val()
+        )
     }
 
     serialize(selector) {
@@ -87,6 +102,7 @@ class MultipleStepForm {
     }
 
     addNewResponsable(index) {
+        console.log(index, this.lastIndex())
         if (this.atTheEnd(index)) {
             $('.buttons .next').text('Agregar otro tutor')
         } else {
@@ -103,9 +119,15 @@ class MultipleStepForm {
     }
 
     createResponsableSection() {
-        let responsableHTML = $('.responsable').clone()
+        let responsableHTML = $('.responsable:first').clone()
+        this.convertSection(responsableHTML)
         this.clearInputs(responsableHTML)
         return responsableHTML
+    }
+
+    convertSection(responsableHTML) {
+        responsableHTML.removeClass('d-none');
+        responsableHTML.addClass('form-section');
     }
 
     clearInputs(responsable) {
@@ -128,8 +150,8 @@ class MultipleStepForm {
                 let responsableSection = this.createResponsableSection()
                 responsableSection.insertBefore($(".buttons"));
             }
-            this.navigateTo(this.curIndex() + 1);
         });
+        this.navigateTo(this.curIndex() + 1);
     }
 
     initSections() {

@@ -1,20 +1,18 @@
 from flask import render_template, flash, redirect, url_for, request
 from flask_login import current_user, login_required
 
-from flaskps.extensions.db import db
-
 from flaskps.helpers.webconfig import get_web_config
 from flaskps.helpers.constraints import permissions_enabled
 from flaskps.helpers.student import StudentCreateForm, ResponsableCreateForm
-from flaskps.helpers.student import StudentEditForm
+from flaskps.helpers.student import StudentEditForm, ResponsableAssignForm
 
 from flaskps.models.student import Student
 from flaskps.models.school_year import SchoolYear
-from flaskps.models.student_workshop import school_year_workshop_student
 from flaskps.models.gender import Gender
 from flaskps.models.neighborhood import Neighborhood
 from flaskps.models.school import School
 from flaskps.models.level import Level
+from flaskps.models.responsable import Responsable
 
 import json
 
@@ -27,6 +25,27 @@ SUCCESS_MSG = {
 ERROR_MSG = {
     'assign': 'No se ha enviado el formulario, especifique un ciclo y al menos un taller por favor.',
 }
+
+
+@login_required
+@permissions_enabled('student_update', current_user)
+def assign_responsable(student_id):
+    student = Student.query.get(student_id)
+
+    if request.method == 'POST':
+        form = ResponsableAssignForm(request.form, student)
+        if form.is_valid():
+            form.save()
+            flash(form.success_message(), 'success')
+        else:
+            for error in form.error_messages():
+                flash(error, 'danger')
+
+    return render_template(
+        'student/assign_responsable.html',
+        student=student,
+        responsables=Responsable.all_except(student.responsables)
+    )
 
 
 @login_required
@@ -168,29 +187,21 @@ def activate(student_id):
     return redirect(url_for('student_index'))
 
 
-def add_workshops_to_table(form_workshops, student_id, form_cicle):
-    for whp in form_workshops:
-        statement = school_year_workshop_student.insert().values(
-            estudiante_id=student_id, ciclo_lectivo_id=form_cicle, taller_id=whp)
-        db.session.execute(statement)
-    db.session.commit()
-
-
 @login_required
 @permissions_enabled('student_update', current_user)
 def assign_workshop(student_id):
+    student = Student.query.get(student_id)
     if request.method == 'POST':
         form_cicle = request.form.get('cicle')
         form_workshops = request.form.getlist('workshop')
         if form_cicle is not None and form_workshops:
-            add_workshops_to_table(form_workshops, student_id, form_cicle)
+            student.assign_to(form_workshops, form_cicle)
             flash(SUCCESS_MSG['assign'], 'success')
             return redirect(url_for('student_index'))
         else:
             flash(ERROR_MSG['assign'], 'danger')
             return redirect(url_for('student_assign', student_id=student_id))
     else:
-        student = Student.query.get(student_id)
         cicles = SchoolYear.query.all()
         return render_template('student/assign_workshop.html', academic=student, cicles=cicles)
 
@@ -199,6 +210,7 @@ def assign_workshop(student_id):
 @permissions_enabled('student_new', current_user)
 def new():
     if request.method == 'POST':
+        print(json.dumps(request.get_json(), indent=4))
         student_form = StudentCreateForm(request.get_json())
 
         if student_form.is_valid():
@@ -218,6 +230,7 @@ def new():
         return render_template(
             'student/new.html',
             academic=None,
+            responsables=Responsable.query.all(),
             genders=Gender.query.all(),
             schools=School.query.all(),
             levels=Level.query.all(),

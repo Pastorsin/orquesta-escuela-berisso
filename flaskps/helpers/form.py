@@ -19,7 +19,7 @@ class EmptyFieldsValidator(Validator):
         self.fields = form
 
     def validate(self):
-        return all(self.fields.values())
+        return bool(self.fields) and all(self.fields.values())
 
     def message(self):
         return 'Error! Todos los campos son obligatorios.'

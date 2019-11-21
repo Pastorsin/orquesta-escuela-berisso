@@ -20,7 +20,7 @@ ERROR_MSG = {
 }
 
 @login_required
-@permissions_enabled('teacher_new', current_user)
+@permissions_enabled('schoolyear_new', current_user)
 def new():
     if request.method == 'POST':
 

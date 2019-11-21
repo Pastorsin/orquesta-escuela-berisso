@@ -2,13 +2,11 @@ from flask import render_template, flash, redirect, url_for, request
 from flask_login import current_user, login_required
 from flaskps.helpers.webconfig import get_web_config
 from flaskps.helpers.constraints import permissions_enabled
-from flaskps.extensions.db import db
 
 from flaskps.helpers.teacher import TeacherCreateForm, TeacherEditForm
 from flaskps.models.teacher import Teacher
 from flaskps.models.gender import Gender
 from flaskps.models.school_year import SchoolYear
-from flaskps.models.teacher_resp_workshop import school_year_workshop_teacher
 
 SUCCESS_MSG = {
     'deactivate': 'El docente {first_name}, {last_name} ha sido desactivado correctamente.',
@@ -146,28 +144,20 @@ def update(form, teacher):
         )
 
 
-def add_workshops_to_table(form_workshops, teacher_id, form_cicle):
-    for whp in form_workshops:
-        statement = school_year_workshop_teacher.insert().values(
-                docente_id=teacher_id, ciclo_lectivo_id=form_cicle, taller_id=whp)
-        db.session.execute(statement)
-    db.session.commit()
-
-
 @login_required
 @permissions_enabled('teacher_update', current_user)
 def assign_workshop(teacher_id):
+    teacher = Teacher.query.get(teacher_id)
     if request.method == 'POST':
         form_cicle = request.form.get('cicle')
         form_workshops = request.form.getlist('workshop')
         if form_cicle is not None and form_workshops:
-            add_workshops_to_table(form_workshops, teacher_id, form_cicle)
+            teacher.assign_to(form_workshops, form_cicle)
             flash(SUCCESS_MSG['assign'], 'success')
             return redirect(url_for('teacher_index'))
         else:
             flash(ERROR_MSG['assign'], 'danger')
             return redirect(url_for('teacher_assign', teacher_id=teacher_id))
     else:
-        teacher = Teacher.query.get(teacher_id)
         cicles = SchoolYear.query.all()
         return render_template('teacher/assign_workshop.html', academic=teacher, cicles=cicles)

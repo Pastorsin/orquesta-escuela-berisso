@@ -156,7 +156,6 @@ class Student(db.Model):
     def __repr__(self):
         return f'<Student {self.first_name}, {self.last_name}>'
 
-
     def activate(self):
         self.is_active = True
         db.session.commit()
@@ -192,3 +191,13 @@ class Student(db.Model):
     def add_responsable(self, responsable):
         self.responsables.append(responsable)
         db.session.commit()
+
+    def assign_to(self, form_workshops, form_cicle):
+        for whp in form_workshops:
+            statement = school_year_workshop_student.insert().values(
+                    estudiante_id=self.id, ciclo_lectivo_id=form_cicle, taller_id=whp)
+            db.session.execute(statement)
+        db.session.commit()
+
+    def has_responsable(self, responsable):
+        return responsable in self.responsables

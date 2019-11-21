@@ -44,7 +44,7 @@
                 <select name="cicle" id="select-ciclos" class="form-control" required>
                   <option value="" selected disabled hidden>Seleccione un ciclo lectivo</option>
                   {% for cicle in cicles %}
-                    <option value="{{ cicle.id }}">{{ cicle.start_date }} - {{ cicle.finish_date }}</option>
+                  <option value="{{ cicle.id }}">De {{ cicle.start_date }} hasta {{ cicle.finish_date }} (Semestre {{ cicle.semester }})</option>
                   {% endfor %}
                 </select>
               </div>

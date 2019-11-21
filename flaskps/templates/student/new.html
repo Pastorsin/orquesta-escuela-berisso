@@ -74,9 +74,25 @@
                 {% endfor %}
             </select>
         </div>
-	</div> 
+	</div>
 
-	<div class="form-section responsable">
+    <div class="form-section responsables-select">
+        <div class="col-12 text-center">
+            <h3 class="subtitle border-bottom">Asignar responsables</h3>
+        </div>
+        <div class="col-10 checkbox-group required">
+            {% for responsable in responsables %}
+                <div class="form-group">
+                    <div class="custom-control custom-checkbox">
+                        <input {% if responsable in academic.responsables %} checked {% endif%} class="custom-control-input responsable-checkbox" id="active-checkbox-{{responsable.id}}" type="checkbox" name="responsables" value="{{responsable.id}}" data-parsley-check-responsable>
+                        <label class="rol-label custom-control-label" for="active-checkbox-{{responsable.id}}">{{responsable.full_name}}</label>
+                    </div>
+                </div>
+            {% endfor %}
+        </div>
+    </div>
+
+	<div class="responsable d-none">
 		<div class="col-12 text-center">			
 			<h3 class="subtitle border-bottom">Datos personales del tutor</h3>
 		</div>
@@ -86,7 +102,7 @@
 
 {% block buttons %}
 	<button type="button" class="previous btn btn-info pull-left mx-2">&lt; Anterior</button>
-	<input type="submit" class="btn btn-success pull-right mx-2">
+	<input type="submit" title="Enviar" class="btn btn-success pull-right mx-2">
 	<button type="button" class="next btn btn-info pull-right mx-2">Siguiente &gt;</button>
 	<span class="clearfix"></span>
 {% endblock %}

@@ -115,3 +115,10 @@ class Teacher(db.Model):
     def get_workshops_of_cicle(self, cicle_id):
         return Workshop.query.join(school_year_workshop_teacher).\
             filter_by(docente_id=self.id, ciclo_lectivo_id=cicle_id)
+
+    def assign_to(self, form_workshops, form_cicle):
+        for whp in form_workshops:
+            statement = school_year_workshop_teacher.insert().values(
+                    docente_id=self.id, ciclo_lectivo_id=form_cicle, taller_id=whp)
+            db.session.execute(statement)
+        db.session.commit()
