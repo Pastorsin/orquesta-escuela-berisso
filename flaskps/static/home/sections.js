@@ -41,6 +41,11 @@ $(document).ready(() => {
 			'name' : 'Crear ciclo lectivo',
 			'icon' : 'fa-book',
 			'url'  : 'ciclo_lectivo/new'
+		},
+		'schoolyear_update' : {
+			'name' : 'Asignar taller a ciclo lectivo',
+			'icon' : 'fa-book',
+			'url'  : 'ciclo_lectivo/assign_workshop'
 		}
 	}
 
