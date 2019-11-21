@@ -150,8 +150,8 @@ class MultipleStepForm {
                 let responsableSection = this.createResponsableSection()
                 responsableSection.insertBefore($(".buttons"));
             }
+            this.navigateTo(this.curIndex() + 1);
         });
-        this.navigateTo(this.curIndex() + 1);
     }
 
     initSections() {
