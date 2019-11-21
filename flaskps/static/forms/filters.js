@@ -21,11 +21,13 @@ class ActiveFilter extends Filter {
     initSelectors() {
         this.activeButton = $("#active-checkbox")
         this.deactiveButton = $("#inactive-checkbox")
+        this.allButton = $("#all-checkbox")
     }
 
     initEvents(search) {
         this.activeButton.change(search.start.bind(search))
         this.deactiveButton.change(search.start.bind(search))
+        this.allButton.change(search.start.bind(search))
     }
 
     satisfy(row, value) {
