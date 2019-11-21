@@ -11,7 +11,7 @@ class SchoolYear(db.Model):
     )
 
     start_date = db.Column(
-        'fecha_ini',
+        'fecha_inicio',
         db.Date,
         nullable=False
     )
@@ -50,4 +50,11 @@ class SchoolYear(db.Model):
         db.session.commit()
 
     def has_workshop(self, workshop):
-        return workshop in self.workshops    
+        return workshop in self.workshops
+
+    def assign_workshops(self, form_workshops):
+        for whp in form_workshops:
+            statement = school_year_workshop.insert().values(
+                ciclo_lectivo_id=self.id, taller_id=whp)
+            db.session.execute(statement)
+        db.session.commit()

@@ -89,12 +89,13 @@ app.add_url_rule("/docentes/<teacher_id>/talleres", 'teacher_workshops', teacher
 
 app.add_url_rule("/docentes/inscribe/<teacher_id>", 'teacher_assign', teacher.assign_workshop, methods=['POST', 'GET'])
 
+
 # API
 app.add_url_rule('/api/docente/<docente_id>/ciclo/<ciclo_id>', 'cicle_workshops_teacher', api.cicle_workshops_teacher)
 app.add_url_rule('/api/estudiante/<estudiante_id>/ciclo/<ciclo_id>', 'cicle_workshops_student', api.cicle_workshops_student)
+app.add_url_rule('/api/ciclo_lectivo/<ciclo_id>', 'cicle_workshops', api.cicle_workshops)
 
 
 # SchoolYear
 app.add_url_rule("/ciclo_lectivo/new", 'schoolyear_new', school_year.new, methods=['POST', 'GET'])
 app.add_url_rule("/ciclo_lectivo/assign_workshop", 'schoolyear_assign_workshop', school_year.assign_workshop, methods=['POST', 'GET'])
-
