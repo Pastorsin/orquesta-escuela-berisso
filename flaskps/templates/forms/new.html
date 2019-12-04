@@ -18,7 +18,7 @@
 			<h1>{% block form_title %}{% endblock %}</h1>
 		</div>
 		<div class="col-12 p-4">
-			<form method="post" action="{% block post_url %} {% endblock %}">
+			<form method="post" action="{% block post_url %} {% endblock %}" enctype="multipart/form-data">
 				{% block fields %}
 
 				{% endblock %}

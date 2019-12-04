@@ -14,3 +14,9 @@ class InstrumentType(db.Model):
         db.String(255),
         nullable=False
     )
+
+    @classmethod
+    def any(cls, category_id):
+        return any(
+            cls.query.filter(cls.id == category_id)
+        )
