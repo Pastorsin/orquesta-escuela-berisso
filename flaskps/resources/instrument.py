@@ -1,11 +1,14 @@
 from base64 import b64encode
+
 from flask import render_template, flash, redirect, url_for, request
 from flask_login import current_user, login_required
 
 from flaskps.models.instrument import Instrument
 from flaskps.models.instrument_type import InstrumentType
+
 from flaskps.helpers.instrument import InstrumentCreateForm, InstrumentEditForm
 from flaskps.helpers.instrument import ImageEditForm
+from flaskps.helpers.constraints import permissions_enabled
 
 
 SUCCESS_MSG = {
@@ -14,6 +17,8 @@ SUCCESS_MSG = {
 }
 
 
+@login_required
+@permissions_enabled('instrument_new', current_user)
 def new():
     if request.method == 'POST':
         form = InstrumentCreateForm(request)
@@ -39,6 +44,8 @@ def new():
         )
 
 
+@login_required
+@permissions_enabled('instrument_index', current_user)
 def index():
     return render_template(
         'instrument/index.html',
@@ -46,6 +53,8 @@ def index():
     )
 
 
+@login_required
+@permissions_enabled('instrument_deactivate', current_user)
 def deactivate(instrument_id):
     instrument = Instrument.query.get(instrument_id)
     instrument.deactivate()
@@ -53,6 +62,8 @@ def deactivate(instrument_id):
     return redirect(url_for('instrument_index'))
 
 
+@login_required
+@permissions_enabled('instrument_activate', current_user)
 def activate(instrument_id):
     instrument = Instrument.query.get(instrument_id)
     instrument.activate()
@@ -60,6 +71,8 @@ def activate(instrument_id):
     return redirect(url_for('instrument_index'))
 
 
+@login_required
+@permissions_enabled('instrument_profile', current_user)
 def profile(instrument_id):
     instrument = Instrument.query.get(instrument_id)
     image = b64encode(instrument.image).decode("utf-8")
@@ -70,6 +83,8 @@ def profile(instrument_id):
     )
 
 
+@login_required
+@permissions_enabled('instrument_update', current_user)
 def edit(instrument_id):
     instrument = Instrument.query.get(instrument_id)
 
@@ -91,6 +106,8 @@ def edit(instrument_id):
     )
 
 
+@login_required
+@permissions_enabled('instrument_update', current_user)
 def edit_image(instrument_id):
     instrument = Instrument.query.get(instrument_id)
     image = b64encode(instrument.image).decode("utf-8")
