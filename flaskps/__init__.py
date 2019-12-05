@@ -110,3 +110,5 @@ app.add_url_rule("/instrumentos/new", 'instrument_new', instrument.new, methods=
 app.add_url_rule("/instrumentos/desactivar/<instrument_id>", 'deactivate_instrument', instrument.deactivate,  methods=['POST'])
 app.add_url_rule("/instrumentos/activar/<instrument_id>", 'activate_instrument', instrument.activate,  methods=['POST'])
 app.add_url_rule("/instrumentos/<instrument_id>", 'instrument_profile', instrument.profile)
+app.add_url_rule("/instrumentos/editar/<instrument_id>", 'instrument_edit', instrument.edit, methods=['POST', 'GET'])
+app.add_url_rule("/instrumentos/editar/<instrument_id>/imagen", 'instrument_image_edit', instrument.edit_image, methods=['POST', 'GET'])

@@ -1,0 +1,18 @@
+{% extends "instrument/form.html" %}
+
+{% block style %}
+	{{super()}}
+	<link rel="stylesheet" type="text/css" href="{{url_for('static', filename='instrument/edit.css')}}">
+{% endblock %}
+
+{% block form_title %}
+	Editar instrumento
+{% endblock %}
+
+{% block image %}
+	<div>
+		<a class="white-button" href="{{ url_for('instrument_image_edit', instrument_id=instrument.id) }}">
+			<i class="fa fa-cog"></i> Cambiar imágen
+		</a>
+	</div>
+{% endblock %}

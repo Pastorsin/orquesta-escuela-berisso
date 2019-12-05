@@ -48,11 +48,14 @@ class Instrument(db.Model):
 
     def __init__(self, data):
         self.__init_attributes(data)
+        self.__init_image(data)
 
     def __init_attributes(self, data):
         self.name = data['name']
-        self.category_id = data['category']
+        self.category_id = data['category_id']
         self.inventory_number = data['inventory_number']
+
+    def __init_image(self, data):
         self.image = data['image']
 
     @classmethod
@@ -76,3 +79,11 @@ class Instrument(db.Model):
         self.is_active = False
         db.session.commit()
         return self
+
+    def update(self, values):
+        self.__init_attributes(values)
+        db.session.commit()
+
+    def update_image(self, values):
+        self.__init_image(values)
+        db.session.commit()

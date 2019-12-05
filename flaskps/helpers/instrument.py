@@ -10,7 +10,7 @@ from flaskps.models.instrument_type import InstrumentType
 class CategoryValidator(Validator):
 
     def __init__(self, form):
-        self.category = form['category']
+        self.category = form['category_id']
 
     def validate(self):
         return InstrumentType.any(self.category)
@@ -50,26 +50,90 @@ class ImageValidator(Validator):
         return f'La imágen supera los {self.max_size} bytes.'
 
 
-class InstrumentCreateForm(Form):
+class EditInventoryNumberValidator(Validator):
+
+    def __init__(self, form, instrument):
+        self.instrument = instrument
+        self.number = form['inventory_number']
+
+    def validate(self):
+        same_number = self.number == self.instrument.inventory_number
+        return same_number or not Instrument.any_inventory_number(self.number)
+
+    def message(self):
+        return 'Ya existe un instrumento con ese número de inventario'
+
+
+class InstrumentForm(Form):
 
     def __init__(self, request):
-        super(InstrumentCreateForm, self).__init__(request.form)
-        self.fields['image'] = request.files['image'].read()
+        super(InstrumentForm, self).__init__(request.form)
+        self.validators.extend([
+            CategoryValidator(request.form)
+        ])
 
+    def values(self):
+        return self.fields
+
+
+class InstrumentCreateForm(InstrumentForm):
+
+    def __init__(self, request):
+        super(InstrumentCreateForm, self).__init__(request)
+        self.fields['image'] = request.files['image'].read()
         self.validators.extend([
             InventoryNumberValidator(request.form),
-            CategoryValidator(request.form),
             ImageValidator(request.files)
         ])
 
     def success_message(self):
         return 'Instrumento creado correctamente'
 
-    def values(self):
-        return self.fields
-
     def save(self):
         Instrument.create(self.fields)
 
     def success_url(self):
         return url_for('instrument_index')
+
+
+class InstrumentEditForm(InstrumentForm):
+
+    def __init__(self, request, instrument):
+        super(InstrumentEditForm, self).__init__(request)
+        self.instrument = instrument
+        self.validators.extend([
+            EditInventoryNumberValidator(request.form, instrument)
+        ])
+
+    def success_message(self):
+        return 'Instrumento modificado correctamente'
+
+    def save(self):
+        self.instrument.update(self.fields)
+
+    def success_url(self):
+        return url_for('instrument_profile', instrument_id=self.instrument.id)
+
+
+class ImageEditForm(Form):
+
+    def __init__(self, request, instrument):
+        super(ImageEditForm, self).__init__(request.form)
+        self.instrument = instrument
+        self.fields['image'] = request.files['image'].read()
+        self.validators.extend([
+            ImageValidator(request.files)
+        ])
+
+    def success_message(self):
+        return 'Imágen modificada correctamente'
+
+    @property
+    def values(self):
+        return self.fields
+
+    def save(self):
+        self.instrument.update_image(self.values)
+
+    def success_url(self):
+        return url_for('instrument_profile', instrument_id=self.instrument.id)

@@ -4,7 +4,9 @@ from flask_login import current_user, login_required
 
 from flaskps.models.instrument import Instrument
 from flaskps.models.instrument_type import InstrumentType
-from flaskps.helpers.instrument import InstrumentCreateForm
+from flaskps.helpers.instrument import InstrumentCreateForm, InstrumentEditForm
+from flaskps.helpers.instrument import ImageEditForm
+
 
 SUCCESS_MSG = {
     'deactivate': 'Instrumento desactivado correctamente',
@@ -63,6 +65,49 @@ def profile(instrument_id):
     image = b64encode(instrument.image).decode("utf-8")
     return render_template(
         'instrument/profile.html',
+        instrument=instrument,
+        image=image
+    )
+
+
+def edit(instrument_id):
+    instrument = Instrument.query.get(instrument_id)
+
+    if request.method == 'POST':
+        form = InstrumentEditForm(request, instrument)
+
+        if form.is_valid():
+            form.save()
+            flash(form.success_message(), 'success')
+            return redirect(form.success_url())
+        else:
+            for error in form.error_messages():
+                flash(error, 'danger')
+
+    return render_template(
+        'instrument/edit.html',
+        instrument=instrument,
+        instrument_types=InstrumentType.query.all()
+    )
+
+
+def edit_image(instrument_id):
+    instrument = Instrument.query.get(instrument_id)
+    image = b64encode(instrument.image).decode("utf-8")
+
+    if request.method == 'POST':
+        form = ImageEditForm(request, instrument)
+
+        if form.is_valid():
+            form.save()
+            flash(form.success_message(), 'success')
+            return redirect(form.success_url())
+        else:
+            for error in form.error_messages():
+                flash(error, 'danger')
+
+    return render_template(
+        'instrument/edit_image.html',
         instrument=instrument,
         image=image
     )
