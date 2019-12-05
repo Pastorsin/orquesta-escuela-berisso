@@ -5,6 +5,11 @@ from flaskps.models.instrument import Instrument
 from flaskps.models.instrument_type import InstrumentType
 from flaskps.helpers.instrument import InstrumentCreateForm
 
+SUCCESS_MSG = {
+    'deactivate': 'Instrumento desactivado correctamente',
+    'activate': 'Instrumento activado correctamente'
+}
+
 
 def new():
     if request.method == 'POST':
@@ -36,3 +41,17 @@ def index():
         'instrument/index.html',
         instruments=Instrument.query.order_by(Instrument.inventory_number)
     )
+
+
+def deactivate(instrument_id):
+    instrument = Instrument.query.get(instrument_id)
+    instrument.deactivate()
+    flash(SUCCESS_MSG['deactivate'], 'success')
+    return redirect(url_for('instrument_index'))
+
+
+def activate(instrument_id):
+    instrument = Instrument.query.get(instrument_id)
+    instrument.activate()
+    flash(SUCCESS_MSG['activate'], 'success')
+    return redirect(url_for('instrument_index'))

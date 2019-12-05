@@ -107,3 +107,5 @@ app.add_url_rule("/ciclo_lectivo/assign_workshop", 'schoolyear_assign_workshop',
 # Instruments
 app.add_url_rule("/instrumentos", 'instrument_index', instrument.index)
 app.add_url_rule("/instrumentos/new", 'instrument_new', instrument.new, methods=['POST', 'GET'])
+app.add_url_rule("/instrumentos/desactivar/<instrument_id>", 'deactivate_instrument', instrument.deactivate,  methods=['POST'])
+app.add_url_rule("/instrumentos/activar/<instrument_id>", 'activate_instrument', instrument.activate,  methods=['POST'])

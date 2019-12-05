@@ -64,3 +64,13 @@ class Instrument(db.Model):
         return any(
             cls.query.filter(cls.inventory_number == number)
         )
+
+    def activate(self):
+        self.is_active = True
+        db.session.commit()
+        return self
+
+    def deactivate(self):
+        self.is_active = False
+        db.session.commit()
+        return self

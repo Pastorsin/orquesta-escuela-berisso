@@ -53,20 +53,20 @@
 				<div class="dropdown-menu" aria-labelledby="dropdownMenuButton">
 					{# <a class="dropdown-item" href="{{ url_for('teacher_profile', teacher_id=instrument.id) }}"><i class="fa fa-user"></i> Ver detalle</a>
 					<a class="dropdown-item" href="{{ url_for('teacher_edit', teacher_id=instrument.id) }}"><i class="fa fa-edit"></i> Modificar datos</a>
-					<a class="dropdown-item" href="{{ url_for('teacher_assign', teacher_id=instrument.id) }}"><i class="fas fa-book"></i> Asignar Taller</a>
+					<a class="dropdown-item" href="{{ url_for('teacher_assign', teacher_id=instrument.id) }}"><i class="fas fa-book"></i> Asignar Taller</a>  #}
 					{% if instrument.is_active %}
-						<form class="deactivate" action="{{ url_for('deactivate_teacher', teacher_id=teacher.id) }}" method="post">
+						<form class="deactivate" action="{{ url_for('deactivate_instrument', instrument_id=instrument.id) }}" method="post">
 							<button type="submit" class="dropdown-item">
 								<i class="fa fa-ban"></i> Deshabilitar
 							</button>
 						</form>
 					{% else %}
-						<form class="activate" action="{{ url_for('activate_teacher', teacher_id=instrument.id) }}" method="post">
+						<form class="activate" action="{{ url_for('activate_instrument', instrument_id=instrument.id) }}" method="post">
 							<button type="submit" class="dropdown-item">
 								<i class="fa fa-check"></i> Activar
 							</button>
 						</form>					    
-					{% endif %} #}
+					{% endif %}
 				</div>
 			</div>
 		</td>
