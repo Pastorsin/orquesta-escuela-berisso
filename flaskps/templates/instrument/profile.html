@@ -1,0 +1,37 @@
+{% extends "forms/profile.html" %}
+
+{% block style %}
+	<link rel="stylesheet" type="text/css" href="{{url_for('static', filename='instrument/profile.css')}}">
+	{{ super() }}
+{% endblock %}
+
+{% block profile_name %}
+    Instrumento
+{% endblock %}
+
+{% block profile_attributes %}
+
+	<div class="row justify-content-center mt-2 py-4 border-bottom">
+    	<img class="image" src="data:image/png;base64,{{ image }}"/>
+    </div>
+
+    <div class="row mt-2 border-bottom">
+	    <div class="col-3">
+			<h4><span class="title subtitle">Número</span></h4>
+		    <span class="information">{{ instrument.inventory_number }}</span>
+	    </div>
+		<div class="col-3">
+		    <h4><span class="title subtitle">Nombre</span></h4>
+		    <span class="information">{{ instrument.name }}</span>		
+		</div>    
+		<div class="col-3">
+		    <h4><span class="title subtitle">Categoría</span></h4>
+		    <span class="information">{{ instrument.category.name }}</span>		
+		</div>
+		<div class="col-3">
+			<h4><span class="title subtitle">Activo</span></h4>
+		    <i class="fa fa-{{ 'check text-success' if (instrument.is_active) else 'times text-danger' }} instrument-active" active={{ instrument.is_active|int }}></i>		
+		</div>
+    </div>
+
+{% endblock %}

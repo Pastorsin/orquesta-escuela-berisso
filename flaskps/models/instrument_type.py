@@ -15,6 +15,8 @@ class InstrumentType(db.Model):
         nullable=False
     )
 
+    instruments = db.relationship('Instrument', backref='category', lazy=True)
+
     @classmethod
     def any(cls, category_id):
         return any(

@@ -1,4 +1,5 @@
 from flaskps.extensions.db import db
+from flaskps.models.instrument_type import InstrumentType
 
 
 class Instrument(db.Model):
@@ -16,9 +17,10 @@ class Instrument(db.Model):
         nullable=False
     )
 
-    category = db.Column(
-        'categoria',
-        db.String(255),
+    category_id = db.Column(
+        'categoria_id',
+        db.Integer,
+        db.ForeignKey('tipo_instrumento.id'),
         nullable=False
     )
 
@@ -49,7 +51,7 @@ class Instrument(db.Model):
 
     def __init_attributes(self, data):
         self.name = data['name']
-        self.category = data['category']
+        self.category_id = data['category']
         self.inventory_number = data['inventory_number']
         self.image = data['image']
 

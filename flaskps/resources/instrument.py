@@ -1,3 +1,4 @@
+from base64 import b64encode
 from flask import render_template, flash, redirect, url_for, request
 from flask_login import current_user, login_required
 
@@ -55,3 +56,13 @@ def activate(instrument_id):
     instrument.activate()
     flash(SUCCESS_MSG['activate'], 'success')
     return redirect(url_for('instrument_index'))
+
+
+def profile(instrument_id):
+    instrument = Instrument.query.get(instrument_id)
+    image = b64encode(instrument.image).decode("utf-8")
+    return render_template(
+        'instrument/profile.html',
+        instrument=instrument,
+        image=image
+    )
