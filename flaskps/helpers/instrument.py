@@ -51,7 +51,7 @@ class ImageValidator(Validator):
         return size
 
     def message(self):
-        return f'Imágen inválida'
+        return 'Imágen inválida'
 
 
 class EditInventoryNumberValidator(Validator):
