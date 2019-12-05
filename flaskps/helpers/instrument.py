@@ -1,6 +1,6 @@
 from .form import Validator, Form
 
-import os
+import re
 
 from flask import url_for, render_template
 from flaskps.models.instrument import Instrument
@@ -34,11 +34,15 @@ class InventoryNumberValidator(Validator):
 class ImageValidator(Validator):
 
     def __init__(self, files):
+        self.extensions = r"([a-zA-Z0-9\s_\\.\-\(\):])+(.jpe?g|.png|.gif|.webp|bmp)$"
         self.image = files['image']
         self.max_size = (2**32) - 1
 
     def validate(self):
-        return self.image_size() < self.max_size
+        return self.valid_extension() and self.image_size() < self.max_size
+
+    def valid_extension(self):
+        return bool(re.match(self.extensions, self.image.filename))
 
     def image_size(self):
         self.image.seek(0)
@@ -47,7 +51,7 @@ class ImageValidator(Validator):
         return size
 
     def message(self):
-        return f'La imágen supera los {self.max_size} bytes.'
+        return f'Imágen inválida'
 
 
 class EditInventoryNumberValidator(Validator):
