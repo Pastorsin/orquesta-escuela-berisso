@@ -1,0 +1,75 @@
+{% extends "forms/index.html" %}
+
+{% block script %}
+	{{super()}}
+	<script src="{{url_for('static', filename='instrument/search.js')}}"></script>	
+	<script src="{{url_for('static', filename='instrument/index.js')}}"></script>	
+{% endblock %}
+
+{% block index_title %}Listado de Instrumentos{% endblock %}
+
+{% block placeholder %}Buscar instrumento{% endblock %}
+
+{% block table_head %}
+	<th scope="col">Número</th>
+	<th scope="col">Nombre</th>
+	<th scope="col" class="text-center">Activo</th>
+	<th scope="col" class="text-center">Opciones</th>
+{% endblock %}
+
+{% block filters %}
+	<div class="list-subtitle">
+		<h5>Filtrar</h5>
+	</div>
+	<div class="col-10 col-off-2">
+		<div class="custom-control custom-radio">
+			<input type="radio" class="custom-control-input" name="radio-active" id="all-checkbox" checked="checked">
+			<label class="custom-control-label" for="all-checkbox" id="label-user-all">Mostrar todo</label>
+		</div>
+		<div class="custom-control custom-radio">
+			<input type="radio" class="custom-control-input" name="radio-active" id="active-checkbox">
+			<label class="custom-control-label" for="active-checkbox" id="label-user-active">Mostrar sólo activos</label>
+		</div>
+		<div class="custom-control custom-radio">
+			<input type="radio" class="custom-control-input" name="radio-active" id="inactive-checkbox">
+			<label class="custom-control-label" for="inactive-checkbox" id="label-user-inactive">Mostrar sólo inactivos</label>
+		</div>
+	</div>
+{% endblock %}
+
+{% block table_body %}
+	{% for instrument in instruments %}
+	<tr class="item-row">
+		<th scope="row" class="inventory-number">{{ instrument.inventory_number }}</th>
+		<td scope="row" class="name">{{ instrument.name }}</td>
+		<td class="text-center">
+			<i class="fa fa-{{'check text-success' if (instrument.is_active) else 'times text-danger'}} td-active" active={{instrument.is_active|int}}></i>
+		</td>
+		<td scope="row" class="text-center">
+			<div class="dropdown">
+				<button type="button" class="white-button btn-sm dropdown-toggle" id="dropdownMenuButton" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
+					<i class="fa fa-cog"></i>
+				</button>
+				<div class="dropdown-menu" aria-labelledby="dropdownMenuButton">
+					{# <a class="dropdown-item" href="{{ url_for('teacher_profile', teacher_id=instrument.id) }}"><i class="fa fa-user"></i> Ver detalle</a>
+					<a class="dropdown-item" href="{{ url_for('teacher_edit', teacher_id=instrument.id) }}"><i class="fa fa-edit"></i> Modificar datos</a>
+					<a class="dropdown-item" href="{{ url_for('teacher_assign', teacher_id=instrument.id) }}"><i class="fas fa-book"></i> Asignar Taller</a>
+					{% if instrument.is_active %}
+						<form class="deactivate" action="{{ url_for('deactivate_teacher', teacher_id=teacher.id) }}" method="post">
+							<button type="submit" class="dropdown-item">
+								<i class="fa fa-ban"></i> Deshabilitar
+							</button>
+						</form>
+					{% else %}
+						<form class="activate" action="{{ url_for('activate_teacher', teacher_id=instrument.id) }}" method="post">
+							<button type="submit" class="dropdown-item">
+								<i class="fa fa-check"></i> Activar
+							</button>
+						</form>					    
+					{% endif %} #}
+				</div>
+			</div>
+		</td>
+	</tr>
+	{% endfor %}
+{% endblock %}

@@ -1,6 +1,7 @@
 from flask import render_template, flash, redirect, url_for, request
 from flask_login import current_user, login_required
 
+from flaskps.models.instrument import Instrument
 from flaskps.models.instrument_type import InstrumentType
 from flaskps.helpers.instrument import InstrumentCreateForm
 
@@ -28,3 +29,10 @@ def new():
             instrument=None,
             instrument_types=InstrumentType.query.all()
         )
+
+
+def index():
+    return render_template(
+        'instrument/index.html',
+        instruments=Instrument.query.order_by(Instrument.inventory_number)
+    )

@@ -35,6 +35,12 @@ class Instrument(db.Model):
         nullable=False
     )
 
+    is_active = db.Column(
+        db.Boolean,
+        nullable=False,
+        default=True
+    )
+
     def __repr__(self):
         return f"{self.inventory_number} - {self.name}"
 
