@@ -4,7 +4,7 @@ from flaskps.config import Config
 
 from flaskps.resources import user, base, webconfig, admin
 from flaskps.resources import student, teacher, school_year, responsable
-from flaskps.resources import api, instrument
+from flaskps.resources import api, instrument, nucleus_map
 
 
 from .extensions.db import db
@@ -112,3 +112,7 @@ app.add_url_rule("/instrumentos/activar/<instrument_id>", 'activate_instrument',
 app.add_url_rule("/instrumentos/<instrument_id>", 'instrument_profile', instrument.profile)
 app.add_url_rule("/instrumentos/editar/<instrument_id>", 'instrument_edit', instrument.edit, methods=['POST', 'GET'])
 app.add_url_rule("/instrumentos/editar/<instrument_id>/imagen", 'instrument_image_edit', instrument.edit_image, methods=['POST', 'GET'])
+
+
+# Map
+app.add_url_rule("/map", 'nucleus_map', nucleus_map.index)
