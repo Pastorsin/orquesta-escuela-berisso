@@ -1,22 +1,37 @@
-var map = L.map('map').setView([-34.8777, -57.8818], 15);
+const ceneter_location = [-34.8777, -57.8818]
+const schools = [
+    {
+        pos: [-34.87641, -57.8929],
+        name: 'Escuela primaria Nº6'
+    },
+    {
+        pos: [-34.88386, -57.89844],
+        name: 'Escuela primaria Nº7'
+    },
+    {
+        pos: [-34.8766, -57.8828],
+        name: 'Escuela primaria Nº8'
+    },
+    {
+        pos: [-34.8758, -57.8761],
+        name: 'Escuela primaria Nº9'
+    },
+    {
+        pos: [-34.8698, -57.8727],
+        name: 'Escuela primaria Nº10'
+    },
+]
+
+var map = L.map('map').setView(ceneter_location, 15);
 
 L.tileLayer('http://{s}.tile.osm.org/{z}/{x}/{y}.png', {
     attribution: '&copy; <a href="http://osm.org/copyright">OpenStreetMap</a> contributors'
 }).addTo(map);
 
-var marker1 = L.marker([-34.87641, -57.8929]).addTo(map);  //EP6
-var marker2 = L.marker([-34.88386, -57.89844]).addTo(map);  //EP7
-var marker3 = L.marker([-34.8766, -57.8828]).addTo(map);
-var marker4 = L.marker([-34.8758, -57.8761]).addTo(map);
-var marker5 = L.marker([-34.8698, -57.8727]).addTo(map);
-
-marker1.bindPopup('<p>Escuela primaria Nº6</p><button>Ir aquí</button>');
-marker2.bindPopup('<p>Escuela primaria Nº7</p><button>Ir aquí</button>');
-marker3.bindPopup('<p>Escuela primaria Nº8</p><button>Ir aquí</button>');
-marker4.bindPopup('<p>Escuela primaria Nº9</p><button>Ir aquí</button>');
-marker5.bindPopup('<p>Escuela primaria Nº10</p><button>Ir aquí</button>');
+createMarkers(schools);
 
 var control = L.Routing.control({
+    reverseWaypoints: true,
     routeWhileDragging: true,
     geocoder: L.Control.Geocoder.nominatim()
 }).addTo(map);
@@ -30,6 +45,13 @@ map.on('popupopen', function (e) {
         map.closePopup();
     });
 });
+
+function createMarkers() {
+    for (let i = 0; i < schools.length; i++) {
+        let x = L.marker(schools[i].pos).addTo(map);
+        x.bindPopup(`<p>${schools[i].name}</p><button>Ir aquí</button>`);
+    }
+}
 
 function setUserLocation(pos) {
     let current_coords = {
