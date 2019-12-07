@@ -46,6 +46,16 @@ $(document).ready(() => {
 			'name' : 'Asignar taller a ciclo lectivo',
 			'icon' : 'fa-book',
 			'url'  : 'ciclo_lectivo/assign_workshop'
+		},
+		'instrument_new' : {
+			'name' : 'Crear instrumento',
+			'icon' : 'fa-music',
+			'url'  : 'instrumentos/new'
+		},
+		'instrument_index' : {
+			'name' : 'Listado de instrumentos',
+			'icon' : 'fa-music',
+			'url'  : 'instrumentos'
 		}
 	}
 

@@ -14,3 +14,11 @@ class InstrumentType(db.Model):
         db.String(255),
         nullable=False
     )
+
+    instruments = db.relationship('Instrument', backref='category', lazy=True)
+
+    @classmethod
+    def any(cls, category_id):
+        return any(
+            cls.query.filter(cls.id == category_id)
+        )

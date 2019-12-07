@@ -2,7 +2,9 @@ from flask import Flask
 
 from flaskps.config import Config
 
-from flaskps.resources import user, base, webconfig, admin, student, teacher, school_year, responsable, api
+from flaskps.resources import user, base, webconfig, admin
+from flaskps.resources import student, teacher, school_year, responsable
+from flaskps.resources import api, instrument, nucleus_map
 
 
 from .extensions.db import db
@@ -71,6 +73,7 @@ app.add_url_rule("/estudiantes/<student_id>/responsables", 'student_responsables
 app.add_url_rule("/estudiantes/<student_id>/responsables/asignar", 'student_assign_responsable', student.assign_responsable, methods=['POST', 'GET'])
 app.add_url_rule("/estudiantes/<student_id>/responsables/new", "responsable_new", student.reponsable_new, methods=['POST', 'GET'])
 
+
 # Responsable
 app.add_url_rule("/responsable/<responsable_id>", 'responsable_profile', responsable.profile)
 app.add_url_rule("/responsable/desactivar/<responsable_id>", 'deactivate_responsable', responsable.deactivate,  methods=['POST'])
@@ -99,3 +102,17 @@ app.add_url_rule('/api/ciclo_lectivo/<ciclo_id>', 'cicle_workshops', api.cicle_w
 # SchoolYear
 app.add_url_rule("/ciclo_lectivo/new", 'schoolyear_new', school_year.new, methods=['POST', 'GET'])
 app.add_url_rule("/ciclo_lectivo/assign_workshop", 'schoolyear_assign_workshop', school_year.assign_workshop, methods=['POST', 'GET'])
+
+
+# Instruments
+app.add_url_rule("/instrumentos", 'instrument_index', instrument.index)
+app.add_url_rule("/instrumentos/new", 'instrument_new', instrument.new, methods=['POST', 'GET'])
+app.add_url_rule("/instrumentos/desactivar/<instrument_id>", 'deactivate_instrument', instrument.deactivate,  methods=['POST'])
+app.add_url_rule("/instrumentos/activar/<instrument_id>", 'activate_instrument', instrument.activate,  methods=['POST'])
+app.add_url_rule("/instrumentos/<instrument_id>", 'instrument_profile', instrument.profile)
+app.add_url_rule("/instrumentos/editar/<instrument_id>", 'instrument_edit', instrument.edit, methods=['POST', 'GET'])
+app.add_url_rule("/instrumentos/editar/<instrument_id>/imagen", 'instrument_image_edit', instrument.edit_image, methods=['POST', 'GET'])
+
+
+# Map
+app.add_url_rule("/map", 'nucleus_map', nucleus_map.index)

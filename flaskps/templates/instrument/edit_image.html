@@ -1,0 +1,29 @@
+{% extends "forms/new.html" %}
+
+{% block script %}
+	{{super()}}
+	<script src="{{url_for('static', filename='instrument/image.js')}}"></script>	
+{% endblock %}
+
+{% block style %}
+	<link rel="stylesheet" type="text/css" href="{{url_for('static', filename='instrument/profile.css')}}">
+	{{ super() }}
+{% endblock %}
+
+{% block form_title %}
+	Editar imágen
+{% endblock %}
+
+{% block fields %}
+	<div class="row justify-content-center mt-2 py-4 border-bottom">
+    	<img class="image" src="data:image/png;base64,{{ image }}"/>
+    </div>
+
+	<div class="form-group mt-4">
+	    <div class="custom-file">
+			<input type="file" name="image" class="custom-file-input" id="image-input" required accept="image/*"/>
+			<label class="custom-file-label" for="image">Elegir archivo</label>
+			<div class="invalid-feedback">Formato inválido de archivo</div>
+		</div>
+	</div>
+{% endblock %}
