@@ -16,12 +16,10 @@ Crear docente
 {% block fields %}
     {{ super() }}
 
-    {% block extra_fields %}
     <div class="form-group">
         <label for="map">Ubicación</label>
         <div id="map"></div>
         <input id="lat" type="hidden" name="latitude" value="">
         <input id="lng" type="hidden" name="longitude" value="">
     </div>
-    {% endblock %}
 {% endblock %}
