@@ -2,7 +2,7 @@ from flaskps.extensions.db import db
 from .teacher_resp_workshop import school_year_workshop_teacher
 from .workshop import Workshop
 from .day import Day
-from .teacher_nucleus import teacher_nucleus
+from .teacher_nucleus import TeacherNucleus
 
 
 class Teacher(db.Model):
@@ -130,7 +130,7 @@ class Teacher(db.Model):
         db.session.commit()
 
     def get_days_of_cicle_whp_nucleus(self, cicle_id, whp_id, nucleus_id):
-        return Day.query.join(teacher_nucleus).\
+        return Day.query.join(TeacherNucleus).\
         filter_by(docente_id=self.id, ciclo_lectivo_id=cicle_id, taller_id=whp_id, nucleo_id=nucleus_id)
 
 
@@ -138,7 +138,7 @@ class Teacher(db.Model):
     
     # def assign_to_nucleus(self, form_whp, form_cicle, form_nucleus, week_day):
     #     for whp in form_whp:
-    #         statement = teacher_nucleus.insert().values(
+    #         statement = TeacherNucleus.insert().values(
     #                 docente_id=self.id, nucleo_id=form_nucleus, ciclo_lectivo_id=form_cicle, dia_semana=week_day)
     #         db.session.execute(statement)
     #     db.session.commit()

@@ -1,42 +1,48 @@
 from flaskps.extensions.db import db
-from .school_year import SchoolYear
-from .workshop import Workshop
 
-teacher_nucleus = db.Table(
-    'docente_nucleo',
-    db.Column(
+
+class TeacherNucleus(db.Model):
+    __tablename__ = 'docente_nucleo_taller_ciclo'
+
+    teacher_id = db.Column(
         'docente_id',
         db.Integer,
         db.ForeignKey('docente.id'),
         primary_key=True
-    ),
-    db.Column(
+    )
+
+    nucleus_id = db.Column(
         'nucleo_id',
         db.Integer,
         db.ForeignKey('nucleo.id'),
         primary_key=True
-    ),
-    db.Column(
+    )
+
+    schoolyear_id = db.Column(
         'ciclo_lectivo_id',
         db.Integer,
         db.ForeignKey('ciclo_lectivo.id'),
         primary_key=True
-    ),
-    
-    db.Column(
+    )
+
+    workshop_id = db.Column(
         'taller_id',
         db.Integer,
         db.ForeignKey('taller.id'),
         primary_key=True
-    ),
-    db.Column(
-        'dia',
+    )
+
+    day_id = db.Column(
+        'dia_id',
         db.Integer,
         db.ForeignKey('dia.id'),
         primary_key=True
+    )
+
+    __table_args__ = (
+        db.ForeignKeyConstraint(
+            ['taller_id', 'ciclo_lectivo_id'],
+            ['ciclo_lectivo_taller.taller_id',
+                'ciclo_lectivo_taller.ciclo_lectivo_id']
         ),
-    db.ForeignKeyConstraint(
-        ['taller_id', 'ciclo_lectivo_id'],
-        ['ciclo_lectivo_taller.taller_id', 'ciclo_lectivo_taller.ciclo_lectivo_id']
-        )
-)
+    )

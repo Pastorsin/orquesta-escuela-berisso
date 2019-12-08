@@ -7,11 +7,17 @@ class Day(db.Model):
     id = db.Column(
         db.Integer,
         primary_key=True
-    ),
+    )
 
     name = db.Column(
         'nombre',
         db.String(15),
+        unique=True,
         nullable=False
     )
 
+    teacher_nucleus = db.relationship(
+        'TeacherNucleus',
+        backref='day',
+        lazy=True
+    )
