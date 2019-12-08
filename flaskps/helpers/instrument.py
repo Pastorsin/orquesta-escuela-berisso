@@ -2,9 +2,13 @@ from .form import Validator, Form
 
 import re
 
-from flask import url_for, render_template
+from flask import url_for
 from flaskps.models.instrument import Instrument
 from flaskps.models.instrument_type import InstrumentType
+
+##################################################
+# Validators
+##################################################
 
 
 class CategoryValidator(Validator):
@@ -31,15 +35,31 @@ class InventoryNumberValidator(Validator):
         return 'Ya existe un instrumento con ese número de inventario'
 
 
+class EditInventoryNumberValidator(InventoryNumberValidator):
+
+    def __init__(self, form, instrument):
+        super(EditInventoryNumberValidator, self).__init__(form)
+        self.instrument = instrument
+
+    def validate(self):
+        return self.same_number() or super().validate()
+
+    def same_number(self):
+        return self.number == self.instrument.inventory_number
+
+
 class ImageValidator(Validator):
 
     def __init__(self, files):
         self.extensions = r"([a-zA-Z0-9\s_\\.\-\(\):])+(.jpe?g|.png|.gif|.webp|bmp)$"
         self.image = files['image']
-        self.max_size = (2**32) - 1
+        self.MAX_SIZE = (2**32) - 1
 
     def validate(self):
-        return self.valid_extension() and self.image_size() < self.max_size
+        return self.valid_extension() and self.valid_size()
+
+    def valid_size(self):
+        return self.image_size() < self.MAX_SIZE
 
     def valid_extension(self):
         return bool(re.match(self.extensions, self.image.filename))
@@ -54,18 +74,20 @@ class ImageValidator(Validator):
         return 'Imágen inválida'
 
 
-class EditInventoryNumberValidator(Validator):
+class PositiveInventoryNumberValidator(Validator):
 
-    def __init__(self, form, instrument):
-        self.instrument = instrument
-        self.number = form['inventory_number']
+    def __init__(self, form):
+        self.number = int(form['inventory_number'])
 
     def validate(self):
-        same_number = self.number == self.instrument.inventory_number
-        return same_number or not Instrument.any_inventory_number(self.number)
+        return self.number > 0
 
     def message(self):
-        return 'Ya existe un instrumento con ese número de inventario'
+        return 'El número de inventario debe ser mayor a 0'
+
+##################################################
+# Forms
+##################################################
 
 
 class InstrumentForm(Form):
@@ -73,7 +95,8 @@ class InstrumentForm(Form):
     def __init__(self, request):
         super(InstrumentForm, self).__init__(request.form)
         self.validators.extend([
-            CategoryValidator(request.form)
+            CategoryValidator(request.form),
+            PositiveInventoryNumberValidator(request.form)
         ])
 
     def values(self):
@@ -106,7 +129,7 @@ class InstrumentEditForm(InstrumentForm):
         super(InstrumentEditForm, self).__init__(request)
         self.instrument = instrument
         self.validators.extend([
-            EditInventoryNumberValidator(request.form, instrument)
+            EditInventoryNumberValidator(request.form, instrument),
         ])
 
     def success_message(self):
