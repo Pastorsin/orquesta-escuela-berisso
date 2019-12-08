@@ -59,7 +59,7 @@ $(document).ready(() => {
 		},
 		'map' : {
 			'name' : 'Mapa de los Núcleos',
-			'icon' : 'fa-book',
+			'icon' : 'fa-map-marker',
 			'url'  : 'mapa'
 		}
 	}
