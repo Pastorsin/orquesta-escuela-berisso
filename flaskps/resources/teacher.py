@@ -7,6 +7,8 @@ from flaskps.helpers.teacher import TeacherCreateForm, TeacherEditForm
 from flaskps.models.teacher import Teacher
 from flaskps.models.gender import Gender
 from flaskps.models.school_year import SchoolYear
+from flaskps.models.workshop import Workshop
+from flaskps.models.nucleus import Nucleus
 
 SUCCESS_MSG = {
     'deactivate': 'El docente {first_name}, {last_name} ha sido desactivado correctamente.',
@@ -145,7 +147,7 @@ def update(form, teacher):
 
 
 @login_required
-@permissions_enabled('teacher_update', current_user)
+# @permissions_enabled('teacher_update', current_user)
 def assign_workshop(teacher_id):
     teacher = Teacher.query.get(teacher_id)
     if request.method == 'POST':
@@ -161,3 +163,23 @@ def assign_workshop(teacher_id):
     else:
         cicles = SchoolYear.query.all()
         return render_template('teacher/assign_workshop.html', academic=teacher, cicles=cicles)
+
+
+def assign_nucleus(teacher_id):
+    teacher = Teacher.query.get(teacher_id)
+    if request.method == 'POST':
+        form_cicle = request.form.get('cicle_value')
+        form_whp = request.form.get('whp_value')
+        form_nucleus = request.form.get('nucleus')
+        form_day = request.form.getlist('days')
+        if form_cicle_whp is not None and form_nucleus is not None and form_day:
+            teacher.assign_to_nucleus(form_cicle_whp, form_nucleus, form_day)
+            flash(SUCCES_MSG['assign'], 'success')
+            return redirect(url_for('secciones'))
+        else:
+            flash(ERROR_MSG['assign'], 'danger')
+            return redirect(url_for('teacher_assign_nucleus', academic=teacher_id))
+    else:
+        cicles = SchoolYear.query.all()
+        nucleus = Nucleus.query.all()
+        return render_template('teacher/assign_nucleus.html', academic=teacher, cicles=cicles, nucleus=nucleus)

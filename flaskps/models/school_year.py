@@ -11,7 +11,7 @@ class SchoolYear(db.Model):
     )
 
     start_date = db.Column(
-        'fecha_inicio',
+        'fecha_ini',
         db.Date,
         nullable=False
     )

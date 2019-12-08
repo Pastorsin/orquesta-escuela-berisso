@@ -2,6 +2,7 @@ from flaskps.models.school_year import SchoolYear
 from flaskps.models.teacher import Teacher
 from flaskps.models.student import Student
 from flaskps.models.workshop import Workshop
+from flaskps.models.nucleus import Nucleus
 import json
 
 
@@ -21,6 +22,21 @@ def cicle_workshops_teacher(docente_id, ciclo_id):
     teacher = Teacher.query.get(docente_id)
     return get_available_workshops(teacher, ciclo_id)
 
+def get_occupied_workshops(academic, ciclo_id):
+    occupied_workshops = academic.get_workshops_of_cicle(ciclo_id)
+    cicle = SchoolYear.query.get(ciclo_id)
+    cicle_workshops = cicle.workshops
+    workshops = filter(lambda whp: whp in occupied_workshops, cicle_workshops)
+    workshop_dict = {}
+    for whp in workshops:
+        item = {whp.id: (whp.name, whp.short_name, cicle.semester, whp.id)} #Despues tengo q ver como cargar la fecha inicio aca y la de fin tmb
+        workshop_dict.update(item)
+    return json.dumps(workshop_dict)
+
+def cicle_workshops_of_teacher(docente_id, ciclo_id):
+    teacher = Teacher.query.get(docente_id)
+    return get_occupied_workshops(teacher, ciclo_id)
+
 
 def cicle_workshops_student(estudiante_id, ciclo_id):
     student = Student.query.get(estudiante_id)
@@ -37,3 +53,20 @@ def cicle_workshops(ciclo_id):
         item = {whp.id: (whp.name, whp.short_name)}
         workshop_dict.update(item)
     return json.dumps(workshop_dict)
+
+
+def get_available_days(academic, cicle_id, taller_id, nucleus_id):
+    occupied_days = academic.get_days_of_cicle_whp_nucleus(cicle_id, taller_id, nucleus_id)
+    all_days = Day.query.all()
+
+    days = filter(lambda day: day not in occupied_days, all_days)
+    days_dict = {}
+    for day in days:
+        item = {day.id: (day.name)}
+        days_dict.update(item)
+    return json.dumps(days_dict)
+
+
+def cicle_workshops_nucleus_of_teacher(docente_id, ciclo_id, taller_id, nucleo_id):
+    teacher = Teacher.query.get(docente_id)
+    return get_available_days(teacher, ciclo_id, taller_id, nucleo_id)
