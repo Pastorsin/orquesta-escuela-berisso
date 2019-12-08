@@ -115,4 +115,4 @@ app.add_url_rule("/instrumentos/editar/<instrument_id>/imagen", 'instrument_imag
 
 
 # Map
-app.add_url_rule("/map", 'nucleus_map', nucleus_map.index)
+app.add_url_rule("/mapa", 'nucleus_map', nucleus_map.index)

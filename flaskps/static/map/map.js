@@ -33,6 +33,7 @@ createMarkers(schools);
 var control = L.Routing.control({
     reverseWaypoints: true,
     routeWhileDragging: true,
+    language: 'es',
     geocoder: L.Control.Geocoder.nominatim()
 }).addTo(map);
 
