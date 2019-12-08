@@ -33,3 +33,7 @@ label {
 .subtitle {
   color:#25899a;
 }
+
+#map {
+	height: 400px;
+}
