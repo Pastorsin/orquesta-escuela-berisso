@@ -56,6 +56,11 @@ $(document).ready(() => {
 			'name' : 'Listado de instrumentos',
 			'icon' : 'fa-music',
 			'url'  : 'instrumentos'
+		},
+		'map' : {
+			'name' : 'Mapa de los Núcleos',
+			'icon' : 'fa-map-marker',
+			'url'  : 'mapa'
 		}
 	}
 

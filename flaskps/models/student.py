@@ -53,6 +53,18 @@ class Student(db.Model):
         nullable=False
     )
 
+    latitude = db.Column(
+        'latitud',
+        db.String(255),
+        nullable=False
+    )
+
+    longitude = db.Column(
+        'longitud',
+        db.String(255),
+        nullable=False
+    )
+
     neighborhood_id = db.Column(
         'barrio_id',
         db.Integer,
@@ -146,6 +158,8 @@ class Student(db.Model):
         self.neighborhood_id = data['neighborhood_id']
         self.birth_location = data['birth_location']
         self.level_id = data['level_id']
+        self.latitude = data['latitude']
+        self.longitude = data['longitude']
 
     def __init_relationships(self, data):
         self.responsables = self.__responsables_by_id(data['responsables_id'])
