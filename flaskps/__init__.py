@@ -4,7 +4,7 @@ from flaskps.config import Config
 
 from flaskps.resources import user, base, webconfig, admin
 from flaskps.resources import student, teacher, school_year, responsable
-from flaskps.resources import api, instrument, nucleus_map
+from flaskps.resources import api, instrument, nucleus_map, assistance
 
 
 from .extensions.db import db
@@ -118,3 +118,6 @@ app.add_url_rule("/instrumentos/editar/<instrument_id>/imagen", 'instrument_imag
 
 # Map
 app.add_url_rule("/mapa", 'nucleus_map', nucleus_map.index)
+
+# Assistance
+app.add_url_rule("/asistencia", 'assistance_register', assistance.index)

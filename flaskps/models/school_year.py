@@ -1,5 +1,6 @@
 from flaskps.extensions.db import db
 from flaskps.models.school_year_workshop import school_year_workshop
+from datetime import datetime
 
 
 class SchoolYear(db.Model):
@@ -58,3 +59,9 @@ class SchoolYear(db.Model):
                 ciclo_lectivo_id=self.id, taller_id=whp)
             db.session.execute(statement)
         db.session.commit()
+    
+    @classmethod
+    def get_current_schoolyear(cls):
+        today = datetime.now()
+        schoolyear = cls.query.filter(cls.finish_date>=today,cls.start_date<=today).first()
+        return schoolyear
