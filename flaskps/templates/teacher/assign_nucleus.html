@@ -34,11 +34,12 @@
         }
       }
 
-      $('#select-ciclos').change(function(){
-        let select_val = $('#select-ciclos').val().split("-");
-        $.get(`/api/docente/` + {{ academic.id |tojson}} + `/ciclo/${select_val[0]}/taller/${select_val[1]}`, function(response) {
+      $('#select-nucleus').change(function(){
+        let select_val_cicle_whp = $('#select-ciclos').val().split("-");
+        let select_val_nucleus = $('#select-nucleus').val();
+        $.get(`/api/docente/` + {{ academic.id |tojson}} + `/ciclo/${select_val_cicle_whp[0]}/taller/${select_val_cicle_whp[1]}/nucleo/${select_val_nucleus}`, function(response) {
             let json_response = JSON.parse(response);
-            replace_nucleus(json_response);
+            replace_days(json_response);
         });
       });
 
@@ -47,24 +48,23 @@
         let container_days = $('.days-list');
         container_days.empty();
         if (! $.isEmptyObject(json_response)) {
-          console.log(json_response[3]);
-          container_nucleus.append(`
-            
+          container_days.append(`
+            <select name="day" id="select-days" class="select-days form-control">
+            <option value="" selected disabled hidden>Seleccione un día</option>
+            </select>
             `);
-          let container_select = $('.select-nucleos');
+          console.log(json_response[0]);
+          let container_select = $('.select-days');
           for (var key of Object.keys(json_response)) {
             console.log(key)
-            container_days.append(
+            container_select.append(
               `
-              <div class="form-check" id="select-ciclos">
-              <input class="form-check-input" type="checkbox" name="workshop" value="${key}" id="check-box-${key}">
-              <label class="form-check-label" for="check-box-${key}"> ${json_response[key][0]} - ${json_response[key][1]} </label>
-              </div>
+              <option value="${key}">${json_response[key]}</option>
               ` 
             );
           }
         } else {
-          container_nucleus.append(`<p>No hay cursos disponibles para este ciclo</p>`)
+          container_days.append(`<p>No hay días disponibles</p>`)
         }
       };
 
@@ -87,7 +87,7 @@
 
               <div class="col">
 
-                <select name="cicle" id="select-ciclos" class="select-ciclos" required>
+                <select name="cicle" id="select-ciclos" class="select-ciclos form-control" required>
                   <option value="" selected disabled hidden>Seleccione un ciclo lectivo</option>
                 </select>
               </div>
@@ -99,7 +99,7 @@
             </div>
               <div class="row w-75">
                 <div class="div-nucleus">
-                  <select name="nucleus" id="select-nucleus" class="select-nucleus" required>
+                  <select name="nucleus" id="select-nucleus" class="select-nucleus form-control" required>
                     {% for nucleo in nucleus %}
                       <option value="" selected disabled hidden>Seleccione un núcleo</option>
                       <option value="{{ nucleo.id }}">{{ nucleo.name }}</option>
@@ -108,8 +108,7 @@
                 </div>
                 </div>
                 <div class="row w-75">
-                <div class="days-list">
-                  
+                <div class="days-list">                  
                 </div>
                 </div>
 

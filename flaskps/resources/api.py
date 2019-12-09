@@ -3,6 +3,7 @@ from flaskps.models.teacher import Teacher
 from flaskps.models.student import Student
 from flaskps.models.workshop import Workshop
 from flaskps.models.nucleus import Nucleus
+from flaskps.models.day import Day
 import json
 
 

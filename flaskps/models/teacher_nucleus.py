@@ -46,3 +46,20 @@ class TeacherNucleus(db.Model):
                 'ciclo_lectivo_taller.ciclo_lectivo_id']
         ),
     )
+
+
+    def __init__(self, data):
+        self.__init_attributes(data)
+
+    def __init_attributes(self, teacher_id, nucleus_id, schoolyear_id, workshop_id, day_id):
+        self.teacher_id = teacher_id
+        self.nucleus_id = nucleus_id
+        self.schoolyear_id = schoolyear_id
+        self.workshop_id = workshop_id
+        self.day_id = day_id
+
+    @classmethod
+    def create(cls, teacher_id, nucleus_id, schoolyear_id, workshop_id, day_id):
+        teacherNucleus = cls(data)
+        db.session.add(teacherNucleus)
+        db.session.commit()
