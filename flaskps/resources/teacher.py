@@ -178,7 +178,7 @@ def assign_nucleus(teacher_id):
             return redirect(url_for('secciones'))
         else:
             flash(ERROR_MSG['assign'], 'danger')
-            return redirect(url_for('teacher_assign_nucleus', academic=teacher_id))
+            return redirect(url_for('teacher_assign_nucleus', teacher_id=teacher.id))
     else:
         cicles = SchoolYear.query.all()
         nucleus = Nucleus.query.all()
