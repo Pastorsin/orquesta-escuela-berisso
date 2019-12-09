@@ -37,6 +37,9 @@
       $('#select-nucleus').change(function(){
         let select_val_cicle_whp = $('#select-ciclos').val().split("-");
         let select_val_nucleus = $('#select-nucleus').val();
+        $('#cicle_value').val(select_val_cicle_whp[0]);
+        $('#whp_value').val(select_val_cicle_whp[1]);
+        console.log($('#cicle_value').val());
         $.get(`/api/docente/` + {{ academic.id |tojson}} + `/ciclo/${select_val_cicle_whp[0]}/taller/${select_val_cicle_whp[1]}/nucleo/${select_val_nucleus}`, function(response) {
             let json_response = JSON.parse(response);
             replace_days(json_response);

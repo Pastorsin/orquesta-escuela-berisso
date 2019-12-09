@@ -48,8 +48,8 @@ class TeacherNucleus(db.Model):
     )
 
 
-    def __init__(self, data):
-        self.__init_attributes(data)
+    def __init__(self, teacher_id, nucleus_id, schoolyear_id, workshop_id, day_id):
+        self.__init_attributes(teacher_id, nucleus_id, schoolyear_id, workshop_id, day_id)
 
     def __init_attributes(self, teacher_id, nucleus_id, schoolyear_id, workshop_id, day_id):
         self.teacher_id = teacher_id
@@ -60,6 +60,6 @@ class TeacherNucleus(db.Model):
 
     @classmethod
     def create(cls, teacher_id, nucleus_id, schoolyear_id, workshop_id, day_id):
-        teacherNucleus = cls(data)
+        teacherNucleus = cls(teacher_id, nucleus_id, schoolyear_id, workshop_id, day_id)
         db.session.add(teacherNucleus)
         db.session.commit()
