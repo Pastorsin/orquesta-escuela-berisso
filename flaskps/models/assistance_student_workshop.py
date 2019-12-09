@@ -1,8 +1,5 @@
 from flaskps.extensions.db import db
 
-from flaskps.extensions.db import db
-
-
 class AssistanceStudentWorkshop(db.Model):
     __tablename__ = 'asistencia_estudiante_taller'
 
@@ -36,7 +33,4 @@ class AssistanceStudentWorkshop(db.Model):
             ['ciclo_lectivo_taller.taller_id',
                 'ciclo_lectivo_taller.ciclo_lectivo_id']
         ),
-        db.ForeignKeyConstraint(
-            'estudiante_id','estudiante.id'
-        )
     )

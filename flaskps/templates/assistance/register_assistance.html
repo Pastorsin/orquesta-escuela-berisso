@@ -1,0 +1,24 @@
+{% extends "sections_base.html" %}
+
+{% block style %}
+{{super()}}
+<link rel="stylesheet" type="text/css" href="{{url_for('static', filename='assistance/assistance.css')}}">
+{% endblock style %}
+
+{% block script %}
+<script text="javascript" src="{{url_for('static', filename='assistance/assistance.js')}}" defer></script>
+{% endblock script %}
+
+
+{% block content %}
+
+<div class="row" id="form-container">
+    <div class="col-12 text-center p-2 title">
+        <h1> Registro de Asistencia</h1>
+    </div>
+    <div class="col-12 p-4">
+        {{students}}
+    </div>
+</div>
+
+{% endblock content %}

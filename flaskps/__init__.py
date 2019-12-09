@@ -121,4 +121,4 @@ app.add_url_rule("/mapa", 'nucleus_map', nucleus_map.index)
 
 # Assistance
 app.add_url_rule("/asistencia", 'assistance_list', assistance.index)
-app.add_url_rule("/asistencia/<schoolyear_id>/<workshop_id>", 'assistance_register', assistance.index)
+app.add_url_rule("/asistencia/<schoolyear_id>/<workshop_id>", 'assistance_register', assistance.register_assistance)
