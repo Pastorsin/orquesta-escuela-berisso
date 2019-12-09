@@ -1,5 +1,6 @@
 from flaskps.extensions.db import db
 
+
 class StudentWorkshop(db.Model):
     __tablename__ = 'estudiante_taller'
 
@@ -8,13 +9,15 @@ class StudentWorkshop(db.Model):
         db.Integer,
         db.ForeignKey('estudiante.id'),
         primary_key=True
-    ),
+    )
+
     schoolyear_id = db.Column(
         'ciclo_lectivo_id',
         db.Integer,
         db.ForeignKey('ciclo_lectivo.id'),
         primary_key=True
-    ),
+    )
+
     workshop_id = db.Column(
         'taller_id',
         db.Integer,
