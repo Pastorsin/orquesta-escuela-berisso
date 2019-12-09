@@ -174,7 +174,7 @@ def assign_nucleus(teacher_id):
         form_day = request.form.get('day')
         if form_cicle is not None and form_whp is not None and form_nucleus is not None and form_day:
             teacher.assign_to_nucleus(form_cicle, form_whp, form_nucleus, form_day)
-            flash(SUCCES_MSG['assign'], 'success')
+            flash(SUCCESS_MSG['assign'], 'success')
             return redirect(url_for('secciones'))
         else:
             flash(ERROR_MSG['assign'], 'danger')
