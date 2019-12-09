@@ -16,3 +16,14 @@ def index():
         current_schoolyear=current_schoolyear,
         workshops=current_schoolyear.workshops
     )
+
+@login_required
+@permissions_enabled('assistance_register', current_user)
+def register_assistance(school_year, workshop):
+    current_schoolyear = SchoolYear.get_current_schoolyear()
+    return render_template(
+        'assistance/register_assistance.html',
+        current_user=current_user,
+        current_schoolyear=current_schoolyear,
+        workshops=current_schoolyear.workshops
+    )

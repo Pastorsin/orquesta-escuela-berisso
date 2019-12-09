@@ -18,24 +18,25 @@
     </div>
     <div class="col-12 p-4">
         {% if workshops %}
-        <form method="post" action="{% block post_url %} {% endblock %}" enctype="multipart/form-data">
-            <div class="form-group">
-                <label for="workshop-input">Seleccione un taller</label>
-                <select id="workshop-input" class="form-control" name="workshop_id" required placeholder="Taller">
-                    <option value="" hidden></option>
-                    {% for workshop in workshops %}
-                        <option value="{{workshop.id}}"  selected="selected">{{workshop.name}}</option>
-                    {% endfor %}
-                </select>
-            </div>
-            <div class="col-12 d-flex justify-content-center buttons pt-4">
-                {% block buttons %}						
-                    <button class="btn btn-success mx-2" id="save-button">Pasar asistencia</button>
-                    <a href="/">
-                        <button class="btn btn-danger mx-2" type="button">Cancelar</button>
-                    </a>
-                {% endblock %}
-            </div>
+        <div class="form-group">
+            <label for="workshop-input">Seleccione un taller</label>
+            <select id="workshop-input" class="form-control" name="workshop_id" required placeholder="Taller">
+                <option value="" hidden></option>
+                {% for workshop in workshops %}
+                    <option value="{{workshop.id}}"  selected="selected">{{workshop.name}}</option>
+                {% endfor %}
+            </select>
+        </div>  
+        <div class="col-12 d-flex justify-content-center buttons pt-4">
+            {% block buttons %}
+                <a id="register-url" href="/{{current_schoolyear.id}}/">			
+                <button class="btn btn-success mx-2" id="save-button">Pasar asistencia</button>
+                </a>	
+                <a href="/">
+                    <button class="btn btn-danger mx-2" type="button">Cancelar</button>
+                </a>
+            {% endblock %}
+        </div>
         </form>
         {% else %}
         <h2 class="text-center">Ya se pasó asistencia en todos los talleres el día de hoy</h2>
