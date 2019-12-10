@@ -1,4 +1,4 @@
-{% extends "sections_base.html" %}
+{% extends "forms/index.html" %}
 
 {% block style %}
 {{super()}}
@@ -6,47 +6,89 @@
 {% endblock style %}
 
 {% block script %}
-<script text="javascript" src="{{url_for('static', filename='assistance/assistance.js')}}" defer></script>
+{{super()}}
+<script text="javascript" src="{{url_for('static', filename='assistance/search.js')}}" defer></script>
+<script text="javascript" src="{{url_for('static', filename='assistance/index.js')}}" defer></script>
 {% endblock script %}
 
 
-{% block content %}
+{% block index_title %}
+    Registro de Asistencias - <a href="{{url_for('student_profile', student_id=student.id)}}">{{student.last_name}}, {{student.first_name}}</a>
+{% endblock %}
 
-<div class="row" id="form-container">
-    <div class="col-12 text-center p-2 title">
-        <h1>Registro de Asistencias - {{student.last_name}}, {{student.first_name}}</h1>
+{% block placeholder %}
+    Buscar taller
+{% endblock %}
+
+{% block filters %}
+    <div class="list-subtitle">
+        <h5>Filtrar</h5>
     </div>
-    <div class="col-12 p-4 text-center">
-        {% if assistances %}
-        <table class="table table-hover">
-                <thead>
-                    <tr>
-                        <th scope="col">CL - Inicio</th>
-                        <th scope="col">CL - Fin</th>
-                        <th scope="col">Taller</th>
-                        <th scope="col">Fecha</th>
-                        <th scope="col" class="text-center">¿Asistió?</th>
-                        <th class="col-4" scope="col" class="text-center">Observación</th>
-                    </tr>
-                </thead>
-                <tbody>
-                    {% for assistance in assistances %}
-                    <tr class="item-row">
-                        <td scope="row" class="first-name">{{ assistance.schoolyear.start_date }}</td>
-                        <td scope="row" class="last-name">{{ assistance.schoolyear.finish_date }}</td>
-                        <td scope="row" class="last-name">{{ assistance.workshop.name }}</td>
-                        <td scope="row" class="last-name">{{ assistance.date }}</td>
-                        <td scope="row" class="last-name">{% if assistance.assisted==1 %}Si{% else %}No{% endif %}</td>
-                        <td scope="row" class="last-name">{% if assistance.observation!='' %}{{assistance.observation}}{% else %}No hay observaciones.{% endif %}</td>
-                    </tr>
-                    {% endfor %}
-                </tbody>			
-        </table>
-        {% else %}
+    <div class="col-10 col-off-2">
+        <div class="custom-control custom-radio">
+            <input type="radio" class="custom-control-input" name="radio-active" id="all-checkbox" checked="checked">
+            <label class="custom-control-label" for="all-checkbox" id="label-user-all">Mostrar todo</label>
+        </div>
+        <div class="custom-control custom-radio">
+            <input type="radio" class="custom-control-input" name="radio-active" id="active-checkbox">
+            <label class="custom-control-label" for="active-checkbox" id="label-user-active">Mostrar asistencias</label>
+        </div>
+        <div class="custom-control custom-radio">
+            <input type="radio" class="custom-control-input" name="radio-active" id="inactive-checkbox">
+            <label class="custom-control-label" for="inactive-checkbox" id="label-user-inactive">Mostrar inasistencias</label>
+        </div>
+    </div>
+{% endblock %}
+
+{% block table_head %}                        
+    <th scope="col">CL - Inicio</th>
+    <th scope="col">CL - Fin</th>
+    <th scope="col">Taller</th>
+    <th scope="col">Fecha</th>
+    <th scope="col" class="text-center">¿Asistió?</th>
+    <th scope="col">Observación</th>
+{% endblock %}
+
+{% block section_buttons %}
+    <a class="white-button mr-2" id="teacher-list-button" href="{{ url_for('assistance_list') }}">
+      <i class="fa fa-list"></i> Pasar asistencia
+    </a>
+{% endblock %}
+
+
+{% block table_body %}
+    {% if assistances %}
+        {% for assistance in assistances %}
+        <tr class="item-row">
+            <th scope="row" class="start-date">
+                {{ assistance.schoolyear.start_date }}
+            </th>
+            <th scope="row" class="finish-date">
+                {{ assistance.schoolyear.finish_date }}
+            </th>
+            <th scope="row" class="workshop-name">
+                {{ assistance.workshop.name }}
+            </th>
+            <td scope="row" class="date">
+                {{ assistance.date }}
+            </td>
+            <td scope="row" class="assisted text-center">
+                {% if assistance.assisted %}
+                    <i class="far fa-check-circle text-success td-active" active={{assistance.assisted}}></i>
+                {% else %}
+                    <i class="far fa-times-circle text-danger td-active" active={{assistance.assisted}}></i>
+                {% endif %}
+            </td>
+            <td scope="row" class="observation">
+                {% if assistance.observation %}
+                    {{assistance.observation}}
+                {% else %}
+                    No hay observaciones.
+                {% endif %}
+            </td>
+        </tr>
+        {% endfor %}
+    {% else %}
         <h2 class="text-center">Este estudiante todavía no registra asistencias en ningún curso.</h2>
-        {% endif %}
-        <a href="/estudiantes/{{student.id}}"><button class="btn btn-danger mx-2 justify-center white" type="button">Volver</button></a>
-    </div>
-</div>
-
-{% endblock content %}
+    {% endif %}
+{% endblock %}

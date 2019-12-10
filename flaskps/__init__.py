@@ -81,7 +81,7 @@ app.add_url_rule("/estudiantes/inscribe/<student_id>", 'student_assign', student
 app.add_url_rule("/estudiantes/<student_id>/responsables", 'student_responsables', student.responsables)
 app.add_url_rule("/estudiantes/<student_id>/responsables/asignar", 'student_assign_responsable', student.assign_responsable, methods=['POST', 'GET'])
 app.add_url_rule("/estudiantes/<student_id>/responsables/new", "responsable_new", student.reponsable_new, methods=['POST', 'GET'])
-app.add_url_rule("/estudiantes/<student_id>/assistances", "student_assistances", student.assistances)
+app.add_url_rule("/estudiantes/<student_id>/asistencias", "student_assistances", student.assistances)
 
 
 # Responsable

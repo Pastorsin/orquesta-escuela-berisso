@@ -57,6 +57,7 @@
 					<a class="dropdown-item" href="{{ url_for('student_profile', student_id=student.id) }}"><i class="fa fa-user"></i> Ver detalle</a>
 					<a class="dropdown-item" href="{{ url_for('student_edit', student_id=student.id) }}"><i class="fa fa-edit"></i> Modificar datos</a>
 					<a class="dropdown-item" href="{{ url_for('student_assign', student_id=student.id) }}"><i class="fas fa-book"></i> Asignar Taller</a>
+					<a class="dropdown-item" href="{{ url_for('student_assistances', student_id=student.id) }}"><i class="fas fa-graduation-cap"></i> Asistencias</a>
 					{% if student.is_active %}
 						<form class="deactivate" action="{{ url_for('deactivate_student', student_id=student.id) }}" method="post">
 							<button type="submit" class="dropdown-item">
