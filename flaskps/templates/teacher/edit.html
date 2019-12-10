@@ -2,6 +2,17 @@
 
 {% block script %}
     {{super()}}
+    <script>
+      $(document).ready(() => {
+        var latlng = {
+          lat: Number('{{ academic.latitude }}'),
+          lng: Number('{{ academic.longitude|float }}')
+        };
+        map.map.setView(latlng, 14);
+        initialMark.setLatLng(latlng);
+        setInputsValues(latlng);
+      });
+    </script>
 {% endblock %}
 
 {% block form_title %}
