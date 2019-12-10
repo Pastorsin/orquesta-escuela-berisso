@@ -13,7 +13,7 @@ from flaskps.models.neighborhood import Neighborhood
 from flaskps.models.school import School
 from flaskps.models.level import Level
 from flaskps.models.responsable import Responsable
-#from flaskps.models.assistance_student_workshop import AssistantStudentWorkshop
+from flaskps.models.assistance_student_workshop import AssistanceStudentWorkshop
 
 import json
 
@@ -242,47 +242,8 @@ def new():
 @login_required
 @permissions_enabled('student_profile', current_user)
 def assistances(student_id):
-    # assistances = AssistanceStudentWorkshop.get_student_assistances(student_id)
-    assistances = [
-        {
-            'schoolyear': {
-                'start_date': '2019-12-03',
-                'finish_date': '2019-12-09'
-            },
-            'workshop': {
-                'name': 'Taller de Contrabajo'
-            },
-            'date': '2019-12-04',
-            'assisted': 0,
-            'observation': '',
-        },
-        {
-            'schoolyear': {
-                'start_date': '2019-12-03',
-                'finish_date': '2019-12-09'
-            },
-            'workshop': {
-                'name': 'Taller de Guitarra'
-            },
-            'date': '2019-12-04',
-            'assisted': 0,
-            'observation': 'Faltó porque no lo pasaron a buscar',
-        }, 
-        {
-            'schoolyear': {
-                'start_date': '2019-12-03',
-                'finish_date': '2019-12-09'
-            },
-            'workshop': {
-                'name': 'Taller de Violin'
-            },
-            'date': '2019-12-05',
-            'assisted': 1,
-            'observation': '',
-        }
-    ]
     return render_template(
         'student/assistances.html',
-        assistances=assistances,
+        assistances=AssistanceStudentWorkshop.student_assistances(student_id),
         student=Student.query.get(student_id)
     )

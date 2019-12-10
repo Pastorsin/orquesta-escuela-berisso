@@ -33,6 +33,12 @@ class SchoolYear(db.Model):
     workshops = db.relationship('Workshop', secondary=school_year_workshop,
                                 lazy='subquery', backref=db.backref('school_years', lazy=True))
 
+    assistances = db.relationship(
+        'AssistanceStudentWorkshop',
+        backref='schoolyear',
+        lazy=True
+    )
+
     def __init__(self, data):
         self.__init_attributes(data)
 

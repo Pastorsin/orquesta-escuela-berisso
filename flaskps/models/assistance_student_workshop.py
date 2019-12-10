@@ -1,6 +1,7 @@
 from flaskps.extensions.db import db
 from datetime import datetime
 
+
 class AssistanceStudentWorkshop(db.Model):
     __tablename__ = 'asistencia_estudiante_taller'
 
@@ -68,9 +69,13 @@ class AssistanceStudentWorkshop(db.Model):
         db.session.commit()
 
     @classmethod
-    def assistance_already_taken(cls,schoolyear_id,workshop_id):
-        return cls.query.filter(cls.schoolyear_id==schoolyear_id,cls.workshop_id==workshop_id,cls.date==datetime.now().date()).count() != 0
+    def assistance_already_taken(cls, schoolyear_id, workshop_id):
+        return cls.query.filter(
+            cls.schoolyear_id == schoolyear_id,
+            cls.workshop_id == workshop_id,
+            cls.date == datetime.now().date()
+        ).count() != 0
 
     @classmethod
-    def get_student_assistances(cls,student_id):
-        return cls.query.filter(cls.student_id==student_id)
+    def student_assistances(cls, student_id):
+        return cls.query.filter(cls.student_id == student_id)
