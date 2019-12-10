@@ -10,3 +10,7 @@
 .input-obligatory {
     color:red;
 }
+
+.title {
+    border-bottom: 2px solid #1a91a1;
+}

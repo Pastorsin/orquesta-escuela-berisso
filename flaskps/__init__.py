@@ -30,6 +30,15 @@ migrate = Migrate(app, db)
 login_manager.init_app(app)
 bcrypt.init_app(app)
 
+# Formateador de fechas para Jinja2
+def format_datetime(value, format="%d/%m/%Y"):
+    """Format a date time to (Default): d Mon YYYY HH:MM P"""
+    if value is None:
+        return ""
+    return value.strftime(format)
+
+app.jinja_env.filters['datetime'] = format_datetime
+
 
 # Jinja2 global context (permanent variables)
 @app.context_processor
@@ -72,6 +81,7 @@ app.add_url_rule("/estudiantes/inscribe/<student_id>", 'student_assign', student
 app.add_url_rule("/estudiantes/<student_id>/responsables", 'student_responsables', student.responsables)
 app.add_url_rule("/estudiantes/<student_id>/responsables/asignar", 'student_assign_responsable', student.assign_responsable, methods=['POST', 'GET'])
 app.add_url_rule("/estudiantes/<student_id>/responsables/new", "responsable_new", student.reponsable_new, methods=['POST', 'GET'])
+app.add_url_rule("/estudiantes/<student_id>/assistances", "student_assistances", student.assistances)
 
 
 # Responsable

@@ -14,13 +14,14 @@
 
 <div class="row" id="form-container">
     <div class="col-12 text-center p-2 title">
-        <h1> Registro de Asistencia</h1>
+        <h1>Registro de Asistencia - {{current_date|datetime}}</h1>
+        <h3><strong>{{workshop.name}}</strong></h3>
     </div>
     <div class="col-12 p-4 text-center">
         {% if students %}
         <form action="" method="post">
             <input type="hidden" name="schoolyear" value="{{current_schoolyear}}">
-            <input type="hidden" name="workshop" value="{{workshop}}">
+            <input type="hidden" name="workshop" value="{{workshop.id}}">
             <table class="table table-hover">
                     <thead>
                         <tr>
@@ -49,7 +50,7 @@
             <a href="/asistencia"><button class="btn btn-danger mx-2 justify-center white" type="button">Volver</button></a>
         </form>
         {% else %}
-        <h2 class="text-center">No hay ningún estudiante cursando el taller seleccionado.</h2>
+        <h2 class="text-center">No hay ningún estudiante inscripto en el taller seleccionado.</h2>
         <a href="/asistencia"><button class="btn btn-danger mx-2 justify-center white" type="button">Volver</button></a>
         {% endif %}
     </div>

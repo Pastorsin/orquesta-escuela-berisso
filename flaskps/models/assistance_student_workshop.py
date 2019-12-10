@@ -63,3 +63,7 @@ class AssistanceStudentWorkshop(db.Model):
     @classmethod
     def assistance_already_taken(cls,schoolyear_id,workshop_id):
         return cls.query.filter(cls.schoolyear_id==schoolyear_id,cls.workshop_id==workshop_id,cls.date==datetime.now().date()).count() != 0
+
+    @classmethod
+    def get_student_assistances(cls,student_id):
+        return cls.query.filter(cls.student_id==student_id)

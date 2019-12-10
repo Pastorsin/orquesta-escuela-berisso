@@ -5,6 +5,7 @@ from flaskps.helpers.constraints import permissions_enabled
 from datetime import datetime
 
 from flaskps.models.school_year import SchoolYear
+from flaskps.models.workshop import Workshop
 from flaskps.models.student_workshop import StudentWorkshop
 from flaskps.models.assistance_student_workshop import AssistanceStudentWorkshop
 from flaskps.models.student import Student
@@ -19,7 +20,8 @@ def index():
         'assistance/index.html',
         current_user=current_user,
         current_schoolyear=current_schoolyear,
-        workshops=current_schoolyear.get_remaining_workshops()
+        workshops=current_schoolyear.get_remaining_workshops(),
+        current_date=datetime.now().date()
     )
 
 @login_required
@@ -36,8 +38,9 @@ def register_assistance(schoolyear_id, workshop_id):
             'assistance/register_assistance.html',
             current_user=current_user,
             current_schoolyear=schoolyear_id,
-            workshop=workshop_id,
-            students=students
+            workshop=Workshop.query.get(workshop_id),
+            students=students,
+            current_date=datetime.now().date()
         )
     else:
         assistances = request.form.getlist('assistance[]')
