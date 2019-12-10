@@ -89,6 +89,10 @@
         </tr>
         {% endfor %}
     {% else %}
-        <h2 class="text-center">Este estudiante todavía no registra asistencias en ningún curso.</h2>
+        <tr>
+            <th colspan="6" scope="row" class="text-center text-light bg-danger">
+                Este estudiante todavía no registra asistencias en ningún curso.
+            </th>
+        </tr>
     {% endif %}
 {% endblock %}

@@ -242,8 +242,10 @@ def new():
 @login_required
 @permissions_enabled('student_profile', current_user)
 def assistances(student_id):
+    assistances = AssistanceStudentWorkshop.student_assistances(
+        student_id).all()
     return render_template(
         'student/assistances.html',
-        assistances=AssistanceStudentWorkshop.student_assistances(student_id),
+        assistances=assistances,
         student=Student.query.get(student_id)
     )
