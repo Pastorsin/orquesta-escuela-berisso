@@ -1,37 +1,27 @@
-$(document).ready(() => {
-    
-    const ceneterLocation = [-34.8777, -57.8818];
-    var map = L.map('map').setView(ceneterLocation, 14);
+const centerLocation = [-34.8777, -57.8818];
 
-    L.tileLayer('http://{s}.tile.osm.org/{z}/{x}/{y}.png', {
-        attribution: '&copy; <a href="http://osm.org/copyright">OpenStreetMap</a> contributors'
-    }).addTo(map);
+var map = new Map(centerLocation, 14)
 
-    var geocoderControl = L.Control.geocoder({
-        defaultMarkGeocode: false,
-    }).addTo(map);
+map.addGeocoder()
+var control = map.geocoderControl
+var initialMark = map.createMarker(centerLocation)
 
-    var initialMark = L.marker(ceneterLocation).addTo(map);
-    setInputsValues(initialMark.getLatLng());
+control.on('markgeocode', function (e) {
+    let centerDest = e.geocode.center;
 
-    geocoderControl.on('markgeocode', function (e) {
-        let centerDest = e.geocode.center;
-
-        map.setView(centerDest, 14);
-        initialMark.setLatLng(centerDest);
-        setInputsValues(centerDest)
-    });
-
-    map.on('click', function (e) {
-        let clickPos = e.latlng;
-
-        initialMark.setLatLng(clickPos);
-        setInputsValues(clickPos)
-    });
-
-    function setInputsValues(latlng) {
-        $('#lat').attr('value', latlng.lat)
-        $('#lng').attr('value', latlng.lng)
-    }
-
+    map.map.setView(centerDest, 14);
+    initialMark.setLatLng(centerDest);
+    setInputsValues(centerDest)
 });
+
+map.map.on('click', function (e) {
+    let clickPos = e.latlng;
+
+    initialMark.setLatLng(clickPos);
+    setInputsValues(clickPos)
+});
+
+function setInputsValues(latlng) {
+    $('#lat').attr('value', latlng.lat)
+    $('#lng').attr('value', latlng.lng)
+}

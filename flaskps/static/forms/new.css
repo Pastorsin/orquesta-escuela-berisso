@@ -34,6 +34,7 @@ label {
   color:#25899a;
 }
 
-#map, #map2 {
+#map {
 	height: 400px;
+    z-index: 0;
 }

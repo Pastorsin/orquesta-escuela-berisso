@@ -2,7 +2,7 @@ from .form import Validator, Form
 
 import re
 
-from flask import url_for, render_template
+from flask import url_for
 from flaskps.models.instrument import Instrument
 from flaskps.models.instrument_type import InstrumentType
 

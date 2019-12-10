@@ -2,7 +2,8 @@
 
 {% block script %}
 {{super()}}
-<script text="javascript" src="{{url_for('static', filename='teacher/map.js')}}"></script>
+<script text="javascript" src="{{url_for('static', filename='map/map.js')}}"></script>
+<script text="javascript" src="{{url_for('static', filename='teacher/map.js')}}" defer></script>
 {% endblock %}
 
 {% block form_title %}

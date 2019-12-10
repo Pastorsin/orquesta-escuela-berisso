@@ -11,7 +11,7 @@ SUCCESS_MSG = {
     'activate': 'El responsable {first_name}, {last_name} ha sido activado correctamente.'
 }
 ERROR_MSG = {
-    'deactivate' : 'Error! Los estudiantes no pueden quedar sin responsables activos'
+    'deactivate': 'Error! Los estudiantes no pueden quedar sin responsables activos'
 }
 
 
