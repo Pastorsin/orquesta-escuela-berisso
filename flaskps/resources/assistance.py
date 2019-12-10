@@ -9,6 +9,8 @@ from flaskps.models.student_workshop import StudentWorkshop
 from flaskps.models.assistance_student_workshop import AssistanceStudentWorkshop
 from flaskps.models.student import Student
 
+SUCCESS_MSG = 'Las asistencias fueron guardadas correctamente!'
+
 @login_required
 @permissions_enabled('assistance_register', current_user)
 def index():
@@ -24,6 +26,7 @@ def index():
 @permissions_enabled('assistance_register', current_user)
 def register_assistance(schoolyear_id, workshop_id):
     if request.method == 'GET':
+        # ¿Debería chequearse que el schoolyear_id y workshop_id existan?
         students_ids = StudentWorkshop.get_students_doing_workshop(schoolyear_id,workshop_id)
         students = []
         for student_id in students_ids:
@@ -51,4 +54,5 @@ def register_assistance(schoolyear_id, workshop_id):
                 'date':datetime.now().date(),
                 'assistance':assistance
             })
+        flash(SUCCESS_MSG, 'success')
         return redirect(url_for('assistance_list'))

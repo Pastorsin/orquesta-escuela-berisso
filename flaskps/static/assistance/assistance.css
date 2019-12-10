@@ -1,0 +1,12 @@
+.input-error {
+    background-color: red;
+    border-radius: 6px;
+    color: white;
+    padding: 5px;
+    margin-top: 10px;
+    display: none;
+}
+
+.input-obligatory {
+    color:red;
+}

@@ -17,7 +17,7 @@
         <h1> Registro de Asistencia</h1>
     </div>
     <div class="col-12 p-4 text-center">
-        {{students}}
+        {% if students %}
         <form action="" method="post">
             <input type="hidden" name="schoolyear" value="{{current_schoolyear}}">
             <input type="hidden" name="workshop" value="{{workshop}}">
@@ -45,8 +45,13 @@
                         {% endfor %}
                     </tbody>			
             </table>
-            <button class="btn btn-success mx-2 justify-center" id="save-button">Guardar asistencias</button>
+            <button class="btn btn-success mx-2 justify-center" id="save-button" type="submit">Guardar asistencias</button>
+            <a href="/asistencia"><button class="btn btn-danger mx-2 justify-center white" type="button">Volver</button></a>
         </form>
+        {% else %}
+        <h2 class="text-center">No hay ningún estudiante cursando el taller seleccionado.</h2>
+        <a href="/asistencia"><button class="btn btn-danger mx-2 justify-center white" type="button">Volver</button></a>
+        {% endif %}
     </div>
 </div>
 

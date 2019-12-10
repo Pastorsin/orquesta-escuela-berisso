@@ -16,28 +16,28 @@
     <div class="col-12 text-center p-2 title">
         <h1> Registro de Asistencia</h1>
     </div>
-    <div class="col-12 p-4">
+    <div class="col-12 text-center p-4">
         {% if workshops %}
         <div class="form-group">
-            <label for="workshop-input">Seleccione un taller</label>
+            <label for="workshop-input">Seleccione un taller <span class="input-obligatory">*</span></label>
             <select id="workshop-input" class="form-control" name="workshop_id" required placeholder="Taller">
-                <option value="" hidden></option>
+                <option value="" hidden selected="selected"></option>
                 {% for workshop in workshops %}
-                    <option value="{{workshop.id}}"  selected="selected">{{workshop.name}}</option>
+                    <option value="{{workshop.id}}">{{workshop.name}}</option>
                 {% endfor %}
             </select>
+            <span class="input-error text-center" id="input-error">Por favor, seleccione un taller</span>
         </div>  
         <div class="col-12 d-flex justify-content-center buttons pt-4">
             {% block buttons %}
-                <a id="register-url" href="/{{current_schoolyear.id}}/">			
-                <button class="btn btn-success mx-2" id="save-button">Pasar asistencia</button>
+                <a id="register-url" href="/asistencia/{{current_schoolyear.id}}/">			
+                <button class="btn btn-success mx-2" id="save-button" type="submit">Pasar asistencia</button>
                 </a>	
                 <a href="/">
                     <button class="btn btn-danger mx-2" type="button">Cancelar</button>
                 </a>
             {% endblock %}
         </div>
-        </form>
         {% else %}
         <h2 class="text-center">Ya se pasó asistencia en todos los talleres el día de hoy</h2>
         {% endif %}
