@@ -25,25 +25,25 @@
             <table class="table table-hover">
                     <thead>
                         <tr>
-                            <th scope="col">Nombres</th>
                             <th scope="col">Apellidos</th>
+                            <th scope="col">Nombres</th>                            
                             <th scope="col" class="text-center">¿Asistió?</th>
-                            <th scope="col" class="text-center">Observación</th>
+                            <th scope="col" class="text-center col-4">Observación</th>
                         </tr>
                     </thead>
                     <tbody>
                         {% for student in students %}
                         <tr class="item-row">
-                            <td scope="row" class="first-name">{{ student.first_name }}</td>
                             <td scope="row" class="last-name">{{ student.last_name }}</td>
+                            <td scope="row" class="first-name">{{ student.first_name }}</td>
                             <td scope="row" class="text-center">
-                                <select name="assistance[]" id="">
+                                <select name="assistance[]" id="" class="form-control text-center w-50 mx-auto">
                                     <option value="0" default>No</option>
                                     <option value="1" default>Si</option>
                                 </select>
                             </td>
                             <td scope="row">
-                                <textarea class="form-control" type="text" name="observation[]"></textarea>
+                                <textarea class="form-control" type="text" name="observation[]" rows="1"></textarea>
                             </td>
                             <input type="hidden" name="student[]" value="{{student.id}}">
                         </tr>

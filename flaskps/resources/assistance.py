@@ -39,7 +39,7 @@ def register_assistance(schoolyear_id, workshop_id):
             current_user=current_user,
             current_schoolyear=schoolyear_id,
             workshop=Workshop.query.get(workshop_id),
-            students=students,
+            students=sorted(students,key=lambda student:(student.last_name,student.first_name)),
             current_date=datetime.now().date()
         )
     else:
