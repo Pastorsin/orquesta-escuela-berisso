@@ -28,6 +28,7 @@
                             <th scope="col">Nombres</th>
                             <th scope="col">Apellidos</th>
                             <th scope="col" class="text-center">¿Asistió?</th>
+                            <th scope="col" class="text-center">Observación</th>
                         </tr>
                     </thead>
                     <tbody>
@@ -40,6 +41,9 @@
                                     <option value="0" default>No</option>
                                     <option value="1" default>Si</option>
                                 </select>
+                            </td>
+                            <td scope="row">
+                                <textarea class="form-control" type="text" name="observation[]"></textarea>
                             </td>
                             <input type="hidden" name="student[]" value="{{student.id}}">
                         </tr>

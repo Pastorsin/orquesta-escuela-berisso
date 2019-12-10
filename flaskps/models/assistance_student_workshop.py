@@ -36,6 +36,12 @@ class AssistanceStudentWorkshop(db.Model):
         db.Integer,
     )
 
+    observation = db.Column(
+        'observacion',
+        db.String(255),
+        nullable=True,
+    )
+
     __table_args__ = (
         db.ForeignKeyConstraint(
             ['taller_id', 'ciclo_lectivo_id'],
@@ -53,6 +59,7 @@ class AssistanceStudentWorkshop(db.Model):
         self.workshop_id = data['workshop_id']
         self.date = data['date']
         self.assisted = data['assistance']
+        self.observation = data['observation']
 
     @classmethod
     def create(cls, data):

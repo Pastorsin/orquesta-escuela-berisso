@@ -44,18 +44,18 @@ def register_assistance(schoolyear_id, workshop_id):
         )
     else:
         assistances = request.form.getlist('assistance[]')
-        print(assistances)
+        observations = request.form.getlist('observation[]')
         students = request.form.getlist('student[]')
-        print(students)
         workshop = request.form.get('workshop')
         schoolyear = request.form.get('schoolyear')
-        for student,assistance in zip(students,assistances):
+        for student,assistance,observation in zip(students,assistances,observations):
             AssistanceStudentWorkshop.create({
                 'student_id':student,
                 'workshop_id':workshop,
                 'schoolyear_id':schoolyear,
                 'date':datetime.now().date(),
-                'assistance':assistance
+                'assistance':assistance,
+                'observation':observation
             })
         flash(SUCCESS_MSG, 'success')
         return redirect(url_for('assistance_list'))

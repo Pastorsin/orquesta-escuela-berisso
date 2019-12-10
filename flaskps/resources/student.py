@@ -254,6 +254,7 @@ def assistances(student_id):
             },
             'date': '2019-12-04',
             'assisted': 0,
+            'observation': '',
         },
         {
             'schoolyear': {
@@ -265,6 +266,7 @@ def assistances(student_id):
             },
             'date': '2019-12-04',
             'assisted': 0,
+            'observation': 'Faltó porque no lo pasaron a buscar',
         }, 
         {
             'schoolyear': {
@@ -276,6 +278,7 @@ def assistances(student_id):
             },
             'date': '2019-12-05',
             'assisted': 1,
+            'observation': '',
         }
     ]
     return render_template(

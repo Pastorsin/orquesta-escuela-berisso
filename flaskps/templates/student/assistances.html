@@ -26,6 +26,7 @@
                         <th scope="col">Taller</th>
                         <th scope="col">Fecha</th>
                         <th scope="col" class="text-center">¿Asistió?</th>
+                        <th class="col-4" scope="col" class="text-center">Observación</th>
                     </tr>
                 </thead>
                 <tbody>
@@ -36,6 +37,7 @@
                         <td scope="row" class="last-name">{{ assistance.workshop.name }}</td>
                         <td scope="row" class="last-name">{{ assistance.date }}</td>
                         <td scope="row" class="last-name">{% if assistance.assisted==1 %}Si{% else %}No{% endif %}</td>
+                        <td scope="row" class="last-name">{% if assistance.observation!='' %}{{assistance.observation}}{% else %}No hay observaciones.{% endif %}</td>
                     </tr>
                     {% endfor %}
                 </tbody>			
