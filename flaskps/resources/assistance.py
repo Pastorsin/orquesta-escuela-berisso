@@ -5,7 +5,7 @@ from flaskps.helpers.constraints import permissions_enabled
 from datetime import datetime
 
 from flaskps.models.school_year import SchoolYear
-from flaskps.models.student_workshop import school_year_workshop_student
+from flaskps.models.student_workshop import StudentWorkshop
 from flaskps.models.assistance_student_workshop import AssistanceStudentWorkshop
 from flaskps.models.student import Student
 
@@ -36,6 +36,7 @@ def register_assistance(schoolyear_id, workshop_id):
                 'last_name':'Milla'
             }
         ]
+        students = StudentWorkshop.get_students_doing_workshop(schoolyear_id,workshop_id)
         return render_template(
             'assistance/register_assistance.html',
             current_user=current_user,
@@ -55,6 +56,6 @@ def register_assistance(schoolyear_id, workshop_id):
                 'student_id':student,
                 'workshop_id':workshop,
                 'schoolyear_id':schoolyear,
-                'date':datetime.now()
+                'date':datetime.today()
             })
         return url_for('assistance_list')

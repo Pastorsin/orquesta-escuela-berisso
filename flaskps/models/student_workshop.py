@@ -3,21 +3,24 @@ from .school_year import SchoolYear
 from .workshop import Workshop
 
 
-school_year_workshop_student = db.Table(
-    'estudiante_taller',
-    db.Column(
+class StudentWorkshop(db.Model):
+    __tablename__ = 'estudiante_taller'
+
+    student_id = db.Column(
         'estudiante_id',
         db.Integer,
         db.ForeignKey('estudiante.id'),
         primary_key=True
-    ),
-    db.Column(
+    )
+
+    schoolyear_id = db.Column(
         'ciclo_lectivo_id',
         db.Integer,
         db.ForeignKey('ciclo_lectivo.id'),
         primary_key=True
-    ),
-    db.Column(
+    )
+
+    workshop_id = db.Column(
         'taller_id',
         db.Integer,
         db.ForeignKey('taller.id'),
@@ -45,5 +48,6 @@ school_year_workshop_student = db.Table(
         db.session.commit()
 
     @classmethod
-    def get_students(cls):
+    def get_students_doing_workshop(cls,schoolyear_id,workshop_id):
+        students = cls.query.filter(cls.schoolyear_id=schoolyear_id,cls.workshop_id=workshop_id)
         return students
