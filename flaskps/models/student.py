@@ -8,7 +8,6 @@ from .student_workshop import StudentWorkshop
 from .workshop import Workshop
 from .responsable_student import responsable_student
 
-
 class Student(db.Model):
     __tablename__ = 'estudiante'
 

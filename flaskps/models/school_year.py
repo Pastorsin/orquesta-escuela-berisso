@@ -1,5 +1,6 @@
 from flaskps.extensions.db import db
 from flaskps.models.school_year_workshop import school_year_workshop
+from flaskps.models.assistance_student_workshop import AssistanceStudentWorkshop
 from datetime import datetime
 
 
@@ -65,3 +66,12 @@ class SchoolYear(db.Model):
         today = datetime.now()
         schoolyear = cls.query.filter(cls.finish_date>=today,cls.start_date<=today).first()
         return schoolyear
+
+    def get_remaining_workshops(self):
+        remaining_workshops = []
+        for workshop in self.workshops:
+            # Chequeo si no se pasó asistencia todavía el día de hoy y además
+            # si corresponde que hoy se pase lista en ese taller (se dan en días particulares)
+            if not AssistanceStudentWorkshop.assistance_already_taken(self.id,workshop.id):
+                remaining_workshops.append(workshop)
+        return remaining_workshops

@@ -1,4 +1,5 @@
 from flaskps.extensions.db import db
+from datetime import datetime
 
 class AssistanceStudentWorkshop(db.Model):
     __tablename__ = 'asistencia_estudiante_taller'
@@ -30,6 +31,11 @@ class AssistanceStudentWorkshop(db.Model):
         primary_key=True
     )
 
+    assisted = db.Column(
+        'asistio',
+        db.Integer,
+    )
+
     __table_args__ = (
         db.ForeignKeyConstraint(
             ['taller_id', 'ciclo_lectivo_id'],
@@ -46,9 +52,14 @@ class AssistanceStudentWorkshop(db.Model):
         self.schoolyear_id = data['schoolyear_id']
         self.workshop_id = data['workshop_id']
         self.date = data['date']
+        self.assisted = data['assistance']
 
     @classmethod
     def create(cls, data):
         assistance_student_workshop = cls(data)
         db.session.add(assistance_student_workshop)
         db.session.commit()
+
+    @classmethod
+    def assistance_already_taken(cls,schoolyear_id,workshop_id):
+        return cls.query.filter(cls.schoolyear_id==schoolyear_id,cls.workshop_id==workshop_id,cls.date==datetime.now().date()).count() != 0

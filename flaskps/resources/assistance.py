@@ -17,26 +17,18 @@ def index():
         'assistance/index.html',
         current_user=current_user,
         current_schoolyear=current_schoolyear,
-        workshops=current_schoolyear.workshops
+        workshops=current_schoolyear.get_remaining_workshops()
     )
 
 @login_required
 @permissions_enabled('assistance_register', current_user)
 def register_assistance(schoolyear_id, workshop_id):
     if request.method == 'GET':
-        students = [
-            {
-                'id':'1',
-                'first_name':'Julian',
-                'last_name':'Almandos'
-            },
-            {
-                'id':'2',
-                'first_name':'Andres',
-                'last_name':'Milla'
-            }
-        ]
-        students = StudentWorkshop.get_students_doing_workshop(schoolyear_id,workshop_id)
+        students_ids = StudentWorkshop.get_students_doing_workshop(schoolyear_id,workshop_id)
+        students = []
+        for student_id in students_ids:
+            students.append(Student.query.get(student_id))
+        
         return render_template(
             'assistance/register_assistance.html',
             current_user=current_user,
@@ -56,6 +48,7 @@ def register_assistance(schoolyear_id, workshop_id):
                 'student_id':student,
                 'workshop_id':workshop,
                 'schoolyear_id':schoolyear,
-                'date':datetime.today()
+                'date':datetime.now().date(),
+                'assistance':assistance
             })
-        return url_for('assistance_list')
+        return redirect(url_for('assistance_list'))

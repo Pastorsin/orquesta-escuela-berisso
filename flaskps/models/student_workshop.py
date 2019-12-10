@@ -49,5 +49,8 @@ class StudentWorkshop(db.Model):
 
     @classmethod
     def get_students_doing_workshop(cls,schoolyear_id,workshop_id):
-        students = cls.query.filter(cls.schoolyear_id=schoolyear_id,cls.workshop_id=workshop_id)
-        return students
+        students = cls.query.filter(cls.schoolyear_id==schoolyear_id,cls.workshop_id==workshop_id).all()
+        students_ids = []
+        for student in students:
+            students_ids.append(student.student_id)
+        return students_ids

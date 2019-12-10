@@ -36,8 +36,8 @@
                             <td scope="row" class="last-name">{{ student.last_name }}</td>
                             <td scope="row" class="text-center">
                                 <select name="assistance[]" id="">
-                                    <option value="False" default>No</option>
-                                    <option value="True" default>Si</option>
+                                    <option value="0" default>No</option>
+                                    <option value="1" default>Si</option>
                                 </select>
                             </td>
                             <input type="hidden" name="student[]" value="{{student.id}}">
