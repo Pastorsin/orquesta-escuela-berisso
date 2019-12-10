@@ -192,10 +192,10 @@ def activate(student_id):
 def assign_workshop(student_id):
     student = Student.query.get(student_id)
     if request.method == 'POST':
-        form_cicle = request.form.get('cicle')
-        form_workshops = request.form.getlist('workshop')
-        if form_cicle is not None and form_workshops:
-            student.assign_to(form_workshops, form_cicle)
+        cicle_id = request.form.get('cicle')
+        workshops_id = request.form.getlist('workshop')
+        if cicle_id is not None and workshops_id:
+            student.add_course(cicle_id, workshops_id)
             flash(SUCCESS_MSG['assign'], 'success')
             return redirect(url_for('student_index'))
         else:
