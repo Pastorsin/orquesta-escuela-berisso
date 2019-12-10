@@ -16,8 +16,37 @@
     <div class="col-12 text-center p-2 title">
         <h1> Registro de Asistencia</h1>
     </div>
-    <div class="col-12 p-4">
+    <div class="col-12 p-4 text-center">
         {{students}}
+        <form action="" method="post">
+            <input type="hidden" name="schoolyear" value="{{current_schoolyear}}">
+            <input type="hidden" name="workshop" value="{{workshop}}">
+            <table class="table table-hover">
+                    <thead>
+                        <tr>
+                            <th scope="col">Nombres</th>
+                            <th scope="col">Apellidos</th>
+                            <th scope="col" class="text-center">¿Asistió?</th>
+                        </tr>
+                    </thead>
+                    <tbody>
+                        {% for student in students %}
+                        <tr class="item-row">
+                            <td scope="row" class="first-name">{{ student.first_name }}</td>
+                            <td scope="row" class="last-name">{{ student.last_name }}</td>
+                            <td scope="row" class="text-center">
+                                <select name="assistance[]" id="">
+                                    <option value="False" default>No</option>
+                                    <option value="True" default>Si</option>
+                                </select>
+                            </td>
+                            <input type="hidden" name="student[]" value="{{student.id}}">
+                        </tr>
+                        {% endfor %}
+                    </tbody>			
+            </table>
+            <button class="btn btn-success mx-2 justify-center" id="save-button">Guardar asistencias</button>
+        </form>
     </div>
 </div>
 

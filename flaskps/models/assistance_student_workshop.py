@@ -8,19 +8,22 @@ class AssistanceStudentWorkshop(db.Model):
         db.Integer,
         db.ForeignKey('estudiante.id'),
         primary_key=True
-    ),
+    )
+
     schoolyear_id = db.Column(
         'ciclo_lectivo_id',
         db.Integer,
         db.ForeignKey('ciclo_lectivo.id'),
         primary_key=True
-    ),
+    )
+
     workshop_id = db.Column(
         'taller_id',
         db.Integer,
         db.ForeignKey('taller.id'),
         primary_key=True
-    ),
+    )
+
     date = db.Column(
         'fecha',
         db.Date,
@@ -34,3 +37,18 @@ class AssistanceStudentWorkshop(db.Model):
                 'ciclo_lectivo_taller.ciclo_lectivo_id']
         ),
     )
+
+    def __init__(self, data):
+        self.__init_attributes(data)
+
+    def __init_attributes(self, data):
+        self.student_id = data['student_id']
+        self.schoolyear_id = data['schoolyear_id']
+        self.workshop_id = data['workshop_id']
+        self.date = data['date']
+
+    @classmethod
+    def create(cls, data):
+        assistance_student_workshop = cls(data)
+        db.session.add(assistance_student_workshop)
+        db.session.commit()
