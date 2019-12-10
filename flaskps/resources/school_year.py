@@ -42,8 +42,8 @@ def new():
         )
 
 
-@login_required
-@permissions_enabled('schoolyear_update', current_user)
+# @login_required
+# @permissions_enabled('schoolyear_update', current_user)
 def assign_workshop():
     if request.method == 'POST':
         form_cicle = request.form.get('cicle')

@@ -9,8 +9,6 @@
     <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.4.1/jquery.min.js"></script>
     <script>
       $(document).ready(() => {
-
-            console.log('hola');
             $.each(cicles, function(index, value){
               $.get(`/api/docente/` + {{ academic.id |tojson}} + `/ciclo_taller/` + value, function(response) {
                 let json_response = JSON.parse(response);
@@ -21,11 +19,13 @@
       function replace_workshops(json_response, cicle) {
         let container = $('.select-ciclos');
         if (! $.isEmptyObject(json_response)) {
-          container.append(`<option value="" selected disabled hidden>Seleccione un ciclo lectivo</option>`
-            );
+          container.append(
+            `
+            <option value="" selected disabled hidden>Ciclo</option>
+            `);
           for (var key of Object.keys(json_response)) {
               container.append(`
-              <option value="${cicle} - ${ json_response[key][3]}">${json_response[key][0]} - Semestre ${json_response[key][2]}</option>
+              <option value="${cicle} - ${ json_response[key][3]}">${json_response[key][0]} - Del ${json_response[key][2]} al ${json_response[key][4]}</option>
               `
             );
           }
@@ -34,9 +34,10 @@
         }
       }
 
-      $('#select-nucleus').change(function(){
+      function change_selects(){
         let select_val_cicle_whp = $('#select-ciclos').val().split("-");
         let select_val_nucleus = $('#select-nucleus').val();
+        console.log('values: ' + select_val_cicle_whp[0] + select_val_cicle_whp[1])
         $('#cicle_value').val(select_val_cicle_whp[0]);
         $('#whp_value').val(select_val_cicle_whp[1]);
         console.log($('#cicle_value').val());
@@ -44,7 +45,7 @@
             let json_response = JSON.parse(response);
             replace_days(json_response);
         });
-      });
+      }
 
       function replace_days(json_response) {
         console.log('replace');
@@ -53,7 +54,7 @@
         if (! $.isEmptyObject(json_response)) {
           container_days.append(`
             <select name="day" id="select-days" class="select-days form-control">
-            <option value="" selected disabled hidden>Seleccione un día</option>
+            <option value="" selected disabled hidden>Día</option>
             </select>
             `);
           console.log(json_response[0]);
@@ -71,10 +72,20 @@
         }
       };
 
+
+      $('#select-nucleus').change(function(){
+        change_selects();
+      });
+
+      $('#select-ciclos').change(function(){
+        change_selects();
+      });
+
+
     });
 
     </script>
-    {% block academic_script %} {% endblock academic_script %}
+    <!-- {% block academic_script %} {% endblock academic_script %} -->
 {% endblock script %}
 
 {% block content %}
@@ -87,16 +98,12 @@
         <form action="{% block form_action %} {% endblock form_action %}" method="POST" name="cicle-form">
           <div class="d-flex justify-content-center">
             <div class="row w-75">
-
               <div class="col">
-
-                <select name="cicle" id="select-ciclos" class="select-ciclos form-control" required>
-                  <option value="" selected disabled hidden>Seleccione un ciclo lectivo</option>
+                <select name="cicle" id="select-ciclos" class="select-ciclos form-control" title="ciclos" required>
                 </select>
               </div>
                   <input type="hidden" id="cicle_value" name="cicle_value" value="">
                   <input type="hidden" id="whp_value" name="whp_value" value="">
-
               <div class="workshops-list col">
               </div>
             </div>
@@ -104,7 +111,7 @@
                 <div class="div-nucleus">
                   <select name="nucleus" id="select-nucleus" class="select-nucleus form-control" required>
                     {% for nucleo in nucleus %}
-                      <option value="" selected disabled hidden>Seleccione un núcleo</option>
+                      <option value="" selected disabled hidden>Núcleo</option>
                       <option value="{{ nucleo.id }}">{{ nucleo.name }}</option>
                     {%endfor%}
                 </select>

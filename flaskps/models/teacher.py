@@ -136,5 +136,5 @@ class Teacher(db.Model):
 
     # se supone que esto va a asignar los nucleos, algun dia ....
     
-    def assign_to_nucleus(self, form_whp, form_cicle, form_nucleus, week_day):
+    def assign_to_nucleus(self,form_cicle, form_whp, form_nucleus, week_day):
         statement = TeacherNucleus.create(self.id, form_nucleus, form_cicle, form_whp, week_day)

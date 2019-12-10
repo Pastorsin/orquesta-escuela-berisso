@@ -13,7 +13,8 @@ from flaskps.models.nucleus import Nucleus
 SUCCESS_MSG = {
     'deactivate': 'El docente {first_name}, {last_name} ha sido desactivado correctamente.',
     'activate': 'El docente {first_name}, {last_name} ha sido activado correctamente.',
-    'assign': 'El docente ha sido asignado a los talleres correctamente.'
+    'assign': 'El docente ha sido asignado a los talleres correctamente.',
+    'assign_nucleus': 'El docente ha sido asignado al nucleo correctamente.'
 }
 
 ERROR_MSG = {
@@ -174,7 +175,7 @@ def assign_nucleus(teacher_id):
         form_day = request.form.get('day')
         if form_cicle is not None and form_whp is not None and form_nucleus is not None and form_day:
             teacher.assign_to_nucleus(form_cicle, form_whp, form_nucleus, form_day)
-            flash(SUCCESS_MSG['assign'], 'success')
+            flash(SUCCESS_MSG['assign_nucleus'], 'success')
             return redirect(url_for('secciones'))
         else:
             flash(ERROR_MSG['assign'], 'danger')
