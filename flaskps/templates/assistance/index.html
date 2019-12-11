@@ -7,6 +7,10 @@
 
 {% block script %}
 <script text="javascript" src="{{url_for('static', filename='assistance/assistance.js')}}" defer></script>
+<script>
+    let currentSchoolYearId='{{current_schoolyear.id}}';
+    let baseUrl='/asistencia/'+currentSchoolYearId+'/';
+</script>
 {% endblock script %}
 
 
@@ -14,12 +18,12 @@
 
 <div class="row" id="form-container">
     <div class="col-12 text-center p-2 title">
-        <h1>Registro de Asistencia - {{current_date|datetime}}</h1>
+        <h1>Registro de Asistencia</h1>
     </div>
     <div class="col-12 text-center p-4">
         {% if workshops %}
         <div class="form-group">
-            <label for="workshop-input">Seleccione un taller de la lista <span class="input-obligatory">*</span></label>
+            <label for="workshop-input"><span class="input-label">Seleccione un taller de la lista</span> <span class="input-obligatory">*</span></label>
             <select id="workshop-input" class="form-control" name="workshop_id" required placeholder="Taller">
                 <option value="" hidden selected="selected"></option>
                 {% for workshop in workshops %}
@@ -28,15 +32,8 @@
             </select>
             <span class="input-error text-center" id="input-error">Por favor, seleccione un taller</span>
         </div>  
-        <div class="col-12 d-flex justify-content-center buttons pt-4">
-            {% block buttons %}
-                <a id="register-url" href="/asistencia/{{current_schoolyear.id}}/">			
-                <button class="btn btn-success mx-2" id="save-button" type="submit">Pasar asistencia</button>
-                </a>	
-                <a href="/">
-                    <button class="btn btn-danger mx-2" type="button">Cancelar</button>
-                </a>
-            {% endblock %}
+        <span class="input-label">Seleccione una fecha</span> <span class="input-obligatory">*</span>
+        <div id="dates-container">
         </div>
         {% else %}
         <h2 class="text-center">Ya se pasó asistencia en todos los talleres el día de hoy</h2>
