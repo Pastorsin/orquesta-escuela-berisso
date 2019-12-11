@@ -6,7 +6,8 @@ $(document).ready(function(){
     $('#workshop-input').on('change', function(){
         //Esconder mensaje de error
         $('#input-error').css('display','none');
-        console.log(baseUrl + 'base');
+        //Mostrar segundo label
+        $('#date-label').css('display','inline-block');
 
         //Parsear URL con nuevo taller
         let currentUrl = baseUrl;
@@ -32,7 +33,6 @@ $(document).ready(function(){
 })
 
 function getDates(schoolYearId, workshopId) {
-    console.log(schoolYearId+' '+workshopId);
     $.ajax({
         type: "GET",
         url: '/api/fechas/'+schoolYearId+'/'+workshopId,
@@ -46,12 +46,27 @@ function getDates(schoolYearId, workshopId) {
 function showDates(dates) {
     //Vacio el container
     $('#dates-container').empty();
-    dates.forEach(date => {
-        //Creo date card y le hago un append al container
-        let dateCard = '<a class="date-card nostyle" href="'+globalUrl.concat('/'+date.fecha)+'">';
-        dateCard += '<strong>'+date.dia+'</strong>';
-        dateCard += date.fecha;
-        dateCard += '</a>'
-        $('#dates-container').append(dateCard);
-    })
+    if(dates.length!=0){
+        hideEmptyDatesError();
+        dates.forEach(date => {
+            //Creo date card y le hago un append al container
+            let dateCard = '<a class="date-card nostyle" href="'+globalUrl.concat('/'+date.fecha)+'">';
+            dateCard += '<strong>'+date.dia+'</strong>';
+            dateCard += date.fecha;
+            dateCard += '</a>'
+            $('#dates-container').append(dateCard);
+        })
+    }else{
+        showEmptyDatesError();
+    }
+}
+
+function showEmptyDatesError() {
+    $('#date-label').css('display','none');
+    $('#date-error').css('display','inline');
+}
+
+function hideEmptyDatesError() {
+    $('#date-label').css('display','inline');
+    $('#date-error').css('display','none');
 }
