@@ -54,6 +54,7 @@
 					<a class="dropdown-item" href="{{ url_for('teacher_profile', teacher_id=teacher.id) }}"><i class="fa fa-user"></i> Ver detalle</a>
 					<a class="dropdown-item" href="{{ url_for('teacher_edit', teacher_id=teacher.id) }}"><i class="fa fa-edit"></i> Modificar datos</a>
 					<a class="dropdown-item" href="{{ url_for('teacher_assign', teacher_id=teacher.id) }}"><i class="fas fa-book"></i> Asignar Taller</a>
+					<a class="dropdown-item" href="{{ url_for('teacher_assign_nucleus', teacher_id=teacher.id) }}"><i class="fas fa-graduation-cap"></i> Asignar Curso</a>
 					{% if teacher.is_active %}
 						<form class="deactivate" action="{{ url_for('deactivate_teacher', teacher_id=teacher.id) }}" method="post">
 							<button type="submit" class="dropdown-item">
