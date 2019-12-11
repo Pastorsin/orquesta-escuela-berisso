@@ -1,12 +1,5 @@
 {% extends "academic/profile.html" %}
 
-{% block extra_content %}
-
-    <!-- <h4 id="workshops" class="my-4"><a class="title subtitle" ></a></h4> -->
-
-{% endblock %}
-
-
 {% block buttons %}
         <a class="white-button mr-2" id="teacher-list-button" href="{{ url_for('teacher_workshops', teacher_id=user.id) }}">
           <i class="fa fa-list"></i> Listado de talleres

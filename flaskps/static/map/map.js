@@ -1,12 +1,12 @@
 class Map {
-    constructor(centerLocation, zoomLevel) {
-        this.centerLocation = centerLocation;
-        this.zoomLevel = zoomLevel;
-        this.initMap();
+    constructor(centerLocation, zoomLevel, options) {
+        this.initMap(centerLocation, zoomLevel, options);
+        this.routingControl = null
+        this.geocoderControl = null
     }
 
-    initMap() {
-        this.map = L.map('map').setView(this.centerLocation, this.zoomLevel);
+    initMap(centerLocation, zoomLevel, options) {
+        this.map = L.map('map', options).setView(centerLocation, zoomLevel);
 
         L.tileLayer('http://{s}.tile.osm.org/{z}/{x}/{y}.png', {
             attribution: '&copy; <a href="http://osm.org/copyright">OpenStreetMap</a> contributors'
