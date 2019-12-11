@@ -1,6 +1,8 @@
 from flaskps.extensions.db import db
 from .teacher_resp_workshop import school_year_workshop_teacher
 from .workshop import Workshop
+from .day import Day
+from .teacher_nucleus import TeacherNucleus
 
 
 class Teacher(db.Model):
@@ -130,9 +132,23 @@ class Teacher(db.Model):
         return Workshop.query.join(school_year_workshop_teacher).\
             filter_by(docente_id=self.id, ciclo_lectivo_id=cicle_id)
 
+    def get_workshops(self):
+        return Workshop.query.join(school_year_workshop_teacher).\
+        filter_by(docente_id=self.id)
+
     def assign_to(self, form_workshops, form_cicle):
         for whp in form_workshops:
             statement = school_year_workshop_teacher.insert().values(
                     docente_id=self.id, ciclo_lectivo_id=form_cicle, taller_id=whp)
             db.session.execute(statement)
         db.session.commit()
+
+    def get_days_of_cicle_whp_nucleus(self, cicle_id, whp_id, nucleus_id):
+        return Day.query.join(TeacherNucleus).\
+        filter_by(teacher_id=self.id, schoolyear_id=cicle_id, workshop_id=whp_id, nucleus_id=nucleus_id)
+
+
+    # se supone que esto va a asignar los nucleos, algun dia ....
+    
+    def assign_to_nucleus(self,form_cicle, form_whp, form_nucleus, week_day):
+        statement = TeacherNucleus.create(self.id, form_nucleus, form_cicle, form_whp, week_day)

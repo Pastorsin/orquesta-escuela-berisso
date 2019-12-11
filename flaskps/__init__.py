@@ -89,12 +89,14 @@ app.add_url_rule("/docentes/new", 'teacher_new', teacher.new, methods=['POST', '
 app.add_url_rule("/docentes/editar/<teacher_id>", 'teacher_edit', teacher.edit, methods=['POST', 'GET'])
 app.add_url_rule("/docentes/<teacher_id>", 'teacher_profile', teacher.profile)
 app.add_url_rule("/docentes/<teacher_id>/talleres", 'teacher_workshops', teacher.workshops)
-
 app.add_url_rule("/docentes/inscribe/<teacher_id>", 'teacher_assign', teacher.assign_workshop, methods=['POST', 'GET'])
+app.add_url_rule("/docentes/asignar_nucleo/<teacher_id>", 'teacher_assign_nucleus', teacher.assign_nucleus, methods=['POST', 'GET'])
 
 
 # API
 app.add_url_rule('/api/docente/<docente_id>/ciclo/<ciclo_id>', 'cicle_workshops_teacher', api.cicle_workshops_teacher)
+app.add_url_rule('/api/docente/<docente_id>/ciclo_taller/<ciclo_id>', 'cicle_workshops_of_teacher', api.cicle_workshops_of_teacher)
+app.add_url_rule('/api/docente/<docente_id>/ciclo/<ciclo_id>/taller/<taller_id>/nucleo/<nucleo_id>', 'cicle_workshops_nucleus_of_teacher', api.cicle_workshops_nucleus_of_teacher)
 app.add_url_rule('/api/estudiante/<estudiante_id>/ciclo/<ciclo_id>', 'cicle_workshops_student', api.cicle_workshops_student)
 app.add_url_rule('/api/ciclo_lectivo/<ciclo_id>', 'cicle_workshops', api.cicle_workshops)
 
