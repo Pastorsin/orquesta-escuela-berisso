@@ -39,18 +39,6 @@ class Responsable(db.Model):
         nullable=False
     )
 
-    latitude = db.Column(
-        'latitud',
-        db.String(255),
-        nullable=False
-    )
-
-    longitude = db.Column(
-        'longitud',
-        db.String(255),
-        nullable=False
-    )
-
     gender_id = db.Column(
         'genero_id',
         db.Integer,
@@ -96,8 +84,6 @@ class Responsable(db.Model):
         self.doc_type_id = data['doc_type_id']
         self.doc_number = data['doc_number']
         self.telephone = data['telephone']
-        self.latitude = data['latitude']
-        self.longitude = data['longitude']
 
     @classmethod
     def create(cls, data):
