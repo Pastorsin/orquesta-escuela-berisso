@@ -2,23 +2,28 @@
 
 {% block style %}
 	<link rel="stylesheet" type="text/css" href="{{url_for('static', filename='user/profile.css')}}">
+    <link rel="stylesheet" href="https://unpkg.com/leaflet@1.6.0/dist/leaflet.css" integrity="sha512-xwE/Az9zrjBIphAcBb3F6JVqxf46+CDLwfLMHloNu6KEQCAWi6HcDUbeOfBIptF7tcCzusKFjFw2yuvEpDL9wQ==" crossorigin="" />
+    <link rel="stylesheet" href="https://unpkg.com/leaflet-control-geocoder/dist/Control.Geocoder.css" />
+
+    <link rel="stylesheet" href="https://unpkg.com/leaflet-routing-machine@latest/dist/leaflet-routing-machine.css" />
 	{{ super() }}
 {% endblock %}
 
 {% block script %}
+    <script src="https://unpkg.com/leaflet@1.6.0/dist/leaflet.js" integrity="sha512-gZwIG9x3wUXg2hdXF6+rVkLF/0Vi9U8D2Ntg4Ga5I5BZpVkVxlJWbSQtXPSiUTtC0TjtGOmxa1AJPuV0CPthew==" crossorigin=""></script>
+    <script src="https://unpkg.com/leaflet-routing-machine@latest/dist/leaflet-routing-machine.js"></script>
+    <script src="https://unpkg.com/leaflet-control-geocoder/dist/Control.Geocoder.js" ></script>
+
     <script text="javascript" src="{{url_for('static', filename='snippets/api_interface.js')}}"></script>
+    <script text="javascript" src="{{url_for('static', filename='map/map.js')}}"></script>
+    <script text="javascript" src="{{url_for('static', filename='academic/profile_map.js')}}"></script>
     <script charset="utf-8">
-      $(document).ready(() => {
-
-        getLocalityWithId({{ user.location_id|tojson }}).then(function(result) {
-          $('#location').text(result)
-        });
-
-        getDocumentTypeWithId({{ user.doc_type_id|tojson }}).then(function(result) {
-          $('#doc-type').text(result)
-        });
-
-      });
+        var latlng = {
+          lat: Number('{{ user.latitude|float }}'),
+          lng: Number('{{ user.longitude|float }}')
+        };
+        var location_id = '{{ user.location_id|tojson }}'
+        var doc_type_id = '{{ user.doc_type_id|tojson }}'
     </script>
 {% endblock %}
 
@@ -47,6 +52,9 @@
 
     <h4><span class="title subtitle">Teléfono</span></h4>
     <span class="information">{{ user.telephone }}</span>
+
+    <h4><span class="title subtitle">Ubicación</span></h4>
+    <div id="map"></div>
 
     {% block extra_content %} {% endblock extra_content %}
 

@@ -38,3 +38,8 @@ h4 {
     text-decoration: none;
     color:black;
 }
+
+#map {
+    height: 500px;
+    margin-bottom: 2em;
+}
