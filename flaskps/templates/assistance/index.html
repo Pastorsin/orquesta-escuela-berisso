@@ -19,6 +19,8 @@
 <div class="row" id="form-container">
     <div class="col-12 text-center p-2 title">
         <h1>Registro de Asistencia</h1>
+        <h4><strong>Ciclo Lectivo: </strong>{{current_schoolyear.start_date|datetime}} - {{current_schoolyear.finish_date|datetime}}</h4>
+        <h4><strong>Semestre: </strong>{{current_schoolyear.semester}}</h4>
     </div>
     <div class="col-12 text-center p-4">
         {% if workshops %}
