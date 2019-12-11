@@ -33,7 +33,7 @@
 .date-card {
     width: 20%;
     height: 4rem;
-    border: 2px solid #1a91a1;
+    border: 2px solid black;
     border-radius: 15px;
     margin-bottom: 1rem;
     margin-left: 1rem;
@@ -46,11 +46,19 @@
 }
 
 .date-card:hover {
-    background-color: #fafafa;
+    background-color: #f7f7f7;
     transform: scale(1.05)
 }
 
-@media (max-width: 400px) {
+.date-today {
+    background-color: #8ed173;
+}
+
+.date-today:hover {
+    background-color: #b7f0a1;
+}
+
+@media (max-width: 500px) {
     #dates-container {
         flex-direction: column;
         flex-flow: none;

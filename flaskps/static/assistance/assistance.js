@@ -18,6 +18,7 @@ $(document).ready(function(){
 
         //Mostrar sección de fechas previo render
         getDates(currentSchoolYearId,$(this).val());
+        console.log(currentDate);
     })
 
     $('#register-url').on('click', function(e){
@@ -50,7 +51,7 @@ function showDates(dates) {
         hideEmptyDatesError();
         dates.forEach(date => {
             //Creo date card y le hago un append al container
-            let dateCard = '<a class="date-card nostyle" href="'+globalUrl.concat('/'+date.fecha)+'">';
+            let dateCard = '<a class="date-card '+(date.fecha==currentDate ? 'date-today' : '')+' nostyle" href="'+globalUrl.concat('/'+date.fecha)+'">';
             dateCard += '<strong>'+date.dia+'</strong>';
             dateCard += date.fecha;
             dateCard += '</a>'
