@@ -10,7 +10,8 @@ def get_available_workshops(academic, cicle_id):
     occupied_workshops = academic.get_workshops_of_cicle(cicle_id)
     cicle_workshops = SchoolYear.query.get(cicle_id).workshops
 
-    workshops = filter(lambda whp: whp not in occupied_workshops, cicle_workshops)
+    workshops = filter(
+        lambda whp: whp not in occupied_workshops, cicle_workshops)
     workshop_dict = {}
     for whp in workshops:
         item = {whp.id: (whp.name, whp.short_name)}
@@ -22,6 +23,7 @@ def cicle_workshops_teacher(docente_id, ciclo_id):
     teacher = Teacher.query.get(docente_id)
     return get_available_workshops(teacher, ciclo_id)
 
+
 def get_occupied_workshops(academic, ciclo_id):
     occupied_workshops = academic.get_workshops_of_cicle(ciclo_id)
     cicle = SchoolYear.query.get(ciclo_id)
@@ -29,9 +31,11 @@ def get_occupied_workshops(academic, ciclo_id):
     workshops = filter(lambda whp: whp in occupied_workshops, cicle_workshops)
     workshop_dict = {}
     for whp in workshops:
-        item = {whp.id: (whp.name, whp.short_name, cicle.semester, whp.id)} #Despues tengo q ver como cargar la fecha inicio aca y la de fin tmb
+        # Despues tengo q ver como cargar la fecha inicio aca y la de fin tmb
+        item = {whp.id: (whp.name, whp.short_name, cicle.semester, whp.id)}
         workshop_dict.update(item)
     return json.dumps(workshop_dict)
+
 
 def cicle_workshops_of_teacher(docente_id, ciclo_id):
     teacher = Teacher.query.get(docente_id)
@@ -47,7 +51,8 @@ def cicle_workshops(ciclo_id):
     workshops = Workshop.query.all()
     assigned_workshops = SchoolYear.query.get(ciclo_id).workshops
 
-    workshops_to_deliver = filter(lambda whp: whp not in assigned_workshops, workshops)
+    workshops_to_deliver = filter(
+        lambda whp: whp not in assigned_workshops, workshops)
     workshop_dict = {}
     for whp in workshops_to_deliver:
         item = {whp.id: (whp.name, whp.short_name)}
@@ -56,7 +61,8 @@ def cicle_workshops(ciclo_id):
 
 
 def get_available_days(academic, cicle_id, taller_id, nucleus_id):
-    occupied_days = academic.get_days_of_cicle_whp_nucleus(cicle_id, taller_id, nucleus_id)
+    occupied_days = academic.get_days_of_cicle_whp_nucleus(
+        cicle_id, taller_id, nucleus_id)
     all_days = Day.query.all()
 
     days = filter(lambda day: day not in occupied_days, all_days)
@@ -71,49 +77,26 @@ def cicle_workshops_nucleus_of_teacher(docente_id, ciclo_id, taller_id, nucleo_i
     teacher = Teacher.query.get(docente_id)
     return get_available_days(teacher, ciclo_id, taller_id, nucleo_id)
 
-def allsundays(start_date, finish_date, week_day):
-    # Las claves deberían estar exactamente igual en la tabla "dia", pero bueno, si no se podría hacer una consulta
-    day_values = {
-        'Lunes':0,
-        'Martes':1,
-        'Miercoles':2,
-        'Jueves':3,
-        'Viernes':4,
-        'Sabado':5,
-        'Domingo':6,
-    }
-    d = date(start_date)                    # January 1st
-    d += timedelta(days = (day_values[week_day] - d.weekday() + 7) % 7)
-    while d<=finish_date:
-        yield d
-        d += timedelta(days = 7)
 
-def get_days_for_workshop_in_schoolyear(ciclo_id,taller_id):
-    # Acá inevitablemente me vas a tener que devolver también el nombre del día para el tema de mostrarlo en la vista, supongo que agregando a la funcion de arriba
-    # el parámetro week_day en el yield
-
-    # Fijate de paso de ordenarlo por fecha ;)
-    # Acordate también de remover las fechas en las que ya se pasó asistencia, o si no de última mandame otro parámetro como para yo desbloquearlo en el front o ponerlo en rojo
-    dates = [
-        {
-            'dia':'Lunes',
-            'fecha':'20-01-2019'
-        },
-        {
-            'dia':'Martes',
-            'fecha':'21-01-2019'
-        },
-        {
-            'dia':'Lunes',
-            'fecha':'28-01-2019'
-        },
-        {
-            'dia':'Martes',
-            'fecha':'29-01-2019'
-        },
-        {
-            'dia':'Miercoles',
-            'fecha':'30-01-2019'
-        },
+def weekname(a_date):
+    weeknames = [
+        'Lunes', 'Martes', 'Miercoles', 'Jueves',
+        'Viernes', 'Sabado', 'Domingo'
     ]
+    return weeknames[a_date.weekday()]
+
+
+def serialize(assistance_dates):
+    dates = []
+    for assistance_date in assistance_dates:
+        dates.append({
+            'dia': weekname(assistance_date),
+            'fecha': assistance_date.strftime("%d-%m-%Y")
+        })
     return json.dumps(dates)
+
+
+def get_days_for_workshop_in_schoolyear(ciclo_id, taller_id):
+    current_schoolyear = SchoolYear.query.get(ciclo_id)
+    assistance_dates = current_schoolyear.assistance_dates(taller_id)
+    return serialize(assistance_dates)
