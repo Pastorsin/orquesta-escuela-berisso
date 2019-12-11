@@ -8,17 +8,18 @@
 {% block script %}
     <script text="javascript" src="{{url_for('static', filename='snippets/api_interface.js')}}"></script>
     <script charset="utf-8">
-      $(document).ready(() => {
 
-        getLocalityWithId({{ user.location_id|tojson }}).then(function(result) {
-          $('#location').text(result)
+        var location_id = '{{ user.location_id|tojson }}'
+        var doc_type_id = '{{ user.doc_type_id|tojson }}'
+
+        getLocalityWithId(location_id).then(function(result) {
+            $('#location').text(result)
         });
 
-        getDocumentTypeWithId({{ user.doc_type_id|tojson }}).then(function(result) {
-          $('#doc-type').text(result)
+        getDocumentTypeWithId(doc_type_id).then(function(result) {
+            $('#doc-type').text(result)
         });
 
-      });
     </script>
 {% endblock %}
 

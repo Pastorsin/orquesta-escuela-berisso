@@ -106,3 +106,4 @@ venv.bak/
 
 db/db.sqlite
 migrations/
+.vscode/

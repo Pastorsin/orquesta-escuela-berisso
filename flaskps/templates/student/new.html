@@ -1,15 +1,15 @@
 {% extends "teacher/new.html" %}
 
 {% block style %}
-	{{super()}}
 	<link rel="stylesheet" type="text/css" href="{{url_for('static', filename='student/new.css')}}">
+	{{super()}}
 {% endblock %}
 
 {% block script %}
-	{{super()}}
 	<script type="text/javascript" src="https://cdn.jsdelivr.net/gh/guillaumepotier/Parsley.js@2.9.1/dist/parsley.js"></script>
     <script type="text/javascript" src="https://cdn.jsdelivr.net/gh/guillaumepotier/Parsley.js@2.9.1/dist/i18n/es.js"></script>
 	<script text="javascript" src="{{url_for('static', filename='student/new.js')}}"></script>
+	{{super()}}
 {% endblock %}
 
 {% block form_title %}Crear estudiante{% endblock %}
@@ -92,11 +92,11 @@
         </div>
     </div>
 
-	<div class="responsable d-none">
+	<div id="tutor-section" class="responsable d-none">
 		<div class="col-12 text-center">			
 			<h3 class="subtitle border-bottom">Datos personales del tutor</h3>
 		</div>
-		{{super()}}
+		{% include "academic/fields.html" %}
 	</div>
 {% endblock %}
 

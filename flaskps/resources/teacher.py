@@ -78,6 +78,8 @@ def activate(teacher_id):
 def new():
     if request.method == 'POST':
 
+        print(request.form)
+
         form = TeacherCreateForm(request.form)
 
         if form.is_valid():

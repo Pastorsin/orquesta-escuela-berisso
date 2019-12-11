@@ -102,7 +102,6 @@ class MultipleStepForm {
     }
 
     addNewResponsable(index) {
-        console.log(index, this.lastIndex())
         if (this.atTheEnd(index)) {
             $('.buttons .next').text('Agregar otro tutor')
         } else {
@@ -164,5 +163,5 @@ class MultipleStepForm {
 }
 
 $(document).ready(() => {
-    const form = new MultipleStepForm()
+    const form = new MultipleStepForm();
 });
