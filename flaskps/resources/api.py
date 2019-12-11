@@ -70,3 +70,50 @@ def get_available_days(academic, cicle_id, taller_id, nucleus_id):
 def cicle_workshops_nucleus_of_teacher(docente_id, ciclo_id, taller_id, nucleo_id):
     teacher = Teacher.query.get(docente_id)
     return get_available_days(teacher, ciclo_id, taller_id, nucleo_id)
+
+def allsundays(start_date, finish_date, week_day):
+    # Las claves deberían estar exactamente igual en la tabla "dia", pero bueno, si no se podría hacer una consulta
+    day_values = {
+        'Lunes':0,
+        'Martes':1,
+        'Miercoles':2,
+        'Jueves':3,
+        'Viernes':4,
+        'Sabado':5,
+        'Domingo':6,
+    }
+    d = date(start_date)                    # January 1st
+    d += timedelta(days = (day_values[week_day] - d.weekday() + 7) % 7)
+    while d<=finish_date:
+        yield d
+        d += timedelta(days = 7)
+
+def get_days_for_workshop_in_schoolyear(ciclo_id,taller_id):
+    # Acá inevitablemente me vas a tener que devolver también el nombre del día para el tema de mostrarlo en la vista, supongo que agregando a la funcion de arriba
+    # el parámetro week_day en el yield
+
+    # Fijate de paso de ordenarlo por fecha ;)
+    # Acordate también de remover las fechas en las que ya se pasó asistencia, o si no de última mandame otro parámetro como para yo desbloquearlo en el front o ponerlo en rojo
+    dates = [
+        {
+            'dia':'Lunes',
+            'fecha':'20-01-2019'
+        },
+        {
+            'dia':'Martes',
+            'fecha':'21-01-2019'
+        },
+        {
+            'dia':'Lunes',
+            'fecha':'28-01-2019'
+        },
+        {
+            'dia':'Martes',
+            'fecha':'29-01-2019'
+        },
+        {
+            'dia':'Miercoles',
+            'fecha':'30-01-2019'
+        },
+    ]
+    return json.dumps(dates)
