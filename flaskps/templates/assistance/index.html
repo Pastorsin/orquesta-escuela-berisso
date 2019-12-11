@@ -32,7 +32,8 @@
             </select>
             <span class="input-error text-center" id="input-error">Por favor, seleccione un taller</span>
         </div>  
-        <span class="input-label">Seleccione una fecha</span> <span class="input-obligatory">*</span>
+        <span class="input-label" id="date-label">Seleccione una fecha <span class="input-obligatory">*</span></span>
+        <h3 class="text-center" id="date-error">Las asistencias para este taller ya fueron registradas.</h3>
         <div id="dates-container">
         </div>
         {% else %}
