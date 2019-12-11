@@ -109,7 +109,8 @@ app.add_url_rule('/api/docente/<docente_id>/ciclo_taller/<ciclo_id>', 'cicle_wor
 app.add_url_rule('/api/docente/<docente_id>/ciclo/<ciclo_id>/taller/<taller_id>/nucleo/<nucleo_id>', 'cicle_workshops_nucleus_of_teacher', api.cicle_workshops_nucleus_of_teacher)
 app.add_url_rule('/api/estudiante/<estudiante_id>/ciclo/<ciclo_id>', 'cicle_workshops_student', api.cicle_workshops_student)
 app.add_url_rule('/api/ciclo_lectivo/<ciclo_id>', 'cicle_workshops', api.cicle_workshops)
-app.add_url_rule('/api/fechas/<ciclo_id>/<taller_id>','workshop_dates',api.get_days_for_workshop_in_schoolyear)
+app.add_url_rule('/api/fechas/<ciclo_id>/<taller_id>/<nucleo_id>','workshop_dates',api.get_days_for_workshop_in_schoolyear)
+app.add_url_rule('/api/nucleos/<workshop_id>/<schoolyear_id>/<teacher_id>', 'nucleus_courses', api.nucleus_of_teacher)
 
 
 # SchoolYear
@@ -132,4 +133,4 @@ app.add_url_rule("/mapa", 'nucleus_map', nucleus_map.index)
 
 # Assistance
 app.add_url_rule("/asistencia", 'assistance_list', assistance.index)
-app.add_url_rule("/asistencia/<schoolyear_id>/<workshop_id>/<assistance_date>", 'assistance_register', assistance.register_assistance, methods=['POST', 'GET'])
+app.add_url_rule("/asistencia/<schoolyear_id>/<workshop_id>/<nucleus_id>/<assistance_date>", 'assistance_register', assistance.register_assistance, methods=['POST', 'GET'])

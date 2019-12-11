@@ -26,6 +26,13 @@ class AssistanceStudentWorkshop(db.Model):
         primary_key=True
     )
 
+    nucleus_id = db.Column(
+        'nucleo_id',
+        db.Integer,
+        db.ForeignKey('nucleo.id'),
+        primary_key=True
+    )
+
     date = db.Column(
         'fecha',
         db.Date,
@@ -58,6 +65,7 @@ class AssistanceStudentWorkshop(db.Model):
         self.student_id = data['student_id']
         self.schoolyear_id = data['schoolyear_id']
         self.workshop_id = data['workshop_id']
+        self.nucleus_id = data['nucleus_id']
         self.date = data['date']
         self.assisted = data['assistance']
         self.observation = data['observation']

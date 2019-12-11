@@ -41,9 +41,9 @@
 {% endblock %}
 
 {% block table_head %}                        
-    <th scope="col">CL - Inicio</th>
-    <th scope="col">CL - Fin</th>
+    <th scope="col">Ciclo lectivo</th>
     <th scope="col">Taller</th>
+    <th scope="col">Núcleo</th>
     <th scope="col">Fecha</th>
     <th scope="col" class="text-center">¿Asistió?</th>
     <th scope="col">Observación</th>
@@ -60,14 +60,14 @@
     {% if assistances %}
         {% for assistance in assistances %}
         <tr class="item-row">
-            <th scope="row" class="start-date">
-                {{ assistance.schoolyear.start_date }}
-            </th>
-            <th scope="row" class="finish-date">
-                {{ assistance.schoolyear.finish_date }}
+            <th scope="row" class="schoolyear-range">
+                Semestre {{ assistance.schoolyear.semester }} - {{ assistance.schoolyear.start_date.year }}
             </th>
             <th scope="row" class="workshop-name">
                 {{ assistance.workshop.name }}
+            </th>
+            <th scope="row" class="nucleus-name">
+                {{ assistance.nucleus.name }}
             </th>
             <td scope="row" class="date">
                 {{ assistance.date }}

@@ -89,39 +89,53 @@ class SchoolYear(db.Model):
                 remaining_workshops.append(workshop)
         return remaining_workshops
 
-    def assistance_dates(self, workshop_id):
+    def assistance_dates(self, workshop_id, nucleus_id):
         assistance_dates = filter(
-            lambda date: date.weekday() in self.course_weekdays(workshop_id),
-            self.dates_without_assistance(workshop_id)
+            lambda date: date.weekday() in self.course_weekdays(workshop_id, nucleus_id),
+            self.dates_without_assistance(workshop_id, nucleus_id)
         )
         return sorted(assistance_dates)
 
-    def course_weekdays(self, workshop_id):
+    def course_weekdays(self, workshop_id, nucleus_id):
         return list(map(
             lambda course: course.day.number,
-            self.workshop_courses(workshop_id)
+            self.workshop_courses(workshop_id, nucleus_id)
         ))
 
-    def workshop_courses(self, workshop_id):
+    def workshop_courses(self, workshop_id, nucleus_id):
         return filter(
             lambda course: course.workshop_id == int(workshop_id),
+            self.nucleus_courses(nucleus_id)
+        )
+
+    def nucleus_courses(self, nucleus_id):
+        return filter(
+            lambda course: course.nucleus_id == int(nucleus_id),
             self.courses
         )
 
-    def dates_without_assistance(self, workshop_id):
+    def dates_without_assistance(self, workshop_id, nucleus_id):
         total_dates = set(self.range_dates())
-        assistance_dates = set(self.dates_workshop_assistances(workshop_id))
+        assistance_dates = set(
+            self.dates_workshop_assistances(workshop_id, nucleus_id)
+        )
         return total_dates - assistance_dates
 
-    def dates_workshop_assistances(self, workshop_id):
+    def dates_workshop_assistances(self, workshop_id, nucleus_id):
         return map(
             lambda assistance: assistance.date,
-            self.workshop_assistances(workshop_id)
+            self.workshop_assistances(workshop_id, nucleus_id)
         )
 
-    def workshop_assistances(self, workshop_id):
+    def workshop_assistances(self, workshop_id, nucleus_id):
         return filter(
             lambda assistance: assistance.workshop_id == int(workshop_id),
+            self.nucleus_assistances(nucleus_id)
+        )
+
+    def nucleus_assistances(self, nucleus_id):
+        return filter(
+            lambda assistance: assistance.nucleus_id == int(nucleus_id),
             self.assistances
         )
 

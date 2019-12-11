@@ -12,6 +12,7 @@ from flaskps.models.student import Student
 
 SUCCESS_MSG = 'Las asistencias fueron guardadas correctamente!'
 
+
 @login_required
 @permissions_enabled('assistance_register', current_user)
 def index():
@@ -24,22 +25,25 @@ def index():
         current_date=datetime.now().date().strftime('%d-%m-%Y')
     )
 
+
 @login_required
 @permissions_enabled('assistance_register', current_user)
-def register_assistance(schoolyear_id, workshop_id, assistance_date):
+def register_assistance(schoolyear_id, workshop_id, assistance_date, nucleus_id):
     if request.method == 'GET':
         # ¿Debería chequearse que el schoolyear_id y workshop_id existan?
-        students_ids = StudentWorkshop.get_students_doing_workshop(schoolyear_id,workshop_id)
+        students_ids = StudentWorkshop.get_students_doing_workshop(
+            schoolyear_id, workshop_id)
         students = []
         for student_id in students_ids:
             students.append(Student.query.get(student_id))
-        
+
         return render_template(
             'assistance/register_assistance.html',
             current_user=current_user,
             current_schoolyear=schoolyear_id,
             workshop=Workshop.query.get(workshop_id),
-            students=sorted(students,key=lambda student:(student.last_name,student.first_name)),
+            students=sorted(students, key=lambda student: (
+                student.last_name, student.first_name)),
             assistance_date=datetime.strptime(assistance_date, '%d-%m-%Y')
         )
     else:
@@ -48,14 +52,15 @@ def register_assistance(schoolyear_id, workshop_id, assistance_date):
         students = request.form.getlist('student[]')
         workshop = request.form.get('workshop')
         schoolyear = request.form.get('schoolyear')
-        for student,assistance,observation in zip(students,assistances,observations):
+        for student, assistance, observation in zip(students, assistances, observations):
             AssistanceStudentWorkshop.create({
-                'student_id':student,
-                'workshop_id':workshop,
-                'schoolyear_id':schoolyear,
-                'date':datetime.strptime(assistance_date, '%d-%m-%Y').strftime('%Y-%m-%d'),
-                'assistance':assistance,
-                'observation':observation
+                'student_id': student,
+                'workshop_id': workshop,
+                'schoolyear_id': schoolyear,
+                'nucleus_id' : nucleus_id,
+                'date': datetime.strptime(assistance_date, '%d-%m-%Y').strftime('%Y-%m-%d'),
+                'assistance': assistance,
+                'observation': observation
             })
         flash(SUCCESS_MSG, 'success')
         return redirect(url_for('assistance_list'))

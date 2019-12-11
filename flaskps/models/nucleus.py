@@ -26,3 +26,15 @@ class Nucleus(db.Model):
         db.String(255),
         nullable=True
     )
+
+    assistances = db.relationship(
+        'AssistanceStudentWorkshop',
+        backref='nucleus',
+        lazy=True
+    )
+
+    courses = db.relationship(
+        'TeacherNucleus',
+        backref='nucleus',
+        lazy=True
+    )

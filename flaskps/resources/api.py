@@ -3,6 +3,7 @@ from flaskps.models.teacher import Teacher
 from flaskps.models.student import Student
 from flaskps.models.workshop import Workshop
 from flaskps.models.nucleus import Nucleus
+from flaskps.models.teacher_nucleus import TeacherNucleus
 import json
 
 
@@ -96,7 +97,23 @@ def serialize(assistance_dates):
     return json.dumps(dates)
 
 
-def get_days_for_workshop_in_schoolyear(ciclo_id, taller_id):
+def get_days_for_workshop_in_schoolyear(ciclo_id, taller_id, nucleo_id):
     current_schoolyear = SchoolYear.query.get(ciclo_id)
-    assistance_dates = current_schoolyear.assistance_dates(taller_id)
+    assistance_dates = current_schoolyear.assistance_dates(
+        taller_id, nucleo_id)
     return serialize(assistance_dates)
+
+
+def serialize_nucleus(nucleus):
+    data = []
+    for nucleu in nucleus:
+        data.append({
+            'id': nucleu.id,
+            'name': nucleu.name
+        })
+    return json.dumps(data)
+
+
+def nucleus_of_teacher(workshop_id, schoolyear_id, teacher_id):
+    nucleus = TeacherNucleus.nucleus_of(workshop_id, schoolyear_id, teacher_id)
+    return serialize_nucleus(nucleus)
