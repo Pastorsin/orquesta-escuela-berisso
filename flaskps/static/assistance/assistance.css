@@ -11,6 +11,14 @@
     color:red;
 }
 
+#date-error {
+    display: none;
+}
+
+#date-label {
+    display: none;
+}
+
 .title {
     border-bottom: 2px solid #1a91a1;
 }
@@ -38,7 +46,8 @@
 }
 
 .date-card:hover {
-    background-color: #eeeeee;
+    background-color: #fafafa;
+    transform: scale(1.05)
 }
 
 @media (max-width: 400px) {
