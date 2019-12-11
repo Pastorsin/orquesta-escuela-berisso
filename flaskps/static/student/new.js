@@ -164,4 +164,5 @@ class MultipleStepForm {
 
 $(document).ready(() => {
     const form = new MultipleStepForm();
+    render_map();
 });
