@@ -1,7 +1,7 @@
 $(document).ready(() => {
     fillDocTypeSelect();
     fillLocalitiesSelect();
-    render_map();
+    Map.render();
 });
 
 async function fillDocTypeSelect() {
