@@ -1,13 +1,5 @@
 $(document).ready(() => {
 
-    getLocalityWithId(location_id).then(function(result) {
-        $('#location').text(result)
-    });
-
-    getDocumentTypeWithId(doc_type_id).then(function(result) {
-        $('#doc-type').text(result)
-    });
-
     var map = new Map(latlng, 14, { scrollWheelZoom: false })
     map.addRouting();
     var control = map.routingControl;
