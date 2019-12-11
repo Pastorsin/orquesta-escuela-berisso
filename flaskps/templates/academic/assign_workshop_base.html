@@ -40,17 +40,13 @@
             <div class="row w-75">
 
               <div class="col">
-                <select name="cicle" id="select-ciclos" class="form-control" onchange="getSelectedValue(this)" required>
+                <select name="cicle" id="select-ciclos" class="form-control" required>
                   <option value="" selected disabled hidden>Seleccione un ciclo lectivo</option>
                   {% for cicle in cicles %}
-                    {% for whp in cicle.workshops %}
-                      <option value="{{ cicle.id }} - {{ whp.id }}">De {{ cicle.start_date }} hasta {{ cicle.finish_date }} (Semestre {{ cicle.semester }} - {{ whp.name }})</option>
-                    {% endfor %}
+                      <option value="{{ cicle.id }}">Del {{ cicle.start_date.strftime("%d/%m/%Y")}} hasta {{ cicle.finish_date.strftime("%d/%m/%Y") }} (Semestre {{ cicle.semester }})</option>
                   {% endfor %}
                 </select>
               </div>
-                  <input type="hidden" id="cicle_value" name="cicle_value" value="">
-                  <input type="hidden" id="whp_value" name="whp_value" value="">
 
               <div class="workshops-list col">
               </div>

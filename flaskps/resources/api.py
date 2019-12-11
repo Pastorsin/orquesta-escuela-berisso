@@ -3,6 +3,7 @@ from flaskps.models.teacher import Teacher
 from flaskps.models.student import Student
 from flaskps.models.workshop import Workshop
 from flaskps.models.nucleus import Nucleus
+from flaskps.models.day import Day
 import json
 
 
@@ -26,10 +27,12 @@ def get_occupied_workshops(academic, ciclo_id):
     occupied_workshops = academic.get_workshops_of_cicle(ciclo_id)
     cicle = SchoolYear.query.get(ciclo_id)
     cicle_workshops = cicle.workshops
+    cicle_start_date = cicle.start_date.strftime("%d/%m/%Y")
+    cicle_finish_date = cicle.finish_date.strftime("%d/%m/%Y")
     workshops = filter(lambda whp: whp in occupied_workshops, cicle_workshops)
     workshop_dict = {}
     for whp in workshops:
-        item = {whp.id: (whp.name, whp.short_name, cicle.semester, whp.id)} #Despues tengo q ver como cargar la fecha inicio aca y la de fin tmb
+        item = {whp.id: (whp.name, whp.short_name, cicle_start_date, whp.id, cicle_finish_date)}
         workshop_dict.update(item)
     return json.dumps(workshop_dict)
 

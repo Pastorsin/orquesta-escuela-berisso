@@ -145,14 +145,10 @@ class Teacher(db.Model):
 
     def get_days_of_cicle_whp_nucleus(self, cicle_id, whp_id, nucleus_id):
         return Day.query.join(TeacherNucleus).\
-        filter_by(docente_id=self.id, ciclo_lectivo_id=cicle_id, taller_id=whp_id, nucleo_id=nucleus_id)
+        filter_by(teacher_id=self.id, schoolyear_id=cicle_id, workshop_id=whp_id, nucleus_id=nucleus_id)
 
 
     # se supone que esto va a asignar los nucleos, algun dia ....
     
-    # def assign_to_nucleus(self, form_whp, form_cicle, form_nucleus, week_day):
-    #     for whp in form_whp:
-    #         statement = TeacherNucleus.insert().values(
-    #                 docente_id=self.id, nucleo_id=form_nucleus, ciclo_lectivo_id=form_cicle, dia_semana=week_day)
-    #         db.session.execute(statement)
-    #     db.session.commit()
+    def assign_to_nucleus(self,form_cicle, form_whp, form_nucleus, week_day):
+        statement = TeacherNucleus.create(self.id, form_nucleus, form_cicle, form_whp, week_day)
