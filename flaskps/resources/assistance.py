@@ -20,13 +20,12 @@ def index():
         'assistance/index.html',
         current_user=current_user,
         current_schoolyear=current_schoolyear,
-        workshops=current_schoolyear.get_remaining_workshops(),
-        current_date=datetime.now().date()
+        workshops=current_schoolyear.get_remaining_workshops()
     )
 
 @login_required
 @permissions_enabled('assistance_register', current_user)
-def register_assistance(schoolyear_id, workshop_id):
+def register_assistance(schoolyear_id, workshop_id, assistance_date):
     if request.method == 'GET':
         # ¿Debería chequearse que el schoolyear_id y workshop_id existan?
         students_ids = StudentWorkshop.get_students_doing_workshop(schoolyear_id,workshop_id)
@@ -40,7 +39,7 @@ def register_assistance(schoolyear_id, workshop_id):
             current_schoolyear=schoolyear_id,
             workshop=Workshop.query.get(workshop_id),
             students=sorted(students,key=lambda student:(student.last_name,student.first_name)),
-            current_date=datetime.now().date()
+            assistance_date=datetime.strptime(assistance_date, '%d-%m-%Y')
         )
     else:
         assistances = request.form.getlist('assistance[]')
@@ -53,7 +52,7 @@ def register_assistance(schoolyear_id, workshop_id):
                 'student_id':student,
                 'workshop_id':workshop,
                 'schoolyear_id':schoolyear,
-                'date':datetime.now().date(),
+                'date':datetime.strptime(assistance_date, '%d-%m-%Y').strftime('%Y-%m-%d'),
                 'assistance':assistance,
                 'observation':observation
             })
