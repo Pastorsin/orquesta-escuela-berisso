@@ -48,10 +48,9 @@ class TeacherNucleus(db.Model):
     )
 
     @classmethod
-    def nucleus_of(cls, workshop_id, schoolyear_id, teacher_id):
+    def nucleus_of(cls, workshop_id, schoolyear_id):
         courses = cls.query.filter_by(
             workshop_id=workshop_id,
-            schoolyear_id=schoolyear_id,
-            teacher_id=teacher_id
+            schoolyear_id=schoolyear_id
         )
-        return map(lambda course: course.nucleus, courses)
+        return set(map(lambda course: course.nucleus, courses))

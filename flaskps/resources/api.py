@@ -114,6 +114,6 @@ def serialize_nucleus(nucleus):
     return json.dumps(data)
 
 
-def nucleus_of_teacher(workshop_id, schoolyear_id, teacher_id):
-    nucleus = TeacherNucleus.nucleus_of(workshop_id, schoolyear_id, teacher_id)
+def nucleus_of_teacher(workshop_id, schoolyear_id):
+    nucleus = TeacherNucleus.nucleus_of(workshop_id, schoolyear_id)
     return serialize_nucleus(nucleus)
