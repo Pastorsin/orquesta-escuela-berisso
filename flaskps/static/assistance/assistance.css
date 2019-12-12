@@ -2,19 +2,7 @@
     color:red;
 }
 
-#date-error {
-    display: none;
-}
-
-#date-label {
-    display: none;
-}
-
-#nucleus-label {
-    display: none;
-}
-
-#nucleus-error {
+#date-error, #date-label, #nucleus-label, #nucleus-error {
     display: none;
 }
 
@@ -60,7 +48,7 @@
 @media (max-width: 500px) {
     #dates-container {
         flex-direction: column;
-        flex-flow: none;
+        flex-flow: wrap;
         align-items: center;
     }
     .date-card {
