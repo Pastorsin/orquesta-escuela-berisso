@@ -62,7 +62,6 @@ $(document).ready(() => {
 			'icon' : 'fa-map-marker',
 			'url'  : 'mapa'
 		}
-	}
 
 	section.forEach((item) => {
 		const titleSelector = item.querySelector(".item-title")
