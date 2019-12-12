@@ -14,5 +14,5 @@ def valid_assistance_date(**kwargs):
     return current_schoolyear.is_valid_assistance_date(
         assistance_datetime.date(),
         kwargs.get('workshop_id'),
-        kwargs.get('schoolyear_id')
+        kwargs.get('nucleus_id')
     )
