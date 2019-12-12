@@ -1,0 +1,51 @@
+{% extends "sections_base.html" %}
+
+{% block style %}
+{{super()}}
+<link rel="stylesheet" type="text/css" href="{{url_for('static', filename='assistance/assistance.css')}}">
+{% endblock style %}
+
+{% block script %}
+<script text="javascript" src="{{url_for('static', filename='assistance/assistance.js')}}" defer></script>
+<script>
+    let currentSchoolYearId='{{current_schoolyear.id}}';
+    let baseUrl='/asistencia/'+currentSchoolYearId+'/';
+    let currentDate="{{current_date}}"
+</script>
+{% endblock script %}
+
+
+{% block content %}
+
+<div class="row" id="form-container">
+    <div class="col-12 text-center p-2 title">
+        <h1>Registro de Asistencia</h1>
+        <h4><strong>Ciclo Lectivo: </strong>{{current_schoolyear.start_date|datetime}} - {{current_schoolyear.finish_date|datetime}}</h4>
+        <h4><strong>Semestre: </strong>{{current_schoolyear.semester}}</h4>
+    </div>
+    <div class="col-12 text-center p-4">
+        {% if workshops %}
+        <div class="form-group">
+            <label for="workshop-select"><span class="input-label">Seleccione un taller de la lista</span> <span class="input-obligatory">*</span></label>
+            <select id="workshop-select" class="form-control">
+                <option value="" hidden selected="selected"></option>
+                {% for workshop in workshops %}
+                    <option value="{{workshop.id}}">{{workshop.name}}</option>
+                {% endfor %}
+            </select>
+            <label for="nucleus-select"><span id="nucleus-label">Seleccione un núcleo de la lista <span class="input-obligatory">*</span></span></label>
+            <h3 class="text-center" id="nucleus-error">El taller seleccionado no se dicta actualmente en ningún núcleo.</h3>
+            <div id=nucleus-container>
+            </div>
+        </div>  
+        <span class="input-label" id="date-label">Seleccione una fecha <span class="input-obligatory">*</span></span>
+        <h3 class="text-center" id="date-error">Las asistencias para este taller ya fueron registradas.</h3>
+        <div id="dates-container">
+        </div>
+        {% else %}
+        <h2 class="text-center">No hay talleres registrados para el ciclo actual.</h2>
+        {% endif %}
+    </div>
+</div>
+
+{% endblock content %}

@@ -1,0 +1,63 @@
+{% extends "sections_base.html" %}
+
+{% block style %}
+{{super()}}
+<link rel="stylesheet" type="text/css" href="{{url_for('static', filename='assistance/assistance.css')}}">
+{% endblock style %}
+
+{% block script %}
+<script text="javascript" src="{{url_for('static', filename='assistance/assistance.js')}}" defer></script>
+{% endblock script %}
+
+
+{% block content %}
+
+<div class="row" id="form-container">
+    <div class="col-12 text-center p-2 title">
+        <h1>Registro de Asistencia - {{assistance_date|datetime}}</h1>
+        <h3><strong>{{workshop.name}}</strong></h3>
+    </div>
+    <div class="col-12 p-4 text-center">
+        {% if students %}
+        <form action="" method="post">
+            <input type="hidden" name="schoolyear" value="{{current_schoolyear}}">
+            <input type="hidden" name="workshop" value="{{workshop.id}}">
+            <table class="table table-hover">
+                    <thead>
+                        <tr>
+                            <th scope="col">Apellidos</th>
+                            <th scope="col">Nombres</th>                            
+                            <th scope="col" class="text-center">¿Asistió?</th>
+                            <th scope="col" class="text-center col-4">Observación</th>
+                        </tr>
+                    </thead>
+                    <tbody>
+                        {% for student in students %}
+                        <tr class="item-row">
+                            <td scope="row" class="last-name">{{ student.last_name }}</td>
+                            <td scope="row" class="first-name">{{ student.first_name }}</td>
+                            <td scope="row" class="text-center">
+                                <select name="assistance[]" id="" class="form-control text-center w-100 mx-auto">
+                                    <option value="0" default>No</option>
+                                    <option value="1" default>Si</option>
+                                </select>
+                            </td>
+                            <td scope="row">
+                                <textarea class="form-control" type="text" name="observation[]" rows="1"></textarea>
+                            </td>
+                            <input type="hidden" name="student[]" value="{{student.id}}">
+                        </tr>
+                        {% endfor %}
+                    </tbody>			
+            </table>
+            <button class="btn btn-success mx-2 justify-center" id="save-button" type="submit">Guardar asistencias</button>
+            <a href="/asistencia"><button class="btn btn-danger mx-2 justify-center white" type="button">Volver</button></a>
+        </form>
+        {% else %}
+        <h2 class="text-center">No hay ningún estudiante inscripto en el taller seleccionado.</h2>
+        <a href="/asistencia"><button class="btn btn-danger mx-2 justify-center white" type="button">Volver</button></a>
+        {% endif %}
+    </div>
+</div>
+
+{% endblock content %}

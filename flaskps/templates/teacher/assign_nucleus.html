@@ -9,38 +9,57 @@
     <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.4.1/jquery.min.js"></script>
     <script>
       $(document).ready(() => {
-            $.each(cicles, function(index, value){
-              $.get(`/api/docente/` + {{ academic.id |tojson}} + `/ciclo_taller/` + value, function(response) {
-                let json_response = JSON.parse(response);
-                replace_workshops(json_response, value);
+            cicle_list=[]
+              $.each(cicles, function(index, value){
+                $.get({
+                  url: `/api/docente/` + {{ academic.id |tojson}} + `/ciclo_taller/` + value,
+                  async: false,
+                  success: function(response, value) {
+                              let json_response = JSON.parse(response);
+                              for (var key of Object.keys(json_response)){
+                                let item = {
+                                      whp_name: json_response[key][0],
+                                      whp_short_name: json_response[key][1],
+                                      cicle_start_date: json_response[key][2],
+                                      whp_id: json_response[key][3],
+                                      cicle_finish_date: json_response[key][4],
+                                      cicle_id: json_response[key][5]
+                                      };
+                                cicle_list.push(item);
+                              }
+                            }
+                  })
                 });
-            });
-           
-      function replace_workshops(json_response, cicle) {
+                replace_workshops(cicle_list);
+      function replace_workshops(cicle_list) {
         let container = $('.select-ciclos');
-        if (! $.isEmptyObject(json_response)) {
-          container.append(
-            `
+        if (!cicle_list.length == 0) {
+            container.append(`
+            <select name="cicle" id="select-cicles" class="select-cicles form-control style=display:none">
             <option value="" selected disabled hidden>Ciclo</option>
+            </select>
             `);
-          for (var key of Object.keys(json_response)) {
-              container.append(`
-              <option value="${cicle} - ${ json_response[key][3]}">${json_response[key][0]} - Del ${json_response[key][2]} al ${json_response[key][4]}</option>
+            $('.select-nucleus').show();
+          let container_cicle = $('#select-cicles');
+          for (var key = 0; key < cicle_list.length; key++) {
+              container_cicle.append(`
+              <option value="${cicle_list[key].cicle_id} - ${cicle_list[key].whp_id}"> ${cicle_list[key].whp_name} - Del ${cicle_list[key].cicle_start_date} al ${cicle_list[key].cicle_finish_date}</option>
               `
             );
           }
-        } else {
-          container.append(`<p>No hay cursos asignados para este docente</p>`);
+        }
+        else{
+          container.append(`
+            <p class=text-danger> No hay talleres asignados para el docente </p>
+            `);
         }
       }
 
       function change_selects(){
-        let select_val_cicle_whp = $('#select-ciclos').val().split("-");
+        let select_val_cicle_whp = $('#select-cicles').val().split("-");
         let select_val_nucleus = $('#select-nucleus').val();
-        console.log('values: ' + select_val_cicle_whp[0] + select_val_cicle_whp[1])
         $('#cicle_value').val(select_val_cicle_whp[0]);
         $('#whp_value').val(select_val_cicle_whp[1]);
-        console.log($('#cicle_value').val());
         $.get(`/api/docente/` + {{ academic.id |tojson}} + `/ciclo/${select_val_cicle_whp[0]}/taller/${select_val_cicle_whp[1]}/nucleo/${select_val_nucleus}`, function(response) {
             let json_response = JSON.parse(response);
             replace_days(json_response);
@@ -48,7 +67,6 @@
       }
 
       function replace_days(json_response) {
-        console.log('replace');
         let container_days = $('.days-list');
         container_days.empty();
         if (! $.isEmptyObject(json_response)) {
@@ -57,10 +75,8 @@
             <option value="" selected disabled hidden>Día</option>
             </select>
             `);
-          console.log(json_response[0]);
           let container_select = $('.select-days');
           for (var key of Object.keys(json_response)) {
-            console.log(key)
             container_select.append(
               `
               <option value="${key}">${json_response[key]}</option>
@@ -98,8 +114,8 @@
         <form action="{{ url_for('teacher_assign_nucleus', teacher_id=academic.id) }}" method="POST" name="cicle-form">
           <div class="d-flex justify-content-center">
             <div class="row w-75">
-              <div class="col">
-                <select name="cicle" id="select-ciclos" class="select-ciclos form-control" title="ciclos" required>
+              <div class="col select-ciclos">
+                
                 </select>
               </div>
                   <input type="hidden" id="cicle_value" name="cicle_value" value="">
@@ -109,7 +125,7 @@
             </div>
               <div class="row w-75">
                 <div class="div-nucleus">
-                  <select name="nucleus" id="select-nucleus" class="select-nucleus form-control" required>
+                  <select name="nucleus" id="select-nucleus" class="select-nucleus form-control" required style="display: none">
                     {% for nucleo in nucleus %}
                       <option value="" selected disabled hidden>Núcleo</option>
                       <option value="{{ nucleo.id }}">{{ nucleo.name }}</option>
