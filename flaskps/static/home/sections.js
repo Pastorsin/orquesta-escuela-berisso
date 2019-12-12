@@ -67,6 +67,7 @@ $(document).ready(() => {
 			'icon' : 'fa-book',
 			'url'  : 'asistencia'
 		}
+	}
 
 	section.forEach((item) => {
 		const titleSelector = item.querySelector(".item-title")
