@@ -63,3 +63,10 @@ class TeacherNucleus(db.Model):
         teacherNucleus = cls(teacher_id, nucleus_id, schoolyear_id, workshop_id, day_id)
         db.session.add(teacherNucleus)
         db.session.commit()
+    @classmethod
+    def nucleus_of(cls, workshop_id, schoolyear_id):
+        courses = cls.query.filter_by(
+            workshop_id=workshop_id,
+            schoolyear_id=schoolyear_id
+        )
+        return set(map(lambda course: course.nucleus, courses))

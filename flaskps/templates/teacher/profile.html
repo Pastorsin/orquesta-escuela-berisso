@@ -36,11 +36,11 @@
 
 {% block buttons %}
         <a class="white-button mr-2" id="teacher-list-button" href="{{ url_for('teacher_workshops', teacher_id=user.id) }}">
-          <i class="fa fa-list"></i> Listado de talleres
+          <i class="fa fa-list"></i> Listado de Talleres
         </a>
     {% if current_user.has_permission('teacher_index') %}
         <a class="white-button" id="user-list-button" href="{{url_for('teacher_index')}}">
-          <i class="fa fa-list"></i> Listado de docentes
+          <i class="fa fa-list"></i> Listado de Docentes
         </a>
     {% endif %}
 {% endblock buttons %}

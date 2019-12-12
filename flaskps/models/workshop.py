@@ -21,3 +21,9 @@ class Workshop(db.Model):
         db.String(255),
         nullable=False
     )
+
+    assistances = db.relationship(
+        'AssistanceStudentWorkshop',
+        backref='workshop',
+        lazy=True
+    )

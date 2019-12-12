@@ -4,7 +4,7 @@ from flaskps.config import Config
 
 from flaskps.resources import user, base, webconfig, admin
 from flaskps.resources import student, teacher, school_year, responsable
-from flaskps.resources import api, instrument, nucleus_map
+from flaskps.resources import api, instrument, nucleus_map, assistance
 
 
 from .extensions.db import db
@@ -29,6 +29,15 @@ migrate = Migrate(app, db)
 
 login_manager.init_app(app)
 bcrypt.init_app(app)
+
+# Formateador de fechas para Jinja2
+def format_datetime(value, format="%d/%m/%Y"):
+    """Format a date time to (Default): d Mon YYYY HH:MM P"""
+    if value is None:
+        return ""
+    return value.strftime(format)
+
+app.jinja_env.filters['datetime'] = format_datetime
 
 
 # Jinja2 global context (permanent variables)
@@ -72,6 +81,7 @@ app.add_url_rule("/estudiantes/inscribe/<student_id>", 'student_assign', student
 app.add_url_rule("/estudiantes/<student_id>/responsables", 'student_responsables', student.responsables)
 app.add_url_rule("/estudiantes/<student_id>/responsables/asignar", 'student_assign_responsable', student.assign_responsable, methods=['POST', 'GET'])
 app.add_url_rule("/estudiantes/<student_id>/responsables/new", "responsable_new", student.reponsable_new, methods=['POST', 'GET'])
+app.add_url_rule("/estudiantes/<student_id>/asistencias", "student_assistances", student.assistances)
 
 
 # Responsable
@@ -99,6 +109,8 @@ app.add_url_rule('/api/docente/<docente_id>/ciclo_taller/<ciclo_id>', 'cicle_wor
 app.add_url_rule('/api/docente/<docente_id>/ciclo/<ciclo_id>/taller/<taller_id>/nucleo/<nucleo_id>', 'cicle_workshops_nucleus_of_teacher', api.cicle_workshops_nucleus_of_teacher)
 app.add_url_rule('/api/estudiante/<estudiante_id>/ciclo/<ciclo_id>', 'cicle_workshops_student', api.cicle_workshops_student)
 app.add_url_rule('/api/ciclo_lectivo/<ciclo_id>', 'cicle_workshops', api.cicle_workshops)
+app.add_url_rule('/api/fechas/<ciclo_id>/<taller_id>/<nucleo_id>','workshop_dates',api.get_days_for_workshop_in_schoolyear)
+app.add_url_rule('/api/nucleos/<ciclo_id>/<taller_id>', 'nucleus_courses', api.nucleus_of_teacher)
 
 
 # SchoolYear
@@ -118,3 +130,7 @@ app.add_url_rule("/instrumentos/editar/<instrument_id>/imagen", 'instrument_imag
 
 # Map
 app.add_url_rule("/mapa", 'nucleus_map', nucleus_map.index)
+
+# Assistance
+app.add_url_rule("/asistencia", 'assistance_list', assistance.index)
+app.add_url_rule("/asistencia/<schoolyear_id>/<workshop_id>/<nucleus_id>/<assistance_date>", 'assistance_register', assistance.register_assistance, methods=['POST', 'GET'])

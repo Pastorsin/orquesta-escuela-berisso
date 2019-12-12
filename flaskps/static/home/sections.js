@@ -61,6 +61,11 @@ $(document).ready(() => {
 			'name' : 'Mapa de los Núcleos',
 			'icon' : 'fa-map-marker',
 			'url'  : 'mapa'
+		},
+		'assistance_register' : {
+			'name' : 'Registro de Asistencias',
+			'icon' : 'fa-book',
+			'url'  : 'asistencia'
 		}
 
 	section.forEach((item) => {

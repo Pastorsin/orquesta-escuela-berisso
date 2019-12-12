@@ -1,0 +1,79 @@
+.input-obligatory {
+    color:red;
+}
+
+#date-error {
+    display: none;
+}
+
+#date-label {
+    display: none;
+}
+
+#nucleus-label {
+    display: none;
+}
+
+#nucleus-error {
+    display: none;
+}
+
+.title {
+    border-bottom: 2px solid #1a91a1;
+}
+
+#dates-container {
+    display: flex;
+    flex-flow: row wrap;
+    justify-content: space-around;
+    margin-top: 10px;
+}
+
+.date-card {
+    width: 20%;
+    height: 4rem;
+    border: 2px solid black;
+    border-radius: 15px;
+    margin-bottom: 1rem;
+    margin-left: 1rem;
+    margin-right: 1rem;
+
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    align-items: center;
+}
+
+.date-card:hover {
+    background-color: #f7f7f7;
+    transform: scale(1.05)
+}
+
+.date-today {
+    background-color: #8ed173;
+}
+
+.date-today:hover {
+    background-color: #b7f0a1;
+}
+
+@media (max-width: 500px) {
+    #dates-container {
+        flex-direction: column;
+        flex-flow: none;
+        align-items: center;
+    }
+    .date-card {
+        width: 70%;
+    }
+}
+
+a.nostyle:link {
+    text-decoration: inherit;
+    color: inherit;
+}
+
+a.nostyle:visited {
+    text-decoration: inherit;
+    color: inherit;
+}

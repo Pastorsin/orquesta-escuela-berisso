@@ -16,6 +16,13 @@ class Day(db.Model):
         nullable=False
     )
 
+    number = db.Column(
+        'numero',
+        db.Integer,
+        unique=True,
+        nullable=False
+    )
+
     teacher_nucleus = db.relationship(
         'TeacherNucleus',
         backref='day',

@@ -13,6 +13,7 @@ from flaskps.models.neighborhood import Neighborhood
 from flaskps.models.school import School
 from flaskps.models.level import Level
 from flaskps.models.responsable import Responsable
+from flaskps.models.assistance_student_workshop import AssistanceStudentWorkshop
 
 import json
 
@@ -192,10 +193,10 @@ def activate(student_id):
 def assign_workshop(student_id):
     student = Student.query.get(student_id)
     if request.method == 'POST':
-        form_cicle = request.form.get('cicle')
-        form_workshops = request.form.getlist('workshop')
-        if form_cicle is not None and form_workshops:
-            student.assign_to(form_workshops, form_cicle)
+        cicle_id = request.form.get('cicle')
+        workshops_id = request.form.getlist('workshop')
+        if cicle_id is not None and workshops_id:
+            student.add_course(cicle_id, workshops_id)
             flash(SUCCESS_MSG['assign'], 'success')
             return redirect(url_for('student_index'))
         else:
@@ -236,3 +237,15 @@ def new():
             levels=Level.query.all(),
             neighborhoods=Neighborhood.query.all()
         )
+
+
+@login_required
+@permissions_enabled('student_profile', current_user)
+def assistances(student_id):
+    assistances = AssistanceStudentWorkshop.student_assistances(
+        student_id).all()
+    return render_template(
+        'student/assistances.html',
+        assistances=assistances,
+        student=Student.query.get(student_id)
+    )

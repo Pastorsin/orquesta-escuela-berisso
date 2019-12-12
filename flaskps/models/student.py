@@ -4,10 +4,9 @@ from .school import School
 from .level import Level
 from .neighborhood import Neighborhood
 from .responsable import Responsable
-from .student_workshop import school_year_workshop_student
+from .student_workshop import StudentWorkshop
 from .workshop import Workshop
 from .responsable_student import responsable_student
-
 
 class Student(db.Model):
     __tablename__ = 'estudiante'
@@ -118,18 +117,10 @@ class Student(db.Model):
         default=True
     )
 
-    school_years = db.relationship(
-        'SchoolYear',
-        secondary=school_year_workshop_student,
-        lazy='subquery',
-        backref=db.backref('students', lazy=True)
-    )
-
-    workshops = db.relationship(
-        'Workshop',
-        secondary=school_year_workshop_student,
-        lazy='subquery',
-        backref=db.backref('students', lazy=True)
+    workshops_school_years = db.relationship(
+        'StudentWorkshop',
+        lazy=True,
+        backref=db.backref('students')
     )
 
     responsables = db.relationship(
@@ -179,8 +170,8 @@ class Student(db.Model):
         db.session.commit()
 
     def get_workshops_of_cicle(self, cicle_id):
-        return Workshop.query.join(school_year_workshop_student).\
-            filter_by(estudiante_id=self.id, ciclo_lectivo_id=cicle_id)
+        return Workshop.query.join(StudentWorkshop).\
+            filter_by(student_id=self.id, schoolyear_id=cicle_id)
 
     @classmethod
     def create(cls, data):
@@ -206,12 +197,9 @@ class Student(db.Model):
         self.responsables.append(responsable)
         db.session.commit()
 
-    def assign_to(self, form_workshops, form_cicle):
-        for whp in form_workshops:
-            statement = school_year_workshop_student.insert().values(
-                    estudiante_id=self.id, ciclo_lectivo_id=form_cicle, taller_id=whp)
-            db.session.execute(statement)
-        db.session.commit()
+    def add_course(self, cicle_id, workshops_id):
+        for workshop_id in workshops_id:
+            StudentWorkshop.create(self.id, cicle_id, workshop_id)
 
     def has_responsable(self, responsable):
         return responsable in self.responsables
