@@ -73,6 +73,7 @@ function showNucleus(nucleus) {
     //Vacio el container
     $('#dates-container').empty();
     $('#date-label').css('display','none');
+    $('#date-error').css('display','none');
     $('#nucleus-container').empty();
     if(nucleus.length!=0){
         hideEmptyNucleusError();
