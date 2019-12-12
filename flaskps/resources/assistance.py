@@ -1,7 +1,7 @@
 from flask import render_template, flash, redirect, url_for, request
 from flask_login import current_user, login_required
 from flaskps.helpers.webconfig import get_web_config
-from flaskps.helpers.constraints import permissions_enabled
+from flaskps.helpers.constraints import permissions_enabled, date_permissions
 from datetime import datetime
 
 from flaskps.models.school_year import SchoolYear
@@ -27,7 +27,7 @@ def index():
 
 
 @login_required
-@permissions_enabled('assistance_register', current_user)
+@date_permissions('assistance_register', current_user)
 def register_assistance(schoolyear_id, workshop_id, assistance_date, nucleus_id):
     if request.method == 'GET':
         # ¿Debería chequearse que el schoolyear_id y workshop_id existan?
