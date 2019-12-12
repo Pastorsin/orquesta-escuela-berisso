@@ -26,14 +26,17 @@
     <div class="col-12 text-center p-4">
         {% if workshops %}
         <div class="form-group">
-            <label for="workshop-input"><span class="input-label">Seleccione un taller de la lista</span> <span class="input-obligatory">*</span></label>
-            <select id="workshop-input" class="form-control" name="workshop_id" required placeholder="Taller">
+            <label for="workshop-select"><span class="input-label">Seleccione un taller de la lista</span> <span class="input-obligatory">*</span></label>
+            <select id="workshop-select" class="form-control">
                 <option value="" hidden selected="selected"></option>
                 {% for workshop in workshops %}
                     <option value="{{workshop.id}}">{{workshop.name}}</option>
                 {% endfor %}
             </select>
-            <span class="input-error text-center" id="input-error">Por favor, seleccione un taller</span>
+            <label for="nucleus-select"><span id="nucleus-label">Seleccione un núcleo de la lista <span class="input-obligatory">*</span></span></label>
+            <h3 class="text-center" id="nucleus-error">El taller seleccionado no se dicta actualmente en ningún núcleo.</h3>
+            <div id=nucleus-container>
+            </div>
         </div>  
         <span class="input-label" id="date-label">Seleccione una fecha <span class="input-obligatory">*</span></span>
         <h3 class="text-center" id="date-error">Las asistencias para este taller ya fueron registradas.</h3>
