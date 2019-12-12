@@ -27,8 +27,8 @@ ERROR_MSG = {
 }
 
 
-@login_required
-@permissions_enabled('student_update', current_user)
+# @login_required
+# @permissions_enabled('student_update', current_user)
 def assign_responsable(student_id):
     student = Student.query.get(student_id)
 
@@ -48,8 +48,8 @@ def assign_responsable(student_id):
     )
 
 
-@login_required
-@permissions_enabled('student_update', current_user)
+# @login_required
+# @permissions_enabled('student_update', current_user)
 def reponsable_new(student_id):
     student = Student.query.get(student_id)
     if request.method == 'POST':
@@ -81,8 +81,8 @@ def reponsable_new(student_id):
         )
 
 
-@login_required
-@permissions_enabled('student_update', current_user)
+# @login_required
+# @permissions_enabled('student_update', current_user)
 def edit(student_id):
     student = Student.query.get(student_id)
 
@@ -125,8 +125,8 @@ def update(form, student):
         )
 
 
-@login_required
-@permissions_enabled('student_profile', current_user)
+# @login_required
+# @permissions_enabled('student_profile', current_user)
 def workshops(student_id):
     student = Student.query.get(student_id)
     return render_template(
@@ -136,8 +136,8 @@ def workshops(student_id):
     )
 
 
-@login_required
-@permissions_enabled('student_profile', current_user)
+# @login_required
+# @permissions_enabled('student_profile', current_user)
 def responsables(student_id):
     return render_template(
         'responsable/index.html',
@@ -145,15 +145,15 @@ def responsables(student_id):
     )
 
 
-@login_required
-@permissions_enabled('student_profile', current_user)
+# @login_required
+# @permissions_enabled('student_profile', current_user)
 def profile(student_id):
     estudiante = Student.query.get(student_id)
     return render_template('student/profile.html', user=estudiante, config=get_web_config())
 
 
-@login_required
-@permissions_enabled('student_index', current_user)
+# @login_required
+# @permissions_enabled('student_index', current_user)
 def index():
     students = Student.query.all()
     return render_template(
@@ -206,8 +206,8 @@ def assign_workshop(student_id):
         return render_template('student/assign_workshop.html', academic=student, cicles=cicles)
 
 
-@login_required
-@permissions_enabled('student_new', current_user)
+# @login_required
+# @permissions_enabled('student_new', current_user)
 def new():
     if request.method == 'POST':
         print(json.dumps(request.get_json(), indent=4))

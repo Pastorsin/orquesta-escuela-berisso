@@ -148,7 +148,7 @@ def update(form, teacher):
 
 
 @login_required
-# @permissions_enabled('teacher_update', current_user)
+@permissions_enabled('teacher_update', current_user)
 def assign_workshop(teacher_id):
     teacher = Teacher.query.get(teacher_id)
     if request.method == 'POST':
@@ -165,7 +165,8 @@ def assign_workshop(teacher_id):
         cicles = SchoolYear.query.all()
         return render_template('teacher/assign_workshop.html', academic=teacher, cicles=cicles)
 
-
+@login_required
+@permissions_enabled('workshop_update', current_user)
 def assign_nucleus(teacher_id):
     teacher = Teacher.query.get(teacher_id)
     if request.method == 'POST':

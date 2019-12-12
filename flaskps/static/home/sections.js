@@ -57,7 +57,6 @@ $(document).ready(() => {
 			'icon' : 'fa-music',
 			'url'  : 'instrumentos'
 		}
-	}
 
 	section.forEach((item) => {
 		const titleSelector = item.querySelector(".item-title")
