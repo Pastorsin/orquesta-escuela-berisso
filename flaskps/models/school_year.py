@@ -90,10 +90,10 @@ class SchoolYear(db.Model):
         return remaining_workshops
 
     def assistance_dates(self, workshop_id, nucleus_id):
-        assistance_dates = filter(
+        assistance_dates = list(filter(
             lambda date: date.weekday() in self.course_weekdays(workshop_id, nucleus_id),
             self.dates_without_assistance(workshop_id, nucleus_id)
-        )
+        ))
         return sorted(assistance_dates)
 
     def course_weekdays(self, workshop_id, nucleus_id):
@@ -143,3 +143,7 @@ class SchoolYear(db.Model):
         delta = self.finish_date - self.start_date
         total_days = delta.days + 1
         return [self.start_date + timedelta(days=i) for i in range(total_days)]
+
+    def is_valid_assistance_date(self, a_date, workshop_id, schoolyear_id):
+        print(a_date)
+        return a_date in self.assistance_dates(workshop_id, schoolyear_id)
