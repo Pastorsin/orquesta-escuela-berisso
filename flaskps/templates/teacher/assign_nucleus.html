@@ -9,31 +9,31 @@
     <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.4.1/jquery.min.js"></script>
     <script>
       $(document).ready(() => {
-            var cicle_list=[]
+            cicle_list=[]
               $.each(cicles, function(index, value){
-                $.get(`/api/docente/` + {{ academic.id |tojson}} + `/ciclo_taller/` + value, function(response, value) {
-                  let json_response = JSON.parse(response);
-                  for (var key of Object.keys(json_response)){
-                    let item = {
-                          whp_name: json_response[key][0],
-                          whp_short_name: json_response[key][1],
-                          cicle_start_date: json_response[key][2],
-                          whp_id: json_response[key][3],
-                          cicle_finish_date: json_response[key][4],
-                          cicle_id: value
-                          }
-                    cicle_list.push(item);
-                  }
-                console.log(cicle_list.length)
+                $.get({
+                  url: `/api/docente/` + {{ academic.id |tojson}} + `/ciclo_taller/` + value,
+                  async: false,
+                  success: function(response, value) {
+                              let json_response = JSON.parse(response);
+                              for (var key of Object.keys(json_response)){
+                                let item = {
+                                      whp_name: json_response[key][0],
+                                      whp_short_name: json_response[key][1],
+                                      cicle_start_date: json_response[key][2],
+                                      whp_id: json_response[key][3],
+                                      cicle_finish_date: json_response[key][4],
+                                      cicle_id: value
+                                      };
+                                cicle_list.push(item);
+                              }
+                            }
+                  })
                 });
-                
-              })
-              console.log('listaza');
-              console.log(cicle_list.length);
-              console.log(cicle_list[0]);
-              ;
-                // console.log(cicle_dict);
-              // replace_workshops(json_response, value);
+                console.log('listaza');
+                console.log(cicle_list);
+                console.log(cicle_list[0]);
+
 
       function add_response(json_response, cicle){
         cicle_dict=[]
