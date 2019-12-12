@@ -145,5 +145,4 @@ class SchoolYear(db.Model):
         return [self.start_date + timedelta(days=i) for i in range(total_days)]
 
     def is_valid_assistance_date(self, a_date, workshop_id, schoolyear_id):
-        print(a_date)
         return a_date in self.assistance_dates(workshop_id, schoolyear_id)

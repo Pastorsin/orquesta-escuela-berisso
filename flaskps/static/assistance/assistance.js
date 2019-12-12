@@ -13,7 +13,6 @@ $(document).ready(function(){
         newUrl = newUrl.concat($(this).val()+'/');
         globalUrl = newUrl;
 
-        console.log(globalUrl);
         //Mostrar sección de fechas previo render
         getNucleus(currentSchoolYearId,$(this).val());
     })
@@ -25,7 +24,6 @@ $(document).ready(function(){
         let newUrl = currentUrl.substring(0,index+1);
         newUrl = newUrl.concat($(this).val());
         globalUrl = newUrl;
-        console.log(globalUrl);
         //Mostrar sección de fechas previo render
         getDates(currentSchoolYearId,currentWorkshopId,$(this).val());
     })
