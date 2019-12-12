@@ -211,7 +211,6 @@ def assign_workshop(student_id):
 # @permissions_enabled('student_new', current_user)
 def new():
     if request.method == 'POST':
-        print(json.dumps(request.get_json(), indent=4))
         student_form = StudentCreateForm(request.get_json())
 
         if student_form.is_valid():

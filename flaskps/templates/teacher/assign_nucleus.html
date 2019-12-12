@@ -31,15 +31,9 @@
                   })
                 });
                 replace_workshops(cicle_list);
-                console.log('listaza');
-                console.log(cicle_list);
-                console.log(cicle_list[1].cicle_id); 
-
       function replace_workshops(cicle_list) {
         let container = $('.select-ciclos');
-        console.log('hola');
         if (!cicle_list.length == 0) {
-            console.log('entreee')
             container.append(`
             <select name="cicle" id="select-cicles" class="select-cicles form-control style=display:none">
             <option value="" selected disabled hidden>Ciclo</option>
@@ -48,7 +42,6 @@
             $('.select-nucleus').show();
           let container_cicle = $('#select-cicles');
           for (var key = 0; key < cicle_list.length; key++) {
-              console.log('aca tambieeen');
               container_cicle.append(`
               <option value="${cicle_list[key].cicle_id} - ${cicle_list[key].whp_id}"> ${cicle_list[key].whp_name} - Del ${cicle_list[key].cicle_start_date} al ${cicle_list[key].cicle_finish_date}</option>
               `
@@ -65,10 +58,8 @@
       function change_selects(){
         let select_val_cicle_whp = $('#select-cicles').val().split("-");
         let select_val_nucleus = $('#select-nucleus').val();
-        console.log('values: ' + select_val_cicle_whp[0] + select_val_cicle_whp[1])
         $('#cicle_value').val(select_val_cicle_whp[0]);
         $('#whp_value').val(select_val_cicle_whp[1]);
-        console.log($('#cicle_value').val());
         $.get(`/api/docente/` + {{ academic.id |tojson}} + `/ciclo/${select_val_cicle_whp[0]}/taller/${select_val_cicle_whp[1]}/nucleo/${select_val_nucleus}`, function(response) {
             let json_response = JSON.parse(response);
             replace_days(json_response);
@@ -76,7 +67,6 @@
       }
 
       function replace_days(json_response) {
-        console.log('replace');
         let container_days = $('.days-list');
         container_days.empty();
         if (! $.isEmptyObject(json_response)) {
@@ -85,10 +75,8 @@
             <option value="" selected disabled hidden>Día</option>
             </select>
             `);
-          console.log(json_response[0]);
           let container_select = $('.select-days');
           for (var key of Object.keys(json_response)) {
-            console.log(key)
             container_select.append(
               `
               <option value="${key}">${json_response[key]}</option>
