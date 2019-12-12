@@ -32,7 +32,7 @@ def get_occupied_workshops(academic, ciclo_id):
     workshops = filter(lambda whp: whp in occupied_workshops, cicle_workshops)
     workshop_dict = {}
     for whp in workshops:
-        item = {whp.id: (whp.name, whp.short_name, cicle_start_date, whp.id, cicle_finish_date)}
+        item = {whp.id: (whp.name, whp.short_name, cicle_start_date, whp.id, cicle_finish_date, ciclo_id)}
         workshop_dict.update(item)
     return json.dumps(workshop_dict)
 
