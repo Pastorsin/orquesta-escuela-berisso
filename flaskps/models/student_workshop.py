@@ -42,7 +42,7 @@ class StudentWorkshop(db.Model):
 
     @classmethod
     def create(cls, student_id, cicle_id, workshop_id):
-        cicle_id = cicle_id.split('-')[0] # Hasta que arreglen el problema
+        cicle_id = cicle_id
         course = cls(student_id, cicle_id, workshop_id)
         db.session.add(course)
         db.session.commit()
