@@ -1,48 +1,51 @@
 {% extends "base.html" %}
 
 {% block style %}
-  <link rel="stylesheet" type="text/css" href="{{url_for('static', filename='sections_base.css')}}">
+<link rel="stylesheet" type="text/css" href="{{url_for('static', filename='sections_base.css')}}">
 {% endblock %}
 
 {% block body %}
 
-	<nav class="navbar navbar-expand-lg navbar-dark" id="navigation-bar">
-        <a class="navbar-brand" href="{{ url_for('home') }}">{{config.title}}</a>
-        <ul class="navbar-nav mr-auto">
-            <li class="nav-item active">
-                <a class="blue-button" href=" {{ url_for('secciones') }}"><i class="fa fa-list"></i> Secciones</a>	
-            </li>
-        </ul>
+<nav class="navbar navbar-expand-lg navbar-dark" id="navigation-bar">
+	<a class="navbar-brand" href="{{ url_for('home') }}">{{config.title}}</a>
+	<ul class="navbar-nav mr-auto">
+		<li class="nav-item active">
+			<a class="blue-button" href=" {{ url_for('secciones') }}"><i class="fa fa-list"></i> Secciones</a>
+		</li>
+	</ul>
 
-		<div id="navbarSupportedContent">
-			<div class="dropdown">
-				<button class="blue-button dropdown-toggle" id="dropdownMenuButton" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
-					<i class="fa fa-user"></i> {{current_user.last_name}}, {{current_user.first_name}}
-				</button>
-				<div class="dropdown-menu dropdown-menu-right" aria-labelledby="dropdownMenuButton">
-					<a class="dropdown-item" href="{{ url_for('user_profile', user_id=current_user.id) }}"><i class="fa fa-user"></i> Ver mi perfil</a>
-                  	<a class="dropdown-item" href="{{ url_for('webconfig') }}"><i class="fa fa-cog"></i> Configuración del Sistema</a>
-					<a class="dropdown-item" href="{{ url_for('logout') }}"><i class="fa fa-sign-out"></i> Cerrar Sesión</a>
-				</div>
+	<div id="navbarSupportedContent">
+		<div class="dropdown">
+			<button class="blue-button dropdown-toggle" id="dropdownMenuButton" data-toggle="dropdown"
+				aria-haspopup="true" aria-expanded="false">
+				<i class="fa fa-user"></i> {{current_user.last_name}}, {{current_user.first_name}}
+			</button>
+			<div class="dropdown-menu dropdown-menu-right" aria-labelledby="dropdownMenuButton">
+				<a class="dropdown-item" href="{{ url_for('user_profile', user_id=current_user.id) }}"><i
+						class="fa fa-user"></i> Ver mi perfil</a>
+				<a class="dropdown-item" href="{{ url_for('webconfig') }}"><i class="fa fa-cog"></i> Configuración del
+					Sistema</a>
+				<a class="dropdown-item" href="{{ url_for('logout') }}"><i class="fa fa-sign-out"></i> Cerrar Sesión</a>
 			</div>
 		</div>
-
-	</nav>
-
-	<div class="container">
-		{% block content %}{% endblock %}
 	</div>
-	
-	<footer>
-		<section id="images">
-			<img src="http://www.oeberisso.com.ar/wp-content/themes/oe/img/logo1.png" alt="Orquesta Escuela de Berisso">
-			<img src="http://www.oeberisso.com.ar/wp-content/themes/oe/img/logo3.png" alt="Ciudad de Berisso">
-			<img src="http://www.oeberisso.com.ar/wp-content/themes/oe/img/logo4.png" alt="Provincia de Buenos Aires">
-		</section>
-		<section id="contact">
-			<span>Orquesta Escuela de Berisso - 2019</span>
-			<span>Contacto: {{config.email}}</span>
-		</section>
-	</footer>
+
+</nav>
+
+<div class="container">
+	{% block content %}{% endblock %}
+</div>
+
+<footer>
+	<section id="images">
+		<img src="http://www.oeberisso.com.ar/wp-content/themes/oe/img/logo1.png" alt="Orquesta Escuela de Berisso">
+		<img src="http://www.oeberisso.com.ar/wp-content/themes/oe/img/logo3.png" alt="Ciudad de Berisso">
+		<img src="http://www.oeberisso.com.ar/wp-content/themes/oe/img/logo4.png" alt="Provincia de Buenos Aires">
+	</section>
+	<section id="contact">
+		<span>Orquesta Escuela de Berisso - 2019</span>
+		<span>Contacto: {{config.email}}</span>
+	</section>
+</footer>
 
 {% endblock %}

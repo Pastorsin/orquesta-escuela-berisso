@@ -2,7 +2,7 @@
 	<div class="title-login">
 		<h2>Iniciar Sesión</h2>
 	</div>
-    <form class="form-login" action="{{ url_for('login') }}" method="post">
+	<form class="form-login" action="{{ url_for('login') }}" method="post">
 
 		<div class="form-item-login">
 			<label class="small label-login">Usuario</label>
@@ -10,7 +10,8 @@
 				<div class="input-group-prepend">
 					<span class="input-group-text"><i class="fas fa-envelope"></i></span>
 				</div>
-				<input class="form-control" type="text" name="username" value="" placeholder="Nombre de Usuario" required>
+				<input class="form-control" type="text" name="username" value="" placeholder="Nombre de Usuario"
+					required>
 			</div>
 		</div>
 
@@ -26,5 +27,9 @@
 		</div>
 		<button class="btn w-100 py-3" type="submit" name="button" id="button-login">Iniciar Sesión</button>
 	</form>
+	<div class="title-login">
+		<h2>O sinó inicia sesión con google</h2>
+		<a href="{{ url_for('google.login') }}">GOOGLE AHORA</a>
+	</div>
 
 </section>

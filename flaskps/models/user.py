@@ -1,7 +1,8 @@
 import itertools
+from datetime import datetime
+
 from flaskps.extensions.bcrypt import bcrypt as bc
 from flaskps.extensions.db import db
-from datetime import datetime
 from flaskps.models.user_role import user_role
 
 
@@ -85,7 +86,8 @@ class User(db.Model):
         db.session.commit()
 
     def has_permission(self, permission_name):
-        permissions = map(lambda rol: rol.has_permission(permission_name), self.roles)
+        permissions = map(lambda rol: rol.has_permission(
+            permission_name), self.roles)
         return any(permissions)
 
     def permissions(self):

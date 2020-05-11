@@ -1,12 +1,10 @@
 # -*- coding: utf-8 -*-
-from flask import redirect, request, url_for, flash, render_template
-from flask_login import login_user, logout_user, current_user, login_required
-
-from flaskps.helpers.constraints import profile_permissions
-from flaskps.helpers.webconfig import get_web_config
+from flask import flash, redirect, render_template, request, url_for
+from flask_login import current_user, login_required, login_user, logout_user
 
 from flaskps.extensions.login_manager import login_manager
-
+from flaskps.helpers.constraints import profile_permissions
+from flaskps.helpers.webconfig import get_web_config
 from flaskps.models.user import User
 
 
