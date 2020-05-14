@@ -1,8 +1,16 @@
 $(document).ready(() => {
     fillDocTypeSelect();
     fillLocalitiesSelect();
-    Map.render();
+
+    var x = Map.render();
+    map = x[0]
+    initialMark = x[1]
 });
+
+function setInputsValues(latlng) {
+    $('#lat').attr('value', latlng.lat)
+    $('#lng').attr('value', latlng.lng)
+}
 
 async function fillDocTypeSelect() {
     let doctypes = await getDocTypes();

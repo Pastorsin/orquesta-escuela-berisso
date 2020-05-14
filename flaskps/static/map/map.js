@@ -67,6 +67,7 @@ class Map {
             $('#lat').attr('value', latlng.lat)
             $('#lng').attr('value', latlng.lng)
         }
+        return [map, initialMark]
     }
 
 }
