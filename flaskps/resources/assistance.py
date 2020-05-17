@@ -21,7 +21,6 @@ def index():
         'assistance/index.html',
         current_user=current_user,
         current_schoolyear=current_schoolyear,
-        workshops=current_schoolyear.get_remaining_workshops(),
         current_date=datetime.now().date().strftime('%d-%m-%Y')
     )
 
