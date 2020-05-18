@@ -20,6 +20,7 @@ SUCCESS_MSG = {
 @login_required
 @permissions_enabled('instrument_new', current_user)
 def new():
+    print(current_user)
     if request.method == 'POST':
 
         print(request.form)
