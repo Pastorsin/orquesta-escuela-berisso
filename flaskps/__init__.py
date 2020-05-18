@@ -12,14 +12,23 @@ from .extensions.login_manager import login_manager
 from .extensions.flask_dance import blueprint
 from .models.webconfig import Webconfig
 
+# Api Marshmallow + FLASK Rest-Ful
+from flask_restful import Api
+from flask_marshmallow import Marshmallow
+from .resources.restful.instrument import InstrumentRest
+from .resources.restful.instrument import InstrumentImageRest
+from .resources.restful.instrument import InstrumentStatusRest
+
+
 # App initial config
 app = Flask(__name__)
 app.config.from_object(Config)
 
-
+# Init DB
 db.init_app(app)
 with app.app_context():
     db.create_all()
+db.session.configure(autoflush=False)
 
 migrate = Migrate(app, db)
 
@@ -27,6 +36,10 @@ login_manager.init_app(app)
 bcrypt.init_app(app)
 
 app.register_blueprint(blueprint, url_prefix="/login")
+
+# Init API Marshmallow + FLASK RestFul
+ma = Marshmallow(app)
+restful = Api(app)
 
 
 # Formateador de fechas para Jinja2
@@ -57,7 +70,7 @@ app.add_url_rule("/usuarios/new", 'user_create',
                  admin.create, methods=['POST'])
 app.add_url_rule("/usuarios/new", 'user_new', admin.new)
 app.add_url_rule("/usuarios/editar/<user_id>", 'user_edit',
-                 admin.edit,  methods=['GET', 'POST'])
+                 admin.edit, methods=['GET', 'POST'])
 app.add_url_rule("/desactivar_usuario/<user_id>",
                  'deactivate_user', admin.deactivateUser)
 app.add_url_rule("/activar_usuario/<user_id>",
@@ -77,11 +90,11 @@ app.add_url_rule("/configuracion/editar", 'webconfig_edit',
 # Students
 app.add_url_rule("/estudiantes", 'student_index', student.index)
 app.add_url_rule("/estudiantes/desactivar/<student_id>",
-                 'deactivate_student', student.deactivate,  methods=['POST'])
+                 'deactivate_student', student.deactivate, methods=['POST'])
 app.add_url_rule("/estudiantes/activar/<student_id>",
-                 'activate_student', student.activate,  methods=['POST'])
+                 'activate_student', student.activate, methods=['POST'])
 app.add_url_rule("/estudiantes/new", 'student_new',
-                 student.new,  methods=['POST', 'GET'])
+                 student.new, methods=['POST', 'GET'])
 app.add_url_rule("/estudiantes/editar/<student_id>",
                  'student_edit', student.edit, methods=['POST', 'GET'])
 app.add_url_rule("/estudiantes/<student_id>",
@@ -104,9 +117,9 @@ app.add_url_rule("/estudiantes/<student_id>/asistencias",
 app.add_url_rule("/responsable/<responsable_id>",
                  'responsable_profile', responsable.profile)
 app.add_url_rule("/responsable/desactivar/<responsable_id>",
-                 'deactivate_responsable', responsable.deactivate,  methods=['POST'])
+                 'deactivate_responsable', responsable.deactivate, methods=['POST'])
 app.add_url_rule("/responsable/activar/<responsable_id>",
-                 'activate_responsable', responsable.activate,  methods=['POST'])
+                 'activate_responsable', responsable.activate, methods=['POST'])
 app.add_url_rule("/responsable/editar/<responsable_id>",
                  'responsable_edit', responsable.edit, methods=['POST', 'GET'])
 
@@ -159,15 +172,20 @@ app.add_url_rule("/instrumentos", 'instrument_index', instrument.index)
 app.add_url_rule("/instrumentos/new", 'instrument_new',
                  instrument.new, methods=['POST', 'GET'])
 app.add_url_rule("/instrumentos/desactivar/<instrument_id>",
-                 'deactivate_instrument', instrument.deactivate,  methods=['POST'])
+                 'deactivate_instrument', instrument.deactivate, methods=['POST'])
 app.add_url_rule("/instrumentos/activar/<instrument_id>",
-                 'activate_instrument', instrument.activate,  methods=['POST'])
+                 'activate_instrument', instrument.activate, methods=['POST'])
 app.add_url_rule("/instrumentos/<instrument_id>",
                  'instrument_profile', instrument.profile)
 app.add_url_rule("/instrumentos/editar/<instrument_id>",
                  'instrument_edit', instrument.edit, methods=['POST', 'GET'])
 app.add_url_rule("/instrumentos/editar/<instrument_id>/imagen",
                  'instrument_image_edit', instrument.edit_image, methods=['POST', 'GET'])
+
+# Instruments REST
+restful.add_resource(InstrumentRest, *['/api/instrumentos/','/api/instrumentos/<instrument_id>'])
+restful.add_resource(InstrumentImageRest, '/api/instrumentos/<instrument_id>/imagen')
+restful.add_resource(InstrumentStatusRest, '/api/instrumentos/<instrument_id>/estado')
 
 
 # Map

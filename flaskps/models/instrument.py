@@ -80,6 +80,10 @@ class Instrument(db.Model):
         db.session.commit()
         return self
 
+    def switch_status(self):
+        self.deactivate() if self.is_active else self.activate()
+        return self.is_active
+
     def update(self, values):
         self.__init_attributes(values)
         db.session.commit()
@@ -87,3 +91,12 @@ class Instrument(db.Model):
     def update_image(self, values):
         self.__init_image(values)
         db.session.commit()
+
+    @classmethod
+    def all_with_representative_entities(cls):
+        return cls.query.with_entities(
+            cls.name,
+            cls.inventory_number,
+            cls.id,
+            cls.is_active
+        )

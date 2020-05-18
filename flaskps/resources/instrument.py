@@ -21,6 +21,9 @@ SUCCESS_MSG = {
 @permissions_enabled('instrument_new', current_user)
 def new():
     if request.method == 'POST':
+
+        print(request.form)
+
         form = InstrumentCreateForm(request)
 
         if form.is_valid():
