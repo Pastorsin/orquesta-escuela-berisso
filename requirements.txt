@@ -1,4 +1,5 @@
 alembic==1.2.1
+aniso8601==8.0.0
 autopep8==1.5
 bcrypt==3.1.7
 blinker==1.4
@@ -12,13 +13,18 @@ Flask==1.0.2
 Flask-Bcrypt==0.7.1
 Flask-Dance==3.0.0
 Flask-Login==0.4.1
+flask-marshmallow==0.12.0
 Flask-Migrate==2.5.2
+Flask-RESTful==0.3.8
+Flask-Session==0.3.1
 Flask-SQLAlchemy==2.4.1
 idna==2.9
 itsdangerous==1.1.0
 Jinja2==2.10.3
 Mako==1.1.0
 MarkupSafe==1.1.1
+marshmallow==3.6.0
+marshmallow-sqlalchemy==0.23.0
 mccabe==0.6.1
 oauthlib==3.1.0
 pkg-resources==0.0.0
@@ -28,6 +34,7 @@ pyflakes==2.1.1
 PyMySQL==0.9.3
 python-dateutil==2.8.0
 python-editor==1.0.4
+pytz==2020.1
 requests==2.23.0
 requests-oauthlib==1.3.0
 six==1.12.0
