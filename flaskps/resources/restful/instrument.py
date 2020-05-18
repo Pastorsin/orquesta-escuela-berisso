@@ -49,7 +49,7 @@ class InstrumentStatusRest(Resource):
         status = instrument.switch_status()
 
         return {
-            'message': 'success',
+            'success': True,
             'status': status
         }
 
