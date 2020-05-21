@@ -64,6 +64,8 @@ class Instrument(db.Model):
         db.session.add(instrument)
         db.session.commit()
 
+        return instrument
+
     @classmethod
     def any_inventory_number(cls, number):
         return any(
@@ -87,6 +89,8 @@ class Instrument(db.Model):
     def update(self, values):
         self.__init_attributes(values)
         db.session.commit()
+
+        return self
 
     def update_image(self, values):
         self.__init_image(values)

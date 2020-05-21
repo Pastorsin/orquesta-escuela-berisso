@@ -117,7 +117,7 @@ class InstrumentCreateForm(InstrumentForm):
         return 'Instrumento creado correctamente'
 
     def save(self):
-        Instrument.create(self.fields)
+        return Instrument.create(self.fields)
 
     def success_url(self):
         return url_for('instrument_index')
@@ -136,7 +136,7 @@ class InstrumentEditForm(InstrumentForm):
         return 'Instrumento modificado correctamente'
 
     def save(self):
-        self.instrument.update(self.fields)
+        return self.instrument.update(self.fields)
 
     def success_url(self):
         return url_for('instrument_profile', instrument_id=self.instrument.id)
@@ -161,6 +161,7 @@ class ImageEditForm(Form):
 
     def save(self):
         self.instrument.update_image(self.values)
+        return self.instrument
 
     def success_url(self):
         return url_for('instrument_profile', instrument_id=self.instrument.id)
