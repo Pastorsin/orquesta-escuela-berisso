@@ -51,29 +51,7 @@ def new():
 @login_required
 @permissions_enabled('instrument_index', current_user)
 def index():
-    return render_template(
-        'instrument/index.html',
-        instruments=Instrument.query.order_by(Instrument.inventory_number)
-    )
-
-
-@login_required
-@permissions_enabled('instrument_deactivate', current_user)
-def deactivate(instrument_id):
-    instrument = Instrument.query.get(instrument_id)
-    instrument.deactivate()
-    flash(SUCCESS_MSG['deactivate'], 'success')
-    return redirect(url_for('instrument_index'))
-
-
-@login_required
-@permissions_enabled('instrument_activate', current_user)
-def activate(instrument_id):
-    instrument = Instrument.query.get(instrument_id)
-    instrument.activate()
-    flash(SUCCESS_MSG['activate'], 'success')
-    return redirect(url_for('instrument_index'))
-
+    return render_template('instrument/index.html')
 
 @login_required
 @permissions_enabled('instrument_profile', current_user)
