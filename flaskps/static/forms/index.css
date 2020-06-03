@@ -49,6 +49,6 @@ thead {
     color: white;
 }
 
-tbody {
+tr:nth-child(even) {
 	background-color: #b8d7e4;
 }
