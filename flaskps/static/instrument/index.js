@@ -29,8 +29,6 @@ window.onload = function () {
             }
         },
         watch: {
-            //No se que conviene, devolverlos a la primer página o fijarse si se puede quedar en la página actual
-            //Tal vez al modificar los instrumentos si quedarse, pero al modificar el filtro volver
             instrumentStateFilter(value) {
                 this.currentPage = 1;
             },
@@ -39,7 +37,6 @@ window.onload = function () {
             },
             instruments() {
                 this.currentPage = this.maxPages >= this.currentPage ? this.currentPage : 1;
-                //this.currentPage = 1;
             }
         },
         methods: {
@@ -50,7 +47,6 @@ window.onload = function () {
                     })
                     .then(response => {
                         this.instruments = response;
-                        console.log(this.instruments);
                     })
             },
             getFilteredInstruments() {
