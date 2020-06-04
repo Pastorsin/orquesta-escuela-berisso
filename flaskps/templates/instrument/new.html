@@ -2,7 +2,8 @@
 
 {% block script %}
 	{{super()}}
-	<script src="{{url_for('static', filename='instrument/image.js')}}"></script>	
+	<script src="{{url_for('static', filename='instrument/image.js')}}"></script>
+	<script src="{{url_for('static', filename='instrument/new.js')}}"></script>
 {% endblock %}
 
 {% block form_title %}
@@ -11,8 +12,9 @@
 
 {% block image %}
     <div class="custom-file">
-		<input type="file" name="image" class="custom-file-input" id="image-input" required accept="image/*"/>
+		<input type="file" name="image" class="custom-file-input" id="image-input" required accept="image/*" @change="setNewImage" ref="instrumentImage"/>
 		<label class="custom-file-label" for="image">Elegir archivo</label>
 		<div class="invalid-feedback">Formato inválido de archivo</div>
+		<strong><p><span v-for="error in errors.image" class="error">[[ error ]]</span></p></strong>
 	</div>
 {% endblock %}
