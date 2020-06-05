@@ -17,9 +17,13 @@
 	<div class="row" id="form-container">
 		<div class="col-12 text-center p-2 title">
 			<h1>{% block form_title %}{% endblock %}</h1>
-		</div>
+        </div>
+        <div class="main-message">
+            <strong><p v-for="error in errors.general" class="error">[[ error ]]</p></strong>
+            <strong><p v-for="successMessage in successMessages" class="success">[[ successMessage ]]</p></strong>
+        </div>
 		<div class="col-12 p-4">
-			<form method="post" @submit.prevent="submitNewInstrument" enctype="multipart/form-data">
+			<form method="post" @submit.prevent="submitNewInstrument" enctype="multipart/form-data" ref="form">
 				<div class="col-12">
                     <div class="form-group">
                         <label for="name-input">Nombre</label>
