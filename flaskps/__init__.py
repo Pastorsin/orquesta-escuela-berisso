@@ -18,6 +18,7 @@ from flask_marshmallow import Marshmallow
 from .resources.restful.instrument import InstrumentRest
 from .resources.restful.instrument import InstrumentImageRest
 from .resources.restful.instrument import InstrumentStatusRest
+from .resources.restful.instrument_type import InstrumentTypeRest
 
 
 # App initial config
@@ -182,6 +183,7 @@ app.add_url_rule("/instrumentos/editar/<instrument_id>/imagen",
 restful.add_resource(InstrumentRest, *['/api/instrumentos/','/api/instrumentos/<instrument_id>'])
 restful.add_resource(InstrumentImageRest, '/api/instrumentos/<instrument_id>/imagen')
 restful.add_resource(InstrumentStatusRest, '/api/instrumentos/<instrument_id>/estado')
+restful.add_resource(InstrumentTypeRest, '/api/instrumentos/tipos')
 
 
 # Map

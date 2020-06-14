@@ -45,7 +45,7 @@ window.onload = function() {
         },
         methods: {
             getInstrumentTypes() {
-                fetch('/api/tipo_instrumento')
+                fetch('/api/instrumentos/tipos')
                     .then(response => {
                         return response.json();
                     })
