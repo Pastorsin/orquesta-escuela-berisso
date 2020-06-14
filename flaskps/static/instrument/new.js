@@ -81,8 +81,8 @@ window.onload = function() {
                             this.clearForm();
                             this.successMessages = json.messages;
                         }
+                        this.sendingForm = false;
                     })
-                this.sendingForm = false;
                 return false;
             },
             validateInstrumentName() {
