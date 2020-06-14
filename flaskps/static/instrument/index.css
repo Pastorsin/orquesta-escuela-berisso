@@ -1,0 +1,13 @@
+.error {
+    color: #aa3333
+}
+
+.success {
+    color: #33aa33;
+}
+
+.main-message {
+    font-family: Open Sans;
+    text-align: center;
+    width: 100%;
+}

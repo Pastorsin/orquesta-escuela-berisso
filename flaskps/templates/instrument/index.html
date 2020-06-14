@@ -14,11 +14,12 @@
 {% block style %}
 	{{super()}}
 	<link rel="stylesheet" type="text/css" href="{{url_for('static', filename='forms/index.css')}}">
+	<link rel="stylesheet" type="text/css" href="{{url_for('static', filename='instrument/form.css')}}">
 {% endblock %}
 
 {% block script %}
 	{{super()}}
-	<script src="{{url_for('static', filename='instrument/index.js')}}"></script>
+	<script type="module" src="{{url_for('static', filename='instrument/index.js')}}"></script>
 {% endblock %}
 
 {% block content %}
@@ -38,7 +39,7 @@
 				</div>
 			</div>
 			<div class="col-12">
-				<small id="result"></small>
+				<small id="result">[[getFilteredInstruments().length]] elementos.</small>
 			</div>
 			<div class="col-12 my-4" id="filters-container">
 				<div class="list-subtitle">
@@ -60,6 +61,12 @@
 				</div>
 			</div>
 		</div>
+		<div class="message-container">
+			<div class="main-message success-message">
+				<strong><p v-for="successMessage in successMessages">[[ successMessage ]]</p></strong>
+				<button @click="clearSuccessMessage" class="message-button" v-if="successMessages.length"><i class="fa fa-times"></i></button>
+			</div>
+		</div>
 		<div class="col-12 table-responsive my-3" id="table-container">
 			<table class="table table-hover">
 				<thead>
@@ -71,28 +78,15 @@
 					</tr>
 				</thead>
 				<tbody>
-					<tr v-for="(instrument, index) in pagedInstruments" :key="index" class="item-row">
-						<th scope="row" class="inventory-number">[[ instrument.inventory_number ]]</th>
-						<td scope="row" class="name">[[ instrument.name ]]</td>
-						<td class="text-center">
-							<i :class="['fa', instrument.is_active ? 'fa-check text-success' : 'fa-times text-danger', 'td-active']" :active="instrument.is_active"></i>
-						</td>
-						<td scope="row" class="text-center">
-							<div class="dropdown">
-								<button type="button" class="white-button btn-sm dropdown-toggle" id="dropdownMenuButton" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
-									<i class="fa fa-cog"></i>
-								</button>
-								<div class="dropdown-menu" aria-labelledby="dropdownMenuButton">
-									<a class="dropdown-item" :href="'{{ url_for('instrument_profile', instrument_id='') }}' + instrument.id"><i class="fa fa-user"></i> Ver detalle</a>
-									<a class="dropdown-item" :href="'{{ url_for('instrument_edit', instrument_id='') }}' + instrument.id"><i class="fa fa-edit"></i> Modificar datos</a>
-									<button type="submit" @click="switchInstrumentStatus(instrument.id)" class="dropdown-item">
-										<span v-if="instrument.is_active"><i class="fa fa-ban"></i> Deshabilitar</span>
-										<span v-else><i class="fa fa-check"></i> Habilitar</span>
-									</button>
-								</div>
-							</div>
-						</td>
-					</tr>
+					<tr
+						is="instrument-row"
+						v-for="(instrument, index) in pagedInstruments"
+						:key="index"
+						:instrument="instrument"
+						:instrumentprofileurl="'{{ url_for('instrument_profile', instrument_id='') }}' + instrument.id"
+						:instrumentediturl="'{{ url_for('instrument_edit', instrument_id='') }}' + instrument.id"
+						@statuschanged="onInstrumentStatusSwitch"
+					></tr>
 				</tbody>
 		</table>
 	</div>

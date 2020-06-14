@@ -28,19 +28,15 @@ window.onload = function() {
         watch: {
             'instrument.name': function() {
                 this.errors.name = [];
-                this.clearGeneralErrors();
             },
             'instrument.type': function() {
                 this.errors.type = [];
-                this.clearGeneralErrors();
             },
             'instrument.code': function() {
                 this.errors.code = [];
-                this.clearGeneralErrors();
             },
             'instrument.image': function() {
                 this.errors.image = [];
-                this.clearGeneralErrors();
             }
         },
         mounted() {
@@ -76,6 +72,7 @@ window.onload = function() {
                     })
                     .then(json => {
                         if (!json.success) {
+                            this.clearGeneralErrors();
                             this.errors.general = json.messages;
                         } else {
                             this.clearForm();
@@ -131,7 +128,7 @@ window.onload = function() {
             },
             clearGeneralErrors() {
                 this.errors.general = [];
-                this.successMessage = '';
+                this.successMessages = [];
             },
         },
 

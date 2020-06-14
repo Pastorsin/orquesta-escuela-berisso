@@ -18,9 +18,14 @@
 		<div class="col-12 text-center p-2 title">
 			<h1>{% block form_title %}{% endblock %}</h1>
         </div>
-        <div class="main-message">
-            <strong><p v-for="error in errors.general" class="error">[[ error ]]</p></strong>
-            <strong><p v-for="successMessage in successMessages" class="success">[[ successMessage ]]</p></strong>
+        <div class="message-container">
+            <div :class="['main-message', this.successMessages.length ? 'success-message' : 'error-message']">
+                <div>
+                    <strong><p v-for="error in errors.general">[[ error ]]</p></strong>
+                    <strong><p v-for="successMessage in successMessages">[[ successMessage ]]</p></strong>
+                </div>
+                <button @click="clearGeneralErrors" class="message-button" v-if="successMessages.length || errors.general.length"><i class="fa fa-times"></i></button>
+            </div>
         </div>
 		<div class="col-12 p-4">
 			<form method="post" @submit.prevent="submitNewInstrument" enctype="multipart/form-data" ref="form">

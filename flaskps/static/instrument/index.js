@@ -1,3 +1,5 @@
+import {InstrumentRow} from './InstrumentRow.js';
+
 $(document).ready(() => {
 	const filters = []
     const search = null;
@@ -6,6 +8,9 @@ $(document).ready(() => {
 window.onload = function () {
     const app = new Vue({
         el: '#app',
+        components: {
+            InstrumentRow
+        },
         delimiters: ['[[',']]'],
         data: {
             instruments: [],
@@ -13,6 +18,7 @@ window.onload = function () {
             instrumentNameFilter: '',
             currentPage: 1,
             elementsPerPage: document.getElementById('pagination').dataset.pagination,
+            successMessages: []
         },
         mounted() {
             this.getInstruments();
@@ -49,19 +55,16 @@ window.onload = function () {
                         this.instruments = response;
                     })
             },
+            onInstrumentStatusSwitch(newStatus, instrument) {
+                this.successMessages = [];
+                this.successMessages.push('El instrumento ' + instrument.name +  ' (Código: ' + instrument.inventory_number + ') ha sido ' + (newStatus ? 'habilitado' : 'deshabilitado') + ' correctamente.');
+                this.getInstruments();
+            },
             getFilteredInstruments() {
                 return this.instruments.filter(instrument => {
                     return instrument.name.includes(this.instrumentNameFilter.trim()) &&
                         (this.instrumentStateFilter != 'all' ? instrument.is_active == this.instrumentStateFilter : true);
                 })
-            },
-            switchInstrumentStatus(instrumentId) {
-                fetch('/api/instrumentos/' + instrumentId + '/estado', {
-                    method: 'PATCH'
-                })
-                    .then(() => {
-                        this.getInstruments();
-                    })
             },
             clearInstrumentNameFilter() {
                 this.instrumentNameFilter = '';
@@ -74,7 +77,10 @@ window.onload = function () {
             },
             goToPreviousPage() {
                 this.currentPage--;
+            },
+            clearSuccessMessage() {
+                this.successMessages = [];
             }
         },
-    })
+    });
 }
