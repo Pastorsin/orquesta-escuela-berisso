@@ -23,7 +23,8 @@ window.onload = function() {
                 'image/jpg',
                 'image/png',
                 'image/bpm',
-            ]
+            ],
+            sendingForm: false
         },
         watch: {
             'instrument.name': function() {
@@ -44,12 +45,13 @@ window.onload = function() {
         },
         methods: {
             getInstrumentTypes() {
-                const types = [
-                    {id: 1, name: 'Viento'},
-                    {id: 2, name: 'Cuerda'},
-                    {id: 3, name: 'Percusión'}
-                ];
-                this.instrumentTypes = types;
+                fetch('/api/tipo_instrumento')
+                    .then(response => {
+                        return response.json();
+                    })
+                    .then(response => {
+                        this.instrumentTypes = response;
+                    })
             },
             validateForm() {
                 this.cleanErrors();
@@ -63,6 +65,7 @@ window.onload = function() {
                 if (this.validateForm()) {
                     return false;
                 }
+                this.sendingForm = true;
                 fetch('/api/instrumentos/', {
                     method: 'POST',
                     body: new FormData(this.$refs.form)
@@ -79,6 +82,7 @@ window.onload = function() {
                             this.successMessages = json.messages;
                         }
                     })
+                this.sendingForm = false;
                 return false;
             },
             validateInstrumentName() {

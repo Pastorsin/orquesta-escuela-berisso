@@ -36,3 +36,10 @@ p {
     border: none;
     background: none;
 }
+
+.loading-container {
+    display: flex;
+    justify-content: center;
+    margin: 10px 0;
+    width: 100%;
+}

@@ -58,8 +58,11 @@
                 {% block extra_fields %}
 
                 {% endblock %}
+                <div class="loading-container" v-if="sendingForm">
+                    <i class="fa fa-spinner fa-pulse fa-3x fa-fw"></i>
+                </div>
 				<div class="col-12 d-flex justify-content-center buttons pt-4">
-					{% block buttons %}
+                    {% block buttons %}
 						<button class="btn btn-success mx-2" id="save-button">Guardar</button>
 						<a href="/">
 							<button class="btn btn-danger mx-2" type="button">Cancelar</button>
