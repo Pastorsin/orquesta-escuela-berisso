@@ -18,7 +18,7 @@ const InstrumentRow = Vue.component('instrument-row', {
                         <i class="fa fa-cog"></i>
                     </button>
                     <div class="dropdown-menu" aria-labelledby="dropdownMenuButton">
-                        <a class="dropdown-item" :href="instrumentprofileurl"></i> Ver detalle</a>
+                        <a class="dropdown-item" :href="instrumentprofileurl"><i class="fa fa-user"></i> Ver detalle</a>
                         <a class="dropdown-item" :href="instrumentediturl"><i class="fa fa-edit"></i> Modificar datos</a>
                         <button type="submit" @click="switchInstrumentStatus(instrument.id)" class="dropdown-item">
                             <span v-if="instrument.is_active"><i class="fa fa-ban"></i> Deshabilitar</span>
