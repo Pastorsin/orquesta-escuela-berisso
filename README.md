@@ -14,4 +14,4 @@ El proyecto se encuentra hosteado en la siguiente url:
 
 ## Informe
 
-Si se desea profundizar en el detalle del trabajo: [Click aquí](https://gitlab.catedras.linti.unlp.edu.ar/proyecto2019/grupo18/-/wikis/Informe-del-trabajo).
+Si se desea profundizar en el detalle del trabajo: [Click aquí](https://drive.google.com/file/d/1HA6Bp3VUseriPgt-CQ6bw3mRAZd_x9w-/view?usp=sharing).
